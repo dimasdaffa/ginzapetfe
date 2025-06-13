@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import type { CartItem, HomeService } from "../types/type";
+import type { CartItem, Product } from "../types/type";
 import apiClient from "../services/apiServices";
 import { Link } from "react-router-dom";
 import AccordionSection from "../components/AccordionSection";
 
 export default function MyCartPage() {
-  const [serviceDetails, setServiceDetails] = useState<HomeService[]>([]); // Assuming HomeService is defined.
+  const [productDetails, setProductDetails] = useState<Product[]>([]); // Assuming HomeService is defined.
   const [cart, setCart] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -31,27 +31,27 @@ export default function MyCartPage() {
       const cartItems: CartItem[] = JSON.parse(savedCart);
       setCart(cartItems);
 
-      const fetchServiceDetails = async () => {
-        const validServices: HomeService[] = [];
+      const fetchProductDetails = async () => {
+        const validProducts: Product[] = [];
         const updatedCart: CartItem[] = [];
 
         for (const item of cartItems) {
           try {
-            const response = await apiClient.get(`/service/${item.slug}`);
-            const service = response.data.data;
-            if (service) {
-              validServices.push(service);
+            const response = await apiClient.get(`/product/${item.slug}`);
+            const product = response.data.data;
+            if (product) {
+              validProducts.push(product);
               updatedCart.push(item);
             } else {
               console.warn(
-                `Service with slug ${item.slug} is no longer available`
+                `Product with slug ${item.slug} is no longer available`
               );
             }
           } catch (error: unknown) {
             if (error instanceof Error) {
               setError(error.message);
               console.error(
-                `Error fetching service with slug ${item.slug}: ${error.message}`
+                `Error fetching product with slug ${item.slug}: ${error.message}`
               );
             }
           }
@@ -60,11 +60,11 @@ export default function MyCartPage() {
         // Update cart with only valid items
         setCart(updatedCart);
         localStorage.setItem("cart", JSON.stringify(updatedCart));
-        setServiceDetails(validServices);
+        setProductDetails(validProducts);
         setLoading(false);
       };
 
-      fetchServiceDetails();
+      fetchProductDetails();
     } else {
       setLoading(false);
     }
@@ -75,13 +75,13 @@ export default function MyCartPage() {
     const updatedCart = cart.filter((item) => item.slug !== slug);
     setCart(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
-    setServiceDetails((prevDetails) =>
-      prevDetails.filter((service) => service.slug !== slug)
+    setProductDetails((prevDetails) =>
+      prevDetails.filter((product) => product.slug !== slug)
     );
   };
 
-  const subtotal = serviceDetails.reduce(
-    (acc, service) => acc + service.price,
+  const subtotal = productDetails.reduce(
+    (acc, product) => acc + product.price,
     0
   );
   const tax = subtotal * 0.11;
@@ -163,21 +163,21 @@ export default function MyCartPage() {
           iconSrc="/assets/images/icons/bottom-booking-form.svg"
         >
           <div className="flex flex-col gap-4" id="HomeServicesJ">
-            {serviceDetails.length > 0
-              ? serviceDetails.map((service, index) => (
-                  <div key={service.id} className="flex flex-col gap-4">
+            {productDetails.length > 0
+              ? productDetails.map((product, index) => (
+                  <div key={product.id} className="flex flex-col gap-4">
                     <div className="card flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <div className="flex h-[90px] w-[80px] shrink-0 items-center justify-center overflow-hidden rounded-3xl">
                           <img
-                            src={`${BASE_URL}/${service.thumbnail}`}
+                            src={`${BASE_URL}/${product.thumbnail}`}
                             alt="image"
                             className="h-full w-full object-cover"
                           />
                         </div>
                         <div className="flex flex-col gap-1">
                           <h3 className="line-clamp-2 h-[42px] text-sm font-semibold leading-[21px]">
-                            {service.name}
+                            {product.name}
                           </h3>
                           <div className="flex items-center gap-[6px]">
                             <div className="flex items-center gap-1">
@@ -187,7 +187,7 @@ export default function MyCartPage() {
                                 className="h-4 w-4 shrink-0"
                               />
                               <p className="text-xs leading-[18px] text-rumahrapih-gray">
-                                Rp {formatCurrency(service.price)}
+                                Rp {formatCurrency(product.price)}
                               </p>
                             </div>
                             <div className="flex items-center gap-1">
@@ -197,14 +197,14 @@ export default function MyCartPage() {
                                 className="h-4 w-4 shrink-0"
                               />
                               <p className="text-xs leading-[18px] text-rumahrapih-gray">
-                                {service.duration} Hours
+                                {product.stok} Stok tersedia
                               </p>
                             </div>
                           </div>
                         </div>
                       </div>
                       <button
-                        onClick={() => handleRemoveItem(service.slug)}
+                        onClick={() => handleRemoveItem(product.slug)}
                         type="button"
                         className="shrink-0"
                       >
@@ -215,7 +215,7 @@ export default function MyCartPage() {
                         />
                       </button>
                     </div>
-                    {index < serviceDetails.length - 1 && (
+                    {index < productDetails.length - 1 && (
                       <hr className="border-rumahrapih-graylight" />
                     )}
                   </div>

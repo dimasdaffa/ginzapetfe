@@ -18,7 +18,7 @@ function App() {
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/success-booking" element={<SuccessBookingPage />} />
         <Route path="/my-booking" element={<MyBookingPage />} />
-        <Route path="/service/:slug" element={<DetailsPage />} />
+        <Route path="/product/:slug" element={<DetailsPage />} />
         <Route path="/category/:slug" element={<CategoryPage />} />
       </Routes>
     </BrowserRouter>

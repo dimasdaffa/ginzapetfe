@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import type { CartItem, HomeService } from "../types/type";
+import type { CartItem, Product } from "../types/type";
 import apiClient from "../services/apiServices";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 export default function DetailsPage() {
   const { slug } = useParams<{ slug: string }>(); // Get slug from URL params
 
-  const [service, setService] = useState<HomeService | null>(null);
+  const [product, setProduct] = useState<Product| null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -37,13 +37,13 @@ export default function DetailsPage() {
     if (slug) {
       // Only fetch if slug is available
       apiClient
-        .get(`/service/${slug}`)
+        .get(`/product/${slug}`)
         .then((response) => {
-          setService(response.data.data); // Adjust if API response structure is different (e.g., response.data)
+          setProduct(response.data.data); // Adjust if API response structure is different (e.g., response.data)
           setLoading(false);
         })
         .catch((error) => {
-          setError("Failed to load service details");
+          setError("Failed to load product details");
           setLoading(false);
           // console.error("Error fetching service details:", error); // Optional: for debugging
         });
@@ -51,18 +51,18 @@ export default function DetailsPage() {
   }, [slug]); // Depend on slug so it refetches if slug changes
 
   const handleAddToCart = () => {
-    if (service) {
-      // Ensure service data is loaded
+    if (product) {
+      // Ensure product data is loaded
       setIsAdding(true);
-      const itemExists = cart.find((item) => item.service_id === service.id);
+      const itemExists = cart.find((item) => item.product_id === product.id);
 
       if (itemExists) {
-        alert("Jasa sudah tersedia di Cart!"); // "Service is already in Cart!"
+        alert("Jasa sudah tersedia di Cart!"); // "product is already in Cart!"
         setIsAdding(false);
       } else {
         const newCartItem: CartItem = {
-          service_id: service.id,
-          slug: service.slug,
+          product_id: product.id,
+          slug: product.slug,
           quantity: 1, // Default quantity
         };
         const updatedCart = [...cart, newCartItem];
@@ -85,9 +85,9 @@ export default function DetailsPage() {
     return <p>Error loading: {error}</p>;
   }
 
-  if (!service) {
-    // If service is null/undefined after loading and no error, it means not found
-    return <p>Service not found!</p>;
+  if (!product) {
+    // If product is null/undefined after loading and no error, it means not found
+    return <p>Product not found!</p>;
   }
   // Format currency to IDR
   const formatCurrency = (value: number): string => {
@@ -159,7 +159,7 @@ export default function DetailsPage() {
       <header className="mt-[100px] px-5">
         <div className="relative flex w-full items-center justify-center overflow-hidden rounded-[40px]">
           <img
-            src={`${BASE_URL}/${service.thumbnail}`}
+            src={`${BASE_URL}/${product.thumbnail}`}
             alt="image"
             className="h-full w-full object-cover"
           />
@@ -171,7 +171,7 @@ export default function DetailsPage() {
             />
             <p className="font-semibold">4.8</p>
           </div>
-          {service.is_popular ? (
+          {product.is_popular ? (
             <div className="absolute bottom-5 left-[20.5px] flex shrink-0 items-center gap-[2px] rounded-full bg-white px-[8px] py-[7px]">
               <img
                 src="/assets/images/icons/star-service-details.svg"
@@ -185,7 +185,7 @@ export default function DetailsPage() {
           )}
         </div>
         <h1 className="mt-5 text-2xl font-bold leading-[36px]">
-          {service.name}
+          {product.name}
         </h1>
       </header>
       <section
@@ -200,10 +200,10 @@ export default function DetailsPage() {
           />
           <div>
             <strong className="text-sm font-semibold leading-[21px]">
-              {service.duration} Hours
+              {product.stok}
             </strong>
             <p className="text-sm leading-[21px] text-rumahrapih-gray">
-              Duration
+              Stok tersedia
             </p>
           </div>
         </div>
@@ -215,7 +215,7 @@ export default function DetailsPage() {
           />
           <div>
             <strong className="text-sm font-semibold leading-[21px]">
-              Top Service
+              Top Product
             </strong>
             <p className="text-sm leading-[21px] text-rumahrapih-gray">
               Guarantee
@@ -230,7 +230,7 @@ export default function DetailsPage() {
           />
           <div>
             <strong className="text-sm font-semibold leading-[21px]">
-              {service.category.name}
+              {product.category.name}
             </strong>
             <p className="text-sm leading-[21px] text-rumahrapih-gray">
               Category
@@ -255,13 +255,13 @@ export default function DetailsPage() {
       </section>
       <section id="ServiceDescription" className="mt-5 px-5">
         <h3 className="font-semibold">Details</h3>
-        <p className="leading-7">{service.about}</p>
+        <p className="leading-7">{product.about}</p>
       </section>
       <section id="ServiceBenefits" className="mt-5 px-5">
         <div className="flex w-full flex-col gap-3 rounded-[24px] border border-rumahrapih-graylight p-[14px]">
-          <h3 className="font-semibold">Service Benefits</h3>
-          {service?.benefits && service.benefits.length > 0 ? (
-            service.benefits.map((benefit, index) => (
+          <h3 className="font-semibold">Product Details</h3>
+          {product?.benefits && product.benefits.length > 0 ? (
+            product.benefits.map((benefit, index) => (
               <div key={benefit.id} className="flex flex-col gap-3">
                 <div className="flex items-center gap-3">
                   <img
@@ -271,7 +271,7 @@ export default function DetailsPage() {
                   />
                   <p className="leading-[26px]">{benefit.name}</p>
                 </div>
-                {index < service.benefits.length - 1 && (
+                {index < product.benefits.length - 1 && (
                   <hr className="border-rumahrapih-graylight" />
                 )}
               </div>
@@ -295,8 +295,8 @@ export default function DetailsPage() {
             slidesOffsetAfter={20}
             slidesOffsetBefore={20}
           >
-            {service.testimonials.length > 0
-              ? service.testimonials.map((testimonial) => (
+            {product.testimonials.length > 0
+              ? product.testimonials.map((testimonial) => (
                   <SwiperSlide key={testimonial.id} className="!w-fit">
                     <a href="#" className="card">
                       <div className="flex w-[300px] flex-col gap-4 rounded-3xl border border-rumahrapih-graylight p-5">
@@ -339,10 +339,7 @@ export default function DetailsPage() {
                           <div className="flex flex-col gap-[2px]">
                             <h5 className="font-semibold">
                               {testimonial.name}
-                            </h5>
-                            <p className="text-sm leading-[21px] text-rumahrapih-gray">
-                              Programmer Need more field
-                            </p>
+                            </h5>                       
                           </div>
                         </div>
                       </div>
@@ -358,7 +355,7 @@ export default function DetailsPage() {
           <div className="flex items-center gap-[45px] rounded-[24px] bg-rumahrapih-black px-[20px] py-[14px]">
             <div>
               <strong className="whitespace-nowrap text-[22px] font-extrabold leading-[33px] text-white">
-                {formatCurrency(service.price)}
+                {formatCurrency(product.price)}
               </strong>
               <p className="text-sm leading-[21px] text-white">
                 Refund Guarantee
