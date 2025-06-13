@@ -382,14 +382,14 @@ export default function MyBookingPage() {
                     <div className="flex items-center gap-3">
                       <div className="flex h-[90px] w-[80px] shrink-0 items-center justify-center overflow-hidden rounded-3xl">
                         <img
-                          src={`${BASE_URL}/${detail.home_service.thumbnail}`}
+                          src={`${BASE_URL}/${detail.product.thumbnail}`}
                           alt="image"
                           className="h-full w-full object-cover"
                         />
                       </div>
                       <div className="flex flex-col gap-1">
                         <h3 className="line-clamp-2 h-[42px] text-sm font-semibold leading-[21px]">
-                          {detail.home_service.name}
+                          {detail.product.name}
                         </h3>
                         <div className="flex items-center gap-[6px]">
                           <div className="flex items-center gap-1">
@@ -409,7 +409,7 @@ export default function MyBookingPage() {
                               className="h-4 w-4 shrink-0"
                             />
                             <p className="text-xs leading-[18px] text-rumahrapih-gray">
-                              {detail.home_service.duration} Hours
+                              {detail.product.stok} Stok Tersedia
                             </p>
                           </div>
                         </div>

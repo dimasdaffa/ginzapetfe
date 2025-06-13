@@ -1,22 +1,22 @@
 import { use, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import type { BookingFormData, CartItem, HomeService } from "../types/type";
+import type { BookingFormData, CartItem, Product } from "../types/type";
 import type { ZodIssue } from "zod";
 import apiClient from "../services/apiServices";
 import { paymentSchema } from "../types/validationBooking";
 
 type FormData = {
   proof: File | null;
-  service_ids: number[];
+  product_ids: number[];
 };
 
 export default function PaymentPage() {
   const [formData, setFormData] = useState<FormData>({
     proof: null,
-    service_ids: [],
+    product_ids: [],
   });
 
-  const [serviceDetails, setServiceDetails] = useState<HomeService[]>([]);
+  const [productDetails, setProductDetails] = useState<Product[]>([]);
   const [bookingData, setBookingData] = useState<BookingFormData | null>(null);
   const [formErrors, setFormErrors] = useState<ZodIssue[]>([]);
   const [loading, setLoading] = useState(true);
@@ -47,8 +47,8 @@ export default function PaymentPage() {
   const navigate = useNavigate();
   const TAX_RATE = 0.11;
 
-  const subtotal = serviceDetails.reduce(
-    (acc, service) => acc + service.price,
+  const subtotal = productDetails.reduce(
+    (acc, product) => acc + product.price,
     0
   );
   const tax = subtotal * TAX_RATE;
@@ -64,26 +64,26 @@ export default function PaymentPage() {
     setFileName(file ? file.name : null);
   };
 
-  const fetchServiceDetails = async (cartItems: CartItem[]) => {
+  const fetchProductDetails = async (cartItems: CartItem[]) => {
     try {
       const fetchedDetails = await Promise.all(
         cartItems.map(async (item) => {
-          const response = await apiClient.get(`/service/${item.slug}`);
+          const response = await apiClient.get(`/product/${item.slug}`);
           return response.data.data;
         })
       );
 
-      setServiceDetails(fetchedDetails);
+      setProductDetails(fetchedDetails);
       setLoading(false);
 
-      const serviceIds = fetchedDetails.map((service) => service.id);
+      const productIds = fetchedDetails.map((product) => product.id);
       setFormData((prevData) => ({
         ...prevData,
-        service_ids: serviceIds,
+        product_ids: productIds,
       }));
     } catch (error) {
-      console.error("Error fetching service details:", error);
-      setError("Failed to fetch service details");
+      console.error("Error fetching product details:", error);
+      setError("Failed to fetch product details");
       setLoading(false);
     }
   };
@@ -102,7 +102,7 @@ export default function PaymentPage() {
     }
 
     const cartItems = JSON.parse(cartData) as CartItem[];
-    fetchServiceDetails(cartItems);
+    fetchProductDetails(cartItems);
   }, [navigate]);
 
   if (loading) {
@@ -139,8 +139,8 @@ export default function PaymentPage() {
       submissionData.append("schedule_at", bookingData.schedule_at);
     }
 
-    formData.service_ids.forEach((id, index) => {
-      submissionData.append(`service_ids[${index}]`, String(id));
+    formData.product_ids.forEach((id, index) => {
+      submissionData.append(`product_ids[${index}]`, String(id));
     });
 
     try {
@@ -164,7 +164,7 @@ export default function PaymentPage() {
         setSuccessMessage("Payment proof submitted successfully!");
         localStorage.removeItem("cart");
         localStorage.removeItem("bookingData");
-        setFormData({ proof: null, service_ids: [] });
+        setFormData({ proof: null, product_ids: [] });
         setLoading(false);
         navigate(`/success-booking?trx_id=${bookingTrxId}&email=${email}`);
       } else {
@@ -347,7 +347,7 @@ export default function PaymentPage() {
                   <div className="flex flex-col gap-[2px]">
                     <h4 className="text-rumahrapih-gray">Bank Account</h4>
                     <strong className="font-semibold">
-                      rumahrapih Indonesia
+                      Ghiza Petshop
                     </strong>
                   </div>
                 </div>
@@ -373,7 +373,7 @@ export default function PaymentPage() {
                   <div className="flex flex-col gap-[2px]">
                     <h4 className="text-rumahrapih-gray">Bank Account</h4>
                     <strong className="font-semibold">
-                      rumahrapih Indonesia
+                      Ghiza Petshop
                     </strong>
                   </div>
                 </div>
