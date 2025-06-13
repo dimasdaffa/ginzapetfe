@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import type { Category, HomeService } from "../types/type";
+import type { Category, Product } from "../types/type";
 import apiClient from "../services/apiServices";
 import { Link } from "react-router-dom";
 
@@ -9,16 +9,16 @@ const fetchCategories = async () => {
   return response.data.data; // Adjust if API response structure is different (e.g., response.data)
 };
 
-const fetchServices = async () => {
-  const response = await apiClient.get("/services?limit=5&is_popular=1"); // Assuming the API returns an array of HomeService
+const fetchProducts = async () => {
+  const response = await apiClient.get("/products?limit=5&is_popular=1"); // Assuming the API returns an array of Product
   return response.data.data; // Adjust if API response structure is different
 };
 
 export default function HomePage() {
   const [categories, setCategories] = useState<Category[]>([]); // Cannot find name 'Category'.
-  const [services, setServices] = useState<HomeService[]>([]); // Assuming HomeService is defined.
+  const [products, setProducts] = useState<Product[]>([]); // Assuming Product is defined.
   const [loadingCategories, setLoadingCategories] = useState(true);
-  const [loadingServices, setLoadingServices] = useState(true);
+  const [loadingProducts, setLoadingProducts] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -34,24 +34,24 @@ export default function HomePage() {
       }
     };
 
-    const getServicesData = async () => {
+    const getProductsData = async () => {
       try {
-        const servicesData = await fetchServices();
-        setServices(servicesData);
+        const productsData = await fetchProducts();
+        setProducts(productsData);
       } catch (err) {
-        setError("Failed to load services");
-        // console.error("Failed to fetch services:", err); // Optional: for debugging
+        setError("Failed to load products");
+        // console.error("Failed to fetch products:", err); // Optional: for debugging
       } finally {
-        setLoadingServices(false);
+        setLoadingProducts(false);
       }
     };
 
     getCategoriesData();
-    getServicesData();
+    getProductsData();
   }, []);
 
-  if (loadingCategories && loadingServices) {
-    return <p>Loading categories and services...</p>;
+  if (loadingCategories && loadingProducts) {
+    return <p>Loading categories and products...</p>;
   }
 
   if (error) {
@@ -116,7 +116,7 @@ export default function HomePage() {
       </section>
       <header className="relative ml-5 mt-[128px] w-[246px]">
         <h1 className="text-[32px] font-extrabold leading-[46px]">
-          Discover Top Home Services
+          Discover Top Products
         </h1>
       </header>
       <section
@@ -150,7 +150,7 @@ export default function HomePage() {
                         <div className="flex min-w-[130px] flex-col gap-[2px]">
                           <h3 className="font-semibold">{category.name}</h3>
                           <p className="text-sm leading-[21px] text-rumahrapih-gray">
-                            {category.home_services_count} Services
+                            {category.products_count} Products
                           </p>
                         </div>
                       </div>
@@ -182,10 +182,10 @@ export default function HomePage() {
             slidesOffsetAfter={20}
             slidesOffsetBefore={20}
           >
-            {services.length > 0
-              ? services.map((service) => (
-                  <SwiperSlide key={service.id} className="swiper-slide !w-fit">
-                    <Link to={`/service/${service.slug}`}className="card">
+            {products.length > 0
+              ? products.map((product) => (
+                  <SwiperSlide key={product.id} className="swiper-slide !w-fit">
+                    <Link to={`/product/${product.slug}`}className="card">
                       <div className="relative flex w-[230px] shrink-0 flex-col gap-[12px] overflow-hidden rounded-[24px] border border-rumahrapih-graylight bg-white p-4 transition-all duration-300 hover:border-rumahrapih-orange">
                         <span className="absolute right-[26px] top-[26px] shrink-0 rounded-full bg-white px-2 py-[7px]">
                           <div className="flex items-center gap-[2px]">
@@ -200,13 +200,13 @@ export default function HomePage() {
                         </span>
                         <div className="flex h-[140px] w-full shrink-0 items-center justify-center overflow-hidden rounded-[16px] bg-[#D9D9D9]">
                           <img
-                            src={`${BASE_URL}/${service.thumbnail}`}
+                            src={`${BASE_URL}/${product.thumbnail}`}
                             alt="image"
                             className="h-full w-full object-cover"
                           />
                         </div>
                         <h3 className="line-clamp-2 min-h-[48px] font-semibold">
-                          {service.name}
+                          {product.name}
                         </h3>
                         <div className="flex flex-col gap-y-3">
                           <div className="flex items-center gap-2">
@@ -216,7 +216,7 @@ export default function HomePage() {
                               className="h-5 w-5 shrink-0"
                             />
                             <p className="text-sm leading-[21px] text-rumahrapih-gray">
-                              {service.category.name}
+                              {product.category.name}
                             </p>
                           </div>
                           <div className="flex items-center gap-2">
@@ -226,11 +226,11 @@ export default function HomePage() {
                               className="h-5 w-5 shrink-0"
                             />
                             <p className="text-sm leading-[21px] text-rumahrapih-gray">
-                              {service.duration} hours
+                              {product.stok} stok tersedia
                             </p>
                           </div>
                           <strong className="font-semibold text-rumahrapih-orange">
-                            {formatCurrency(service.price)}
+                            {formatCurrency(product.price)}
                           </strong>
                           <img
                             className="absolute bottom-0 right-0"
@@ -275,17 +275,6 @@ export default function HomePage() {
                   </div>
                 </Link>
               </li>
-              {/* <li className="shrink-0">
-                <a href="#">
-                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-rumahrapih-graylight transition-all duration-300 hover:border-rumahrapih-orange">
-                    <img
-                      src="assets/images/icons/chat.svg"
-                      alt="icon"
-                      className="h-[22px] w-[22px] shrink-0"
-                    />
-                  </div>
-                </a>
-              </li> */}
               <li className="shrink-0">
                 <a href="#">
                   <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-rumahrapih-graylight transition-all duration-300 hover:border-rumahrapih-orange">

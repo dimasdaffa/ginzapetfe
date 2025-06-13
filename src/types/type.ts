@@ -1,7 +1,7 @@
-export interface HomeService {
+export interface Product {
   id: number;
   price: number;
-  duration: number;
+  stok: number;
   name: string;
   slug: string;
   is_popular: boolean;
@@ -29,9 +29,9 @@ export interface Category {
   name: string;
   slug: string;
   photo: string;
-  home_services_count: number;
-  home_services: HomeService[]; // Assuming this is an array of HomeService
-  popular_services: HomeService[]; // Assuming this is an array of HomeService
+  products_count: number;
+  products: Product[]; // Assuming this is an array of HomeService
+  popular_products: Product[]; // Assuming this is an array of HomeService
 }
 
 export interface BookingDetails {
@@ -56,12 +56,12 @@ export interface BookingDetails {
 interface TransactionDetails {
   id: number;
   price: number; // This might be a number if it's a monetary value. Adjust if necessary.
-  home_service_id: number;
-  home_service: HomeService; // Assuming HomeService interface is defined elsewhere
+  product_id: number;
+  product: Product; // Assuming HomeService interface is defined elsewhere
 }
 
 export interface CartItem {
-  service_id: number;
+  product_id: number;
   slug: string;
   quantity: number;
 }
