@@ -2,21 +2,27 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import type { CartItem, Product } from "../types/type";
 import apiClient from "../services/apiServices";
-import { Swiper, SwiperSlide } from "swiper/react";
+import {
+  ArrowLeft,
+  ShoppingCart,
+  Star,
+  Clock,
+  Award,
+  Calendar,
+  CheckCircle,
+} from "lucide-react";
 
 export default function DetailsPage() {
-  const { slug } = useParams<{ slug: string }>(); // Get slug from URL params
+  const { slug } = useParams<{ slug: string }>(); 
 
-  const [product, setProduct] = useState<Product| null>(null);
+  const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [isAdding, setIsAdding] = useState(false); // Used to track if an item is currently being added to cart
+  const [isAdding, setIsAdding] = useState(false); 
+  const [isScrolled, setIsScrolled] = useState(false); 
 
-  const [isScrolled, setIsScrolled] = useState(false); // Track if the user has scrolled
-
-  // Load cart from local storage on page load
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
     if (savedCart) {
@@ -35,41 +41,39 @@ export default function DetailsPage() {
 
   useEffect(() => {
     if (slug) {
-      // Only fetch if slug is available
       apiClient
         .get(`/product/${slug}`)
         .then((response) => {
-          setProduct(response.data.data); // Adjust if API response structure is different (e.g., response.data)
+          setProduct(response.data.data); 
           setLoading(false);
         })
         .catch((error) => {
           setError("Failed to load product details");
           setLoading(false);
-          // console.error("Error fetching service details:", error); // Optional: for debugging
+          console.error("Error fetching service details:", error); 
         });
     }
-  }, [slug]); // Depend on slug so it refetches if slug changes
+  }, [slug]);
 
   const handleAddToCart = () => {
     if (product) {
-      // Ensure product data is loaded
       setIsAdding(true);
       const itemExists = cart.find((item) => item.product_id === product.id);
 
       if (itemExists) {
-        alert("Jasa sudah tersedia di Cart!"); // "product is already in Cart!"
+        alert("Jasa sudah tersedia di Cart!"); 
         setIsAdding(false);
       } else {
         const newCartItem: CartItem = {
           product_id: product.id,
           slug: product.slug,
-          quantity: 1, // Default quantity
+          quantity: 1, 
         };
         const updatedCart = [...cart, newCartItem];
         setCart(updatedCart);
         localStorage.setItem("cart", JSON.stringify(updatedCart));
 
-        alert("Jasa berhasil ditambahkan ke Cart!"); // "Service successfully added to Cart!"
+        alert("Jasa berhasil ditambahkan ke Cart!"); 
         setIsAdding(false);
       }
     }
@@ -86,10 +90,8 @@ export default function DetailsPage() {
   }
 
   if (!product) {
-    // If product is null/undefined after loading and no error, it means not found
     return <p>Product not found!</p>;
   }
-  // Format currency to IDR
   const formatCurrency = (value: number): string => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
@@ -98,258 +100,311 @@ export default function DetailsPage() {
     }).format(value);
   };
   return (
-    <main className="relative mx-auto w-full max-w-[640px] overflow-x-hidden bg-white pb-[144px]">
-      <div id="Background" className="absolute left-0 right-0 top-0 h-[228px]">
+    <div className="min-h-screen bg-white">
+      {/* Background Image - Mobile Only */}
+      <div className="absolute left-0 right-0 top-0 h-56 lg:hidden">
         <img
           src="/assets/images/backgrounds/orange-service-details.png"
-          alt="image"
+          alt="background"
+          className="h-full w-full object-cover"
         />
       </div>
-      <section
-        id="NavTop"
-        className={`fixed left-0 right-0 z-30 transition-all duration-300 
-          ${isScrolled ? "top-[30px]" : "top-[16px]"}`}
+
+      {/* Desktop Background */}
+      <div className="hidden lg:block absolute left-0 right-0 top-0 h-32 bg-gradient-to-r from-[#d14a1e] to-[#ff6b35]"></div>
+
+      {/* Navigation */}
+      <nav
+        className={`fixed left-0 right-0 z-30 transition-all duration-300 ${
+          isScrolled ? "top-7 lg:top-4" : "top-4 lg:top-4"
+        }`}
       >
-        <div className="relative mx-auto max-w-[640px] px-5">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div
-            id="ContainerNav"
-            className={`flex items-center justify-between py-[14px] transition-all duration-300 
-              ${
-                isScrolled
-                  ? "bg-white rounded-[22px] px-[16px] shadow-[0px_12px_20px_0px_#0305041C]"
-                  : ""
-              }`}
+            className={`flex items-center justify-between py-3 lg:py-4 transition-all duration-300 ${
+              isScrolled
+                ? "bg-white rounded-2xl lg:rounded-3xl px-4 lg:px-6 shadow-lg"
+                : "lg:bg-white/10 lg:backdrop-blur-sm lg:rounded-3xl lg:px-6"
+            }`}
           >
-            <Link to={`/`}>
+            <Link to="/">
               <div
-                id="Back"
-                className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full bg-white
-                  ${isScrolled ? "border border-ginzapet-graylight" : ""}`}
+                className={`flex h-11 w-11 lg:h-12 lg:w-12 items-center justify-center rounded-full bg-white transition-all duration-300 ${
+                  isScrolled ? "border border-gray-200" : "lg:bg-white/20 lg:backdrop-blur-sm"
+                }`}
               >
-                <img
-                  src="/assets/images/icons/back.svg"
-                  alt="icon"
-                  className="h-[22px] w-[22px] shrink-0"
-                />
+                <ArrowLeft className="h-5 w-5 lg:h-6 lg:w-6 text-gray-700" />
               </div>
             </Link>
-            <h2
-              id="Title"
-              className={`font-semibold transition-all duration-300
-                ${isScrolled ? "" : "text-white"}`}
+            <h1
+              className={`font-semibold text-lg lg:text-xl transition-all duration-300 ${
+                isScrolled ? "text-gray-900" : "text-white lg:text-white"
+              }`}
             >
               Details
-            </h2>
-            <Link to={`/cart`}>
+            </h1>
+            <Link to="/cart">
               <div
-                id="Cart"
-                className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full bg-white
-                  ${isScrolled ? "border border-ginzapet-graylight" : ""}`}
+                className={`flex h-11 w-11 lg:h-12 lg:w-12 items-center justify-center rounded-full bg-white transition-all duration-300 ${
+                  isScrolled ? "border border-gray-200" : "lg:bg-white/20 lg:backdrop-blur-sm"
+                }`}
               >
-                <img
-                  src="/assets/images/icons/cart.svg"
-                  alt="icon"
-                  className="h-[22px] w-[22px] shrink-0"
-                />
+                <ShoppingCart className="h-5 w-5 lg:h-6 lg:w-6 text-gray-700" />
               </div>
             </Link>
           </div>
         </div>
-      </section>
-      <header className="mt-[100px] px-5">
-        <div className="relative flex w-full items-center justify-center overflow-hidden rounded-[40px]">
-          <img
-            src={`${BASE_URL}/${product.thumbnail}`}
-            alt="image"
-            className="h-full w-full object-cover"
-          />
-          {product.is_popular ? (
-            <div className="absolute bottom-5 left-[20.5px] flex shrink-0 items-center gap-[2px] rounded-full bg-white px-[8px] py-[7px]">
-              <img
-                src="/assets/images/icons/star-service-details.svg"
-                alt="icon"
-                className="h-[22px] w-[22px] shrink-0"
-              />
-              <p className="font-semibold">Popular</p>
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
-        <h1 className="mt-5 text-2xl font-bold leading-[36px]">
-          {product.name}
-        </h1>
-      </header>
-      <section
-        id="ServiceDetails"
-        className="mt-5 grid grid-cols-2 gap-[14px] px-5"
-      >
-        <div className="flex items-center gap-[10px] rounded-[20px] bg-[#F4F5F7] px-[14px] py-[14px]">
-          <img
-            src="/assets/images/icons/clock-service-details.svg"
-            alt="icon"
-            className="h-[32px] w-[32px] shrink-0"
-          />
-          <div>
-            <strong className="text-sm font-semibold leading-[21px]">
-              {product.stok}
-            </strong>
-            <p className="text-sm leading-[21px] text-ginzapet-gray">
-              Stok tersedia
-            </p>
-          </div>
-        </div>
-        <div className="flex items-center gap-[10px] rounded-[20px] bg-[#F4F5F7] px-[14px] py-[14px]">
-          <img
-            src="/assets/images/icons/note-service-details.svg"
-            alt="icon"
-            className="h-[32px] w-[32px] shrink-0"
-          />
-          <div>
-            <strong className="text-sm font-semibold leading-[21px]">
-              Top Product
-            </strong>
-            <p className="text-sm leading-[21px] text-ginzapet-gray">
-              Guarantee
-            </p>
-          </div>
-        </div>
-        <div className="flex items-center gap-[10px] rounded-[20px] bg-[#F4F5F7] px-[14px] py-[14px]">
-          <img
-            src="/assets/images/icons/calender-service-details.svg"
-            alt="icon"
-            className="h-[32px] w-[32px] shrink-0"
-          />
-          <div>
-            <strong className="text-sm font-semibold leading-[21px]">
-              {product.category.name}
-            </strong>
-            <p className="text-sm leading-[21px] text-ginzapet-gray">
-              Category
-            </p>
-          </div>
-        </div>
-      </section>
-      <section id="ServiceDescription" className="mt-5 px-5">
-        <h3 className="font-semibold">Details</h3>
-        <p className="leading-7">{product.about}</p>
-      </section>
-      <section id="ServiceBenefits" className="mt-5 px-5">
-        <div className="flex w-full flex-col gap-3 rounded-[24px] border border-ginzapet-graylight p-[14px]">
-          <h3 className="font-semibold">Product Details</h3>
-          {product?.benefits && product.benefits.length > 0 ? (
-            product.benefits.map((benefit, index) => (
-              <div key={benefit.id} className="flex flex-col gap-3">
-                <div className="flex items-center gap-3">
-                  <img
-                    src="/assets/images/icons/verify-service-details.svg"
-                    alt="icon"
-                    className="h-[32px] w-[32px] shrink-0"
-                  />
-                  <p className="leading-[26px]">{benefit.name}</p>
-                </div>
-                {index < product.benefits.length - 1 && (
-                  <hr className="border-ginzapet-graylight" />
+      </nav>
+
+      {/* Main Content */}
+      <main className="pt-24 lg:pt-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Mobile Layout */}
+          <div className="lg:hidden pb-40">
+            {/* Product Image */}
+            <header className="mb-6">
+              <div className="relative overflow-hidden rounded-3xl">
+                <img
+                  src={product.thumbnail ? `${BASE_URL}/${product.thumbnail}` : "/placeholder.svg"}
+                  alt={product.name}
+                  className="h-64 w-full object-cover"
+                />
+                {product.is_popular && (
+                  <div className="absolute bottom-4 left-4 flex items-center gap-1 rounded-full bg-white px-3 py-2">
+                    <Star className="h-5 w-5 text-yellow-500 fill-current" />
+                    <span className="font-semibold text-sm">Popular</span>
+                  </div>
                 )}
               </div>
-            ))
-          ) : (
-            <p>Belum ada data</p>
-          )}
-        </div>
-      </section>
-      <section id="GreatCustomers" className="relative mt-5 space-y-[14px]">
-        <h3 className="pl-5 font-semibold">Great Customers</h3>
-        <div
-          id="GreatCustomersSlider"
-          className="swiper w-full overflow-x-hidden"
-        >
-          <Swiper
-            className="pb-[30px]"
-            direction="horizontal"
-            spaceBetween={20}
-            slidesPerView="auto"
-            slidesOffsetAfter={20}
-            slidesOffsetBefore={20}
-          >
-            {product.testimonials.length > 0
-              ? product.testimonials.map((testimonial) => (
-                  <SwiperSlide key={testimonial.id} className="!w-fit">
-                    <a href="#" className="card">
-                      <div className="flex w-[300px] flex-col gap-4 rounded-3xl border border-ginzapet-graylight p-5">
-                        <div className="stars flex items-center">
-                          <img
-                            src="/assets/images/icons/star-service-details.svg"
-                            alt="icon"
-                            className="h-[22px] w-[22px] shrink-0"
-                          />
-                          <img
-                            src="/assets/images/icons/star-service-details.svg"
-                            alt="icon"
-                            className="h-[22px] w-[22px] shrink-0"
-                          />
-                          <img
-                            src="/assets/images/icons/star-service-details.svg"
-                            alt="icon"
-                            className="h-[22px] w-[22px] shrink-0"
-                          />
-                          <img
-                            src="/assets/images/icons/star-service-details.svg"
-                            alt="icon"
-                            className="h-[22px] w-[22px] shrink-0"
-                          />
-                          <img
-                            src="/assets/images/icons/star-service-details.svg"
-                            alt="icon"
-                            className="h-[22px] w-[22px] shrink-0"
-                          />
-                        </div>
-                        <p className="leading-7">{testimonial.message}</p>
-                        <div className="profil flex items-center gap-3">
-                          <div className="flex h-[60px] w-[60px] items-center justify-center overflow-hidden rounded-full">
-                            <img
-                              src={`${BASE_URL}/${testimonial.photo}`}
-                              alt="image"
-                              className="h-full w-full object-cover"
-                            />
-                          </div>
-                          <div className="flex flex-col gap-[2px]">
-                            <h5 className="font-semibold">
-                              {testimonial.name}
-                            </h5>                       
-                          </div>
+              <h1 className="mt-4 text-2xl font-bold leading-tight">{product.name}</h1>
+            </header>
+
+            {/* Product Info Grid */}
+            <section className="mb-6 grid grid-cols-2 gap-3">
+              <div className="flex items-center gap-3 rounded-2xl bg-[#F4F5F7] p-4">
+                <Clock className="h-8 w-8 text-[#d14a1e]" />
+                <div>
+                  <p className="font-semibold text-sm">{product.stok}</p>
+                  <p className="text-sm text-gray-500">Stok tersedia</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 rounded-2xl bg-[#F4F5F7] p-4">
+                <Award className="h-8 w-8 text-[#d14a1e]" />
+                <div>
+                  <p className="font-semibold text-sm">Top Product</p>
+                  <p className="text-sm text-gray-500">Guarantee</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 rounded-2xl bg-[#F4F5F7] p-4 col-span-2">
+                <Calendar className="h-8 w-8 text-[#d14a1e]" />
+                <div>
+                  <p className="font-semibold text-sm">{product.category.name}</p>
+                  <p className="text-sm text-gray-500">Category</p>
+                </div>
+              </div>
+            </section>
+
+            {/* Description */}
+            <section className="mb-6">
+              <h3 className="font-semibold mb-3">Details</h3>
+              <p className="leading-relaxed text-gray-700">{product.about}</p>
+            </section>
+
+            {/* Benefits */}
+            <section className="mb-6">
+              <div className="rounded-2xl border border-gray-200 p-4">
+                <h3 className="font-semibold mb-4">Product Details</h3>
+                <div className="space-y-4">
+                  {product.benefits.map((benefit, index) => (
+                    <div key={benefit.id} className="flex flex-col gap-3">
+                      <div className="flex items-center gap-3">
+                        <CheckCircle className="h-6 w-6 text-green-500" />
+                        <p className="leading-relaxed">{benefit.name}</p>
+                      </div>
+                      {index < product.benefits.length - 1 && <hr className="border-gray-200" />}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Testimonials */}
+            <section className="mb-6">
+              <h3 className="font-semibold mb-4">Great Customers</h3>
+              <div className="overflow-x-auto pb-4">
+                <div className="flex gap-4 w-max">
+                  {product.testimonials.map((testimonial) => (
+                    <div key={testimonial.id} className="w-72 rounded-2xl border border-gray-200 p-5">
+                      <div className="flex items-center mb-3">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="h-5 w-5 text-yellow-500 fill-current" />
+                        ))}
+                      </div>
+                      <p className="leading-relaxed mb-4 text-gray-700">{testimonial.message}</p>
+                      <div className="flex items-center gap-3">
+                        <img
+                          src={testimonial.photo ? `${BASE_URL}/${testimonial.photo}` : "/placeholder.svg"}
+                          alt={testimonial.name}
+                          className="h-12 w-12 rounded-full object-cover"
+                        />
+                        <div>
+                          <h5 className="font-semibold">{testimonial.name}</h5>
                         </div>
                       </div>
-                    </a>
-                  </SwiperSlide>
-                ))
-              : " No testimonials available"}
-          </Swiper>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          </div>
+
+          {/* Desktop Layout */}
+          <div className="hidden lg:grid lg:grid-cols-2 lg:gap-12 py-8">
+            {/* Left Column - Product Image and Info */}
+            <div className="space-y-8">
+              {/* Product Image */}
+              <div className="relative overflow-hidden rounded-3xl">
+                <img
+                  src={product.thumbnail ? `${BASE_URL}/${product.thumbnail}` : "/placeholder.svg"}
+                  alt={product.name}
+                  className="h-full w-full object-cover"
+                />
+                {product.is_popular && (
+                  <div className="absolute bottom-6 left-6 flex items-center gap-2 rounded-full bg-white px-4 py-3">
+                    <Star className="h-6 w-6 text-yellow-500 fill-current" />
+                    <span className="font-semibold">Popular</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Product Info Grid */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex items-center gap-4 rounded-2xl bg-[#F4F5F7] p-6">
+                  <Clock className="h-10 w-10 text-[#d14a1e]" />
+                  <div>
+                    <p className="font-semibold text-lg">{product.stok}</p>
+                    <p className="text-gray-500">Stok tersedia</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4 rounded-2xl bg-[#F4F5F7] p-6">
+                  <Award className="h-10 w-10 text-[#d14a1e]" />
+                  <div>
+                    <p className="font-semibold text-lg">Top Product</p>
+                    <p className="text-gray-500">Guarantee</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4 rounded-2xl bg-[#F4F5F7] p-6 col-span-2">
+                  <Calendar className="h-10 w-10 text-[#d14a1e]" />
+                  <div>
+                    <p className="font-semibold text-lg">{product.category.name}</p>
+                    <p className="text-gray-500">Category</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column - Product Details */}
+            <div className="space-y-8">
+              <div>
+                <h1 className="text-4xl font-bold leading-tight mb-6">{product.name}</h1>
+
+                {/* Description */}
+                <div className="mb-8">
+                  <h3 className="text-xl font-semibold mb-4">Details</h3>
+                  <p className="leading-relaxed text-gray-700 text-lg">{product.about}</p>
+                </div>
+
+                {/* Benefits */}
+                <div className="mb-8">
+                  <div className="rounded-2xl border border-gray-200 p-6">
+                    <h3 className="text-xl font-semibold mb-6">Product Details</h3>
+                    <div className="space-y-4">
+                      {product.benefits.map((benefit, index) => (
+                        <div key={benefit.id} className="flex flex-col gap-4">
+                          <div className="flex items-center gap-4">
+                            <CheckCircle className="h-6 w-6 text-green-500" />
+                            <p className="leading-relaxed text-lg">{benefit.name}</p>
+                          </div>
+                          {index < product.benefits.length - 1 && <hr className="border-gray-200" />}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Price and Add to Cart */}
+                <div className="bg-gray-50 rounded-2xl p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <p className="text-3xl font-bold text-[#d14a1e]">{formatCurrency(product.price)}</p>
+                      <p className="text-gray-500">Refund Guarantee</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={handleAddToCart}
+                    disabled={isAdding}
+                    className="w-full bg-[#d14a1e] text-white font-semibold py-4 px-6 rounded-full hover:bg-[#b8401a] transition-colors hover:shadow-lg disabled:opacity-50"
+                  >
+                    {isAdding ? "Adding..." : "Add to Cart"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Testimonials - Full Width on Desktop */}
+          <section className="hidden lg:block mt-12">
+            <h3 className="text-2xl font-semibold mb-8">Great Customers</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {product.testimonials.map((testimonial) => (
+                <div
+                  key={testimonial.id}
+                  className="rounded-2xl border border-gray-200 p-6 hover:shadow-lg transition-shadow"
+                >
+                  <div className="flex items-center mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 text-yellow-500 fill-current" />
+                    ))}
+                  </div>
+                  <p className="leading-relaxed mb-6 text-gray-700">{testimonial.message}</p>
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={testimonial.photo ? `${BASE_URL}/${testimonial.photo}` : "/placeholder.svg"}
+                      alt={testimonial.name}
+                      className="h-12 w-12 rounded-full object-cover"
+                    />
+                    <div>
+                      <h5 className="font-semibold">{testimonial.name}</h5>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
         </div>
-      </section>
-      <nav className="fixed bottom-5 left-0 right-0 z-30 mx-auto w-full">
-        <div className="mx-auto max-w-[640px] px-5 ">
-          <div className="flex items-center gap-[45px] rounded-[24px] bg-black px-[20px] py-[14px]">
-            <div>
-              <strong className="whitespace-nowrap text-[22px] font-extrabold leading-[33px] text-white">
-                {formatCurrency(product.price)}
-              </strong>
-              <p className="text-sm leading-[21px] text-white">
-                Refund Guarantee
-              </p>
+      </main>
+
+      {/* Mobile Bottom Navigation */}
+      <nav className="fixed bottom-5 left-0 right-0 z-30 lg:hidden">
+        <div className="mx-auto max-w-2xl px-4">
+          <div className="flex items-center gap-4 rounded-2xl bg-black px-5 py-4">
+            <div className="flex-1">
+              <p className="text-xl font-extrabold text-white">{formatCurrency(product.price)}</p>
+              <p className="text-sm text-white/80">Refund Guarantee</p>
             </div>
             <button
               onClick={handleAddToCart}
               disabled={isAdding}
-              className="w-full"
+              className="flex-1 rounded-full bg-[#d14a1e] px-6 py-3 text-center font-semibold text-white hover:bg-[#b8401a] transition-colors disabled:opacity-50"
             >
-              <p className="w-full rounded-full bg-[#d14a1e] px-[18px] py-[14px] text-center font-semibold text-white transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
-                {isAdding ? "Adding..." : "Add to Cart"}
-              </p>
+              {isAdding ? "Adding..." : "Add to Cart"}
             </button>
           </div>
         </div>
       </nav>
-    </main>
+
+      {/* Mobile spacing for bottom nav */}
+      <div className="h-24 lg:hidden"></div>
+    </div>
   );
 }
