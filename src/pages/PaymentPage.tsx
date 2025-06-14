@@ -284,20 +284,7 @@ export default function PaymentPage() {
           <p className="text-white">Dibayar dulu nanti baru dikerjain</p>
         </header>
         <div className="mt-[20px] flex flex-col gap-5">
-          <section id="PaymentMethod" className="grid grid-cols-2 gap-[14px]">
-            <div className="flex items-center justify-center gap-[10px] rounded-[20px] bg-ginzapet-black py-[14px]">
-              <img
-                src="/assets/images/icons/send-to-payment.svg"
-                alt="icon"
-                className="h-[32px] w-[32px] shrink-0"
-              />
-              <div>
-                <h5 className="text-sm font-semibold leading-[21px] text-white">
-                  Send to Bank
-                </h5>
-                <p className="text-sm leading-[21px] text-white">Available</p>
-              </div>
-            </div>
+          <section id="PaymentMethod" className="">
             <div className="flex items-center justify-center gap-[10px] rounded-[20px] border border-ginzapet-graylight bg-white py-[14px]">
               <img
                 src="/assets/images/icons/credit-payment.svg"
@@ -306,9 +293,9 @@ export default function PaymentPage() {
               />
               <div>
                 <h5 className="text-sm font-semibold leading-[21px]">
-                  Ngutang
+                  Send to Bank
                 </h5>
-                <p className="text-sm leading-[21px]">Offline</p>
+                <p className="text-sm leading-[21px]">Available</p>
               </div>
             </div>
           </section>
