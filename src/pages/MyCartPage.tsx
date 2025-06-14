@@ -5,18 +5,6 @@ import { Link } from "react-router-dom";
 import AccordionSection from "../components/AccordionSection";
 import { ArrowLeft, DollarSign, Clock, Trash2 } from "lucide-react";
 
-// const DollarSign = ({ className }: { className?: string }) => (
-//   <span className={className}>$</span>
-// );
-// const Clock = ({ className }: { className?: string }) => (
-//   <span className={className}>🕒</span>
-// );
-// const Trash2 = ({ className }: { className?: string }) => (
-//   <span className={className}>🗑️</span>
-// );
-// const ArrowLeft = ({ className }: { className?: string }) => (
-//   <span className={className}>←</span>
-// );
 
 export default function MyCartPage() {
   const [productDetails, setProductDetails] = useState<Product[]>([]);
@@ -53,7 +41,6 @@ export default function MyCartPage() {
             const response = await apiClient.get(`/product/${item.slug}`);
             const product = response.data.data;
             if (product) {
-              // Add quantity to product object based on cart item
               validProducts.push({ ...product, quantity: item.quantity });
               updatedCart.push(item);
             } else {
@@ -124,7 +111,7 @@ export default function MyCartPage() {
       {/* Background Image */}
       <div className="absolute left-0 right-0 top-0 lg:hidden">
         <img
-          src="/assets/images/backgrounds/orange.png" // Using your provided image path
+          src="/assets/images/backgrounds/orange.png" 
           alt="background"
           className="h-48 w-full object-cover object-bottom"
         />
@@ -174,7 +161,7 @@ export default function MyCartPage() {
           <div className="lg:hidden flex flex-col gap-5 pb-40">
             <AccordionSection
               title="Home Services"
-              iconSrc="/assets/images/icons/bottom-booking-form.svg" // Updated path
+              iconSrc="/assets/images/icons/bottom-booking-form.svg" 
             >
               <div className="flex flex-col gap-4">
                 {productDetails.length > 0 ? (
@@ -184,7 +171,7 @@ export default function MyCartPage() {
                         <div className="flex items-center gap-3">
                           <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-gray-100">
                             <img
-                              src={`${BASE_URL}/${product.thumbnail}`} // Using BASE_URL for thumbnail
+                              src={`${BASE_URL}/${product.thumbnail}`} 
                               alt={product.name}
                               className="h-full w-full object-cover"
                             />
@@ -221,7 +208,7 @@ export default function MyCartPage() {
 
             <AccordionSection
               title="Booking Details"
-              iconSrc="/assets/images/icons/bottom-booking-form.svg" // Updated path
+              iconSrc="/assets/images/icons/bottom-booking-form.svg" 
             >
               <div className="flex flex-col gap-4">
                 <div className="flex justify-between items-center">
@@ -351,7 +338,7 @@ export default function MyCartPage() {
               <p className="text-2xl font-extrabold text-white">{formatCurrency(total)}</p>
               <p className="text-sm text-white/80">Grand Total</p>
             </div>
-            {productDetails.length > 0 && ( // Use productDetails here for cart items check
+            {productDetails.length > 0 && ( 
               <Link to="/booking" className="flex-1">
                 <button className="w-full rounded-full bg-[#d14a1e] px-6 py-3 text-center font-semibold text-white hover:bg-[#b8401a] transition-colors">
                   Continue
