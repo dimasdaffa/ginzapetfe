@@ -98,11 +98,11 @@ export default function SuccessBookingPage() {
     </header>
     <section
       id="BookingDetails"
-      className="mt-[30px] flex flex-col gap-4 rounded-3xl border border-rumahrapih-graylight bg-white px-[14px] py-[14px]"
+      className="mt-[30px] flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
     >
       <label className="flex flex-col gap-2">
         <h4 className="font-semibold">Booking TRX ID</h4>
-        <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-rumahrapih-graylight bg-[#F4F5F7]">
+        <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight bg-[#F4F5F7]">
           <img
             src="/assets/images/icons/note-id-finished.svg"
             alt="icon"
@@ -111,7 +111,7 @@ export default function SuccessBookingPage() {
           <input
             readOnly
             defaultValue={bookingTrxId ? bookingTrxId : "Undefined"}
-            className="h-full w-full rounded-full bg-transparent pl-[50px] font-semibold leading-6 placeholder:text-[16px] placeholder:font-normal placeholder:text-rumahrapih-gray focus:outline-none"
+            className="h-full w-full rounded-full bg-transparent pl-[50px] font-semibold leading-6 placeholder:text-[16px] placeholder:font-normal placeholder:text-ginzapet-gray focus:outline-none"
             placeholder="Booking ID"
             type="text"
           />
@@ -119,7 +119,7 @@ export default function SuccessBookingPage() {
       </label>
       <label className="flex flex-col gap-2">
         <h4 className="font-semibold">Email Address</h4>
-        <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-rumahrapih-graylight bg-[#F4F5F7]">
+        <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight bg-[#F4F5F7]">
           <img
             src="/assets/images/icons/amplop-booking-form.svg"
             alt="icon"
@@ -128,13 +128,13 @@ export default function SuccessBookingPage() {
           <input
             readOnly
             defaultValue={email ? email : "Undefined"}
-            className="h-full w-full rounded-full bg-transparent pl-[50px] font-semibold leading-6 placeholder:text-[16px] placeholder:font-normal placeholder:text-rumahrapih-gray focus:outline-none"
+            className="h-full w-full rounded-full bg-transparent pl-[50px] font-semibold leading-6 placeholder:text-[16px] placeholder:font-normal placeholder:text-ginzapet-gray focus:outline-none"
             placeholder="Write your email"
             type="email"
           />
         </div>
       </label>
-      <hr className="border-rumahrapih-graylight" />
+      <hr className="border-ginzapet-graylight" />
       <div className="flex gap-[10px]">
         <img
           src="/assets/images/icons/penting-finished.svg"
@@ -142,7 +142,7 @@ export default function SuccessBookingPage() {
           className="h-[40px] w-[40px] shrink-0"
         />
         <div>
-          <p className="text-sm leading-[21px] text-rumahrapih-gray">
+          <p className="text-sm leading-[21px] text-ginzapet-gray">
             Penting Diingat:
           </p>
           <strong className="font-semibold">
@@ -153,12 +153,12 @@ export default function SuccessBookingPage() {
     </section>
     <section id="Btn" className="mt-[54px] flex flex-col gap-[14px]">
       <Link to={"/"}>
-        <p className="w-full rounded-full bg-rumahrapih-orange py-[14px] text-center font-semibold text-white transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
+        <p className="w-full rounded-full bg-ginzapet-orange py-[14px] text-center font-semibold text-white transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
           Order Service Again
         </p>
       </Link>
       <Link to={"/my-booking"}>
-        <p className="w-full rounded-full bg-rumahrapih-black py-[14px] text-center font-semibold text-white">
+        <p className="w-full rounded-full bg-ginzapet-black py-[14px] text-center font-semibold text-white">
           View My Booking Details
         </p>
       </Link>

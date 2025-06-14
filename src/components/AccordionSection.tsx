@@ -17,7 +17,7 @@ export default function AccordionSection({
   return (
     <section
       id="HomeServices"
-      className="flex flex-col gap-4 rounded-3xl border border-rumahrapih-graylight bg-white px-[14px] py-[14px]"
+      className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
     >
       <div className="flex items-center justify-between">
         <h2 className="font-semibold">{title}</h2>

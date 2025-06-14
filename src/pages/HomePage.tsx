@@ -90,7 +90,7 @@ export default function HomePage() {
             <ul className="flex items-center gap-[10px]">
               <li className="shrink-0">
                 <a href="#">
-                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-rumahrapih-graylight">
+                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-ginzapet-graylight">
                     <img
                       src="assets/images/icons/notification.svg"
                       alt="icon"
@@ -101,7 +101,7 @@ export default function HomePage() {
               </li>
               <li className="shrink-0">
                 <Link to="/cart">
-                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-rumahrapih-graylight">
+                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-ginzapet-graylight">
                     <img
                       src="assets/images/icons/cart.svg"
                       alt="icon"
@@ -139,7 +139,7 @@ export default function HomePage() {
                     className="swiper-slide !w-fit"
                   >
                     <Link to={`/category/${category.slug}`} className="card">
-                      <div className="shrink-0 space-y-3 rounded-[24px] border border-x-rumahrapih-graylight bg-white py-4 text-center transition-all duration-300 hover:border-rumahrapih-orange">
+                      <div className="shrink-0 space-y-3 rounded-[24px] border border-x-ginzapet-graylight bg-white py-4 text-center transition-all duration-300 hover:border-ginzapet-orange">
                         <div className="mx-auto flex h-[70px] w-[70px] shrink-0 items-center justify-center overflow-hidden rounded-full">
                           <img
                             src={`${BASE_URL}/${category.photo}`}
@@ -149,7 +149,7 @@ export default function HomePage() {
                         </div>
                         <div className="flex min-w-[130px] flex-col gap-[2px]">
                           <h3 className="font-semibold">{category.name}</h3>
-                          <p className="text-sm leading-[21px] text-rumahrapih-gray">
+                          <p className="text-sm leading-[21px] text-ginzapet-gray">
                             {category.products_count} Products
                           </p>
                         </div>
@@ -186,7 +186,7 @@ export default function HomePage() {
               ? products.map((product) => (
                   <SwiperSlide key={product.id} className="swiper-slide !w-fit">
                     <Link to={`/product/${product.slug}`}className="card">
-                      <div className="relative flex w-[230px] shrink-0 flex-col gap-[12px] overflow-hidden rounded-[24px] border border-rumahrapih-graylight bg-white p-4 transition-all duration-300 hover:border-rumahrapih-orange">
+                      <div className="relative flex w-[230px] shrink-0 flex-col gap-[12px] overflow-hidden rounded-[24px] border border-ginzapet-graylight bg-white p-4 transition-all duration-300 hover:border-ginzapet-orange">
                         <span className="absolute right-[26px] top-[26px] shrink-0 rounded-full bg-white px-2 py-[7px]">
                           <div className="flex items-center gap-[2px]">
                             <img
@@ -215,7 +215,7 @@ export default function HomePage() {
                               alt="icon"
                               className="h-5 w-5 shrink-0"
                             />
-                            <p className="text-sm leading-[21px] text-rumahrapih-gray">
+                            <p className="text-sm leading-[21px] text-ginzapet-gray">
                               {product.category.name}
                             </p>
                           </div>
@@ -225,11 +225,11 @@ export default function HomePage() {
                               alt="icon"
                               className="h-5 w-5 shrink-0"
                             />
-                            <p className="text-sm leading-[21px] text-rumahrapih-gray">
+                            <p className="text-sm leading-[21px] text-ginzapet-gray">
                               {product.stok} stok tersedia
                             </p>
                           </div>
-                          <strong className="font-semibold text-rumahrapih-orange">
+                          <strong className="font-semibold text-ginzapet-orange">
                             {formatCurrency(product.price)}
                           </strong>
                           <img
@@ -248,11 +248,11 @@ export default function HomePage() {
       </section>
       <nav className="fixed bottom-5 left-0 right-0 z-30 mx-auto w-full">
         <div className="mx-auto max-w-[640px] px-5">
-          <div className="rounded-[24px] bg-rumahrapih-black px-[20px] py-[14px]">
+          <div className="rounded-[24px] bg-ginzapet-black px-[20px] py-[14px]">
             <ul className="flex items-center gap-[20.30px]">
               <li className="w-full">
                 <Link to={"/"}>
-                  <div className="flex items-center justify-center gap-2 rounded-full bg-rumahrapih-orange px-[18px] py-[10px] transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
+                  <div className="flex items-center justify-center gap-2 rounded-full bg-ginzapet-orange px-[18px] py-[10px] transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
                     <img
                       src="assets/images/icons/browse.svg"
                       alt="icon"
@@ -266,7 +266,7 @@ export default function HomePage() {
               </li>
               <li className="shrink-0">
                 <Link to={"/my-booking"}>
-                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-rumahrapih-graylight transition-all duration-300 hover:border-rumahrapih-orange">
+                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-ginzapet-graylight transition-all duration-300 hover:border-ginzapet-orange">
                     <img
                       src="assets/images/icons/note.svg"
                       alt="icon"
@@ -277,7 +277,7 @@ export default function HomePage() {
               </li>
               <li className="shrink-0">
                 <a href="#">
-                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-rumahrapih-graylight transition-all duration-300 hover:border-rumahrapih-orange">
+                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-ginzapet-graylight transition-all duration-300 hover:border-ginzapet-orange">
                     <img
                       src="assets/images/icons/profil.svg"
                       alt="icon"

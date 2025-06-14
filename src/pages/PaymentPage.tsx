@@ -210,7 +210,7 @@ export default function PaymentPage() {
               <div
                 id="Back"
                 className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full bg-white
-                    ${isScrolled ? "border border-rumahrapih-graylight" : ""}`}
+                    ${isScrolled ? "border border-ginzapet-graylight" : ""}`}
               >
                 <img
                   src="/assets/images/icons/back.svg"
@@ -285,7 +285,7 @@ export default function PaymentPage() {
         </header>
         <div className="mt-[20px] flex flex-col gap-5">
           <section id="PaymentMethod" className="grid grid-cols-2 gap-[14px]">
-            <div className="flex items-center justify-center gap-[10px] rounded-[20px] bg-rumahrapih-black py-[14px]">
+            <div className="flex items-center justify-center gap-[10px] rounded-[20px] bg-ginzapet-black py-[14px]">
               <img
                 src="/assets/images/icons/send-to-payment.svg"
                 alt="icon"
@@ -298,7 +298,7 @@ export default function PaymentPage() {
                 <p className="text-sm leading-[21px] text-white">Available</p>
               </div>
             </div>
-            <div className="flex items-center justify-center gap-[10px] rounded-[20px] border border-rumahrapih-graylight bg-white py-[14px]">
+            <div className="flex items-center justify-center gap-[10px] rounded-[20px] border border-ginzapet-graylight bg-white py-[14px]">
               <img
                 src="/assets/images/icons/credit-payment.svg"
                 alt="icon"
@@ -314,7 +314,7 @@ export default function PaymentPage() {
           </section>
           <section
             id="AvailablePayment"
-            className="flex flex-col gap-4 rounded-3xl border border-rumahrapih-graylight bg-white px-[14px] py-[14px]"
+            className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
           >
             <div className="flex items-center justify-between">
               <h3 className="font-semibold">Available Payment</h3>
@@ -337,22 +337,22 @@ export default function PaymentPage() {
                 </div>
                 <div className="flex flex-col gap-[10px]">
                   <div className="flex flex-col gap-[2px]">
-                    <h4 className="text-rumahrapih-gray">Bank Name</h4>
+                    <h4 className="text-ginzapet-gray">Bank Name</h4>
                     <strong className="font-semibold">Bank Central Asia</strong>
                   </div>
                   <div className="flex flex-col gap-[2px]">
-                    <h4 className="text-rumahrapih-gray">Bank Number</h4>
+                    <h4 className="text-ginzapet-gray">Bank Number</h4>
                     <strong className="font-semibold">18212331928391</strong>
                   </div>
                   <div className="flex flex-col gap-[2px]">
-                    <h4 className="text-rumahrapih-gray">Bank Account</h4>
+                    <h4 className="text-ginzapet-gray">Bank Account</h4>
                     <strong className="font-semibold">
                       Ghiza Petshop
                     </strong>
                   </div>
                 </div>
               </div>
-              <hr className="border-rumahrapih-graylight" />
+              <hr className="border-ginzapet-graylight" />
               <div className="flex gap-4">
                 <div className="flex h-[60px] w-[81px] items-center justify-center overflow-hidden">
                   <img
@@ -363,15 +363,15 @@ export default function PaymentPage() {
                 </div>
                 <div className="flex flex-col gap-[10px]">
                   <div className="flex flex-col gap-[2px]">
-                    <h4 className="text-rumahrapih-gray">Bank Name</h4>
+                    <h4 className="text-ginzapet-gray">Bank Name</h4>
                     <strong className="font-semibold">Bank Mandiri</strong>
                   </div>
                   <div className="flex flex-col gap-[2px]">
-                    <h4 className="text-rumahrapih-gray">Bank Number</h4>
+                    <h4 className="text-ginzapet-gray">Bank Number</h4>
                     <strong className="font-semibold">829123192</strong>
                   </div>
                   <div className="flex flex-col gap-[2px]">
-                    <h4 className="text-rumahrapih-gray">Bank Account</h4>
+                    <h4 className="text-ginzapet-gray">Bank Account</h4>
                     <strong className="font-semibold">
                       Ghiza Petshop
                     </strong>
@@ -382,7 +382,7 @@ export default function PaymentPage() {
           </section>
           <section
             id="BookingDetails"
-            className="flex flex-col gap-4 rounded-3xl border border-rumahrapih-graylight bg-white px-[14px] py-[14px]"
+            className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
           >
             <div className="flex items-center justify-between">
               <h3 className="font-semibold">Booking Details</h3>
@@ -402,13 +402,13 @@ export default function PaymentPage() {
                     alt="icon"
                     className="h-[24px] w-[24px] shrink-0"
                   />
-                  <p className="text-rumahrapih-gray">Sub Total</p>
+                  <p className="text-ginzapet-gray">Sub Total</p>
                 </div>
                 <strong className="font-semibold">
                   {formatCurrency(subtotal)}
                 </strong>
               </div>
-              <hr className="border-rumahrapih-graylight" />
+              <hr className="border-ginzapet-graylight" />
               <div className="flex justify-between">
                 <div className="flex items-center gap-[10px]">
                   <img
@@ -416,11 +416,11 @@ export default function PaymentPage() {
                     alt="icon"
                     className="h-[24px] w-[24px] shrink-0"
                   />
-                  <p className="text-rumahrapih-gray">Tax 11%</p>
+                  <p className="text-ginzapet-gray">Tax 11%</p>
                 </div>
                 <strong className="font-semibold">{formatCurrency(tax)}</strong>
               </div>
-              <hr className="border-rumahrapih-graylight" />
+              <hr className="border-ginzapet-graylight" />
               <div className="flex justify-between">
                 <div className="flex items-center gap-[10px]">
                   <img
@@ -428,11 +428,11 @@ export default function PaymentPage() {
                     alt="icon"
                     className="h-[24px] w-[24px] shrink-0"
                   />
-                  <p className="text-rumahrapih-gray">Service Tools</p>
+                  <p className="text-ginzapet-gray">Service Tools</p>
                 </div>
                 <strong className="font-semibold">Free</strong>
               </div>
-              <hr className="border-rumahrapih-graylight" />
+              <hr className="border-ginzapet-graylight" />
               <div className="flex justify-between">
                 <div className="flex items-center gap-[10px]">
                   <img
@@ -440,9 +440,9 @@ export default function PaymentPage() {
                     alt="icon"
                     className="h-[24px] w-[24px] shrink-0"
                   />
-                  <p className="text-rumahrapih-gray">Grand Total</p>
+                  <p className="text-ginzapet-gray">Grand Total</p>
                 </div>
-                <strong className="text-[20px] font-bold leading-[30px] text-rumahrapih-orange">
+                <strong className="text-[20px] font-bold leading-[30px] text-ginzapet-orange">
                   {formatCurrency(total)}
                 </strong>
               </div>
@@ -450,7 +450,7 @@ export default function PaymentPage() {
           </section>
         </div>
         <form onSubmit={handleSubmit} className="mt-[20px]">
-          <section className="flex flex-col gap-4 rounded-3xl border border-rumahrapih-graylight bg-white px-[14px] py-[14px]">
+          <section className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]">
             <div className="flex items-center justify-between">
               <h3 className="font-semibold">Confirmation</h3>
               <button type="button" data-expand="ConfirmationJ">
@@ -464,7 +464,7 @@ export default function PaymentPage() {
             <div id="ConfirmationJ" className="flex flex-col gap-4">
               <label className="flex flex-col gap-2">
                 <h4 className="font-semibold">Add Proof of Payment</h4>
-                <div className="relative flex h-[52px] w-full items-center overflow-hidden rounded-full border border-rumahrapih-graylight transition-all duration-300 focus-within:border-rumahrapih-orange">
+                <div className="relative flex h-[52px] w-full items-center overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
                   <img
                     src="/assets/images/icons/proof-payment.svg"
                     alt="icon"
@@ -472,7 +472,7 @@ export default function PaymentPage() {
                   />
                   <p
                     id="upload"
-                    className="absolute left-12 top-1/2 -translate-y-1/2 py-[50px] text-rumahrapih-gray"
+                    className="absolute left-12 top-1/2 -translate-y-1/2 py-[50px] text-ginzapet-gray"
                   >
                     {fileName ? fileName : "Upload image"}
                   </p>
@@ -489,7 +489,7 @@ export default function PaymentPage() {
           </section>
           <button
             type="submit"
-            className="mt-[54px] w-full rounded-full bg-rumahrapih-orange py-[14px] font-semibold text-white transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]"
+            className="mt-[54px] w-full rounded-full bg-ginzapet-orange py-[14px] font-semibold text-white transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]"
           >
             Confirm My Payment
           </button>

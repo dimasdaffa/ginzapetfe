@@ -138,7 +138,7 @@ export default function MyCartPage() {
               <div
                 id="Back"
                 className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full bg-white
-            ${isScrolled ? "border border-rumahrapih-graylight" : ""}`}
+            ${isScrolled ? "border border-ginzapet-graylight" : ""}`}
               >
                 <img
                   src="/assets/images/icons/back.svg"
@@ -186,7 +186,7 @@ export default function MyCartPage() {
                                 alt="icon"
                                 className="h-4 w-4 shrink-0"
                               />
-                              <p className="text-xs leading-[18px] text-rumahrapih-gray">
+                              <p className="text-xs leading-[18px] text-ginzapet-gray">
                                 Rp {formatCurrency(product.price)}
                               </p>
                             </div>
@@ -196,7 +196,7 @@ export default function MyCartPage() {
                                 alt="icon"
                                 className="h-4 w-4 shrink-0"
                               />
-                              <p className="text-xs leading-[18px] text-rumahrapih-gray">
+                              <p className="text-xs leading-[18px] text-ginzapet-gray">
                                 {product.stok} Stok tersedia
                               </p>
                             </div>
@@ -216,7 +216,7 @@ export default function MyCartPage() {
                       </button>
                     </div>
                     {index < productDetails.length - 1 && (
-                      <hr className="border-rumahrapih-graylight" />
+                      <hr className="border-ginzapet-graylight" />
                     )}
                   </div>
                 ))
@@ -235,13 +235,13 @@ export default function MyCartPage() {
                   alt="icon"
                   className="h-[24px] w-[24px] shrink-0"
                 />
-                <p className="text-rumahrapih-gray">Sub Total</p>
+                <p className="text-ginzapet-gray">Sub Total</p>
               </div>
               <strong className="font-semibold">
                 {formatCurrency(subtotal)}
               </strong>
             </div>
-            <hr className="border-rumahrapih-graylight" />
+            <hr className="border-ginzapet-graylight" />
             <div className="flex justify-between">
               <div className="flex items-center gap-[10px]">
                 <img
@@ -249,11 +249,11 @@ export default function MyCartPage() {
                   alt="icon"
                   className="h-[24px] w-[24px] shrink-0"
                 />
-                <p className="text-rumahrapih-gray">Tax 11%</p>
+                <p className="text-ginzapet-gray">Tax 11%</p>
               </div>
               <strong className="font-semibold">{formatCurrency(tax)}</strong>
             </div>
-            <hr className="border-rumahrapih-graylight" />
+            <hr className="border-ginzapet-graylight" />
             {/* <div className="flex justify-between">
               <div className="flex items-center gap-[10px]">
                 <img
@@ -261,11 +261,11 @@ export default function MyCartPage() {
                   alt="icon"
                   className="h-[24px] w-[24px] shrink-0"
                 />
-                <p className="text-rumahrapih-gray">Insurance</p>
+                <p className="text-ginzapet-gray">Insurance</p>
               </div>
               <strong className="font-semibold">Free for All</strong>
             </div>
-            <hr className="border-rumahrapih-graylight" />
+            <hr className="border-ginzapet-graylight" />
             <div className="flex justify-between">
               <div className="flex items-center gap-[10px]">
                 <img
@@ -273,7 +273,7 @@ export default function MyCartPage() {
                   alt="icon"
                   className="h-[24px] w-[24px] shrink-0"
                 />
-                <p className="text-rumahrapih-gray">Service Tools</p>
+                <p className="text-ginzapet-gray">Service Tools</p>
               </div>
               <strong className="font-semibold">Free for All</strong>
             </div> */}
@@ -282,7 +282,7 @@ export default function MyCartPage() {
       </div>
       <nav className="fixed bottom-5 left-0 right-0 z-30 mx-auto w-full">
         <div className="mx-auto max-w-[640px] px-5">
-          <div className="flex items-center gap-[45px] rounded-[24px] bg-rumahrapih-black px-[20px] py-[14px]">
+          <div className="flex items-center gap-[45px] rounded-[24px] bg-ginzapet-black px-[20px] py-[14px]">
             <div>
               <strong className="whitespace-nowrap text-[22px] font-extrabold leading-[33px] text-white">
                 {formatCurrency(total)}
@@ -291,7 +291,7 @@ export default function MyCartPage() {
             </div>
             {cart.length > 0 ? (
               <Link to={`/booking`} className="w-full">
-                <p className="w-full rounded-full bg-rumahrapih-orange px-[18px] py-[14px] text-center font-semibold text-white transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
+                <p className="w-full rounded-full bg-ginzapet-orange px-[18px] py-[14px] text-center font-semibold text-white transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
                   Continue
                 </p>
               </Link>

@@ -124,7 +124,7 @@ export default function DetailsPage() {
               <div
                 id="Back"
                 className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full bg-white
-                  ${isScrolled ? "border border-rumahrapih-graylight" : ""}`}
+                  ${isScrolled ? "border border-ginzapet-graylight" : ""}`}
               >
                 <img
                   src="/assets/images/icons/back.svg"
@@ -144,7 +144,7 @@ export default function DetailsPage() {
               <div
                 id="Cart"
                 className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full bg-white
-                  ${isScrolled ? "border border-rumahrapih-graylight" : ""}`}
+                  ${isScrolled ? "border border-ginzapet-graylight" : ""}`}
               >
                 <img
                   src="/assets/images/icons/cart.svg"
@@ -202,7 +202,7 @@ export default function DetailsPage() {
             <strong className="text-sm font-semibold leading-[21px]">
               {product.stok}
             </strong>
-            <p className="text-sm leading-[21px] text-rumahrapih-gray">
+            <p className="text-sm leading-[21px] text-ginzapet-gray">
               Stok tersedia
             </p>
           </div>
@@ -217,7 +217,7 @@ export default function DetailsPage() {
             <strong className="text-sm font-semibold leading-[21px]">
               Top Product
             </strong>
-            <p className="text-sm leading-[21px] text-rumahrapih-gray">
+            <p className="text-sm leading-[21px] text-ginzapet-gray">
               Guarantee
             </p>
           </div>
@@ -232,7 +232,7 @@ export default function DetailsPage() {
             <strong className="text-sm font-semibold leading-[21px]">
               {product.category.name}
             </strong>
-            <p className="text-sm leading-[21px] text-rumahrapih-gray">
+            <p className="text-sm leading-[21px] text-ginzapet-gray">
               Category
             </p>
           </div>
@@ -247,7 +247,7 @@ export default function DetailsPage() {
             <strong className="text-sm font-semibold leading-[21px]">
               Free Tools
             </strong>
-            <p className="text-sm leading-[21px] text-rumahrapih-gray">
+            <p className="text-sm leading-[21px] text-ginzapet-gray">
               SNI Level
             </p>
           </div>
@@ -258,7 +258,7 @@ export default function DetailsPage() {
         <p className="leading-7">{product.about}</p>
       </section>
       <section id="ServiceBenefits" className="mt-5 px-5">
-        <div className="flex w-full flex-col gap-3 rounded-[24px] border border-rumahrapih-graylight p-[14px]">
+        <div className="flex w-full flex-col gap-3 rounded-[24px] border border-ginzapet-graylight p-[14px]">
           <h3 className="font-semibold">Product Details</h3>
           {product?.benefits && product.benefits.length > 0 ? (
             product.benefits.map((benefit, index) => (
@@ -272,7 +272,7 @@ export default function DetailsPage() {
                   <p className="leading-[26px]">{benefit.name}</p>
                 </div>
                 {index < product.benefits.length - 1 && (
-                  <hr className="border-rumahrapih-graylight" />
+                  <hr className="border-ginzapet-graylight" />
                 )}
               </div>
             ))
@@ -299,7 +299,7 @@ export default function DetailsPage() {
               ? product.testimonials.map((testimonial) => (
                   <SwiperSlide key={testimonial.id} className="!w-fit">
                     <a href="#" className="card">
-                      <div className="flex w-[300px] flex-col gap-4 rounded-3xl border border-rumahrapih-graylight p-5">
+                      <div className="flex w-[300px] flex-col gap-4 rounded-3xl border border-ginzapet-graylight p-5">
                         <div className="stars flex items-center">
                           <img
                             src="/assets/images/icons/star-service-details.svg"
@@ -352,7 +352,7 @@ export default function DetailsPage() {
       </section>
       <nav className="fixed bottom-5 left-0 right-0 z-30 mx-auto w-full">
         <div className="mx-auto max-w-[640px] px-5">
-          <div className="flex items-center gap-[45px] rounded-[24px] bg-rumahrapih-black px-[20px] py-[14px]">
+          <div className="flex items-center gap-[45px] rounded-[24px] bg-ginzapet-black px-[20px] py-[14px]">
             <div>
               <strong className="whitespace-nowrap text-[22px] font-extrabold leading-[33px] text-white">
                 {formatCurrency(product.price)}
@@ -366,7 +366,7 @@ export default function DetailsPage() {
               disabled={isAdding}
               className="w-full"
             >
-              <p className="w-full rounded-full bg-rumahrapih-orange px-[18px] py-[14px] text-center font-semibold text-white transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
+              <p className="w-full rounded-full bg-ginzapet-orange px-[18px] py-[14px] text-center font-semibold text-white transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
                 {isAdding ? "Adding..." : "Add to Cart"}
               </p>
             </button>

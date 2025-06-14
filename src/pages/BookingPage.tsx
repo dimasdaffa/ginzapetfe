@@ -141,7 +141,7 @@ export default function BookingPage() {
               <div
                 id="Back"
                 className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full bg-white
-                    ${isScrolled ? "border border-rumahrapih-graylight" : ""}`}
+                    ${isScrolled ? "border border-ginzapet-graylight" : ""}`}
               >
                 <img
                   src="/assets/images/icons/back.svg"
@@ -215,7 +215,7 @@ export default function BookingPage() {
           <div className="mt-[20px] flex flex-col gap-5">
             <section
               id="WorkingSchedule"
-              className="flex flex-col gap-4 rounded-3xl border border-rumahrapih-graylight bg-white px-[14px] py-[14px]"
+              className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
             >
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold">Working Schedule</h3>
@@ -230,7 +230,7 @@ export default function BookingPage() {
               <div id="WorkingScheduleJ" className="flex flex-col gap-4">
                 <label className="flex flex-col gap-2">
                   <h4 className="font-semibold">Date</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-rumahrapih-graylight">
+                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight">
                     <img
                       src="/assets/images/icons/date-booking-form.svg"
                       alt="icon"
@@ -249,7 +249,7 @@ export default function BookingPage() {
                 </label>
                 <label className="flex flex-col gap-2">
                   <h4 className="font-semibold">Start Time At</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-rumahrapih-graylight transition-all duration-300 focus-within:border-rumahrapih-orange">
+                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
                     <img
                       src="/assets/images/icons/clock-booking-form.svg"
                       alt="icon"
@@ -284,7 +284,7 @@ export default function BookingPage() {
             </section>
             <section
               id="PersonalInformations"
-              className="flex flex-col gap-4 rounded-3xl border border-rumahrapih-graylight bg-white px-[14px] py-[14px]"
+              className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
             >
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold">Personal Informations</h3>
@@ -299,7 +299,7 @@ export default function BookingPage() {
               <div className="flex flex-col gap-4" id="PersonalInformationsJ">
                 <label className="flex flex-col gap-2">
                   <h4 className="font-semibold">Full Name</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-rumahrapih-graylight transition-all duration-300 focus-within:border-rumahrapih-orange">
+                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
                     <img
                       src="/assets/images/icons/profil-booking-form.svg"
                       alt="icon"
@@ -310,7 +310,7 @@ export default function BookingPage() {
                       value={formData.name}
                       onChange={handleChange}
                       name="name"
-                      className="h-full w-full rounded-full pl-[50px] font-semibold leading-6 placeholder:text-[16px] placeholder:font-normal placeholder:text-rumahrapih-gray focus:outline-none"
+                      className="h-full w-full rounded-full pl-[50px] font-semibold leading-6 placeholder:text-[16px] placeholder:font-normal placeholder:text-ginzapet-gray focus:outline-none"
                       placeholder="Write your complete name"
                       type="text"
                     />
@@ -329,7 +329,7 @@ export default function BookingPage() {
                 </label>
                 <label className="flex flex-col gap-2">
                   <h4 className="font-semibold">Email Address</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-rumahrapih-graylight transition-all duration-300 focus-within:border-rumahrapih-orange">
+                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
                     <img
                       src="/assets/images/icons/amplop-booking-form.svg"
                       alt="icon"
@@ -340,7 +340,7 @@ export default function BookingPage() {
                       value={formData.email}
                       onChange={handleChange}
                       name="email"
-                      className="h-full w-full rounded-full pl-[50px] font-semibold leading-6 placeholder:text-[16px] placeholder:font-normal placeholder:text-rumahrapih-gray focus:outline-none"
+                      className="h-full w-full rounded-full pl-[50px] font-semibold leading-6 placeholder:text-[16px] placeholder:font-normal placeholder:text-ginzapet-gray focus:outline-none"
                       placeholder="Write your email"
                       type="email"
                     />
@@ -359,7 +359,7 @@ export default function BookingPage() {
                 </label>
                 <label className="flex flex-col gap-2">
                   <h4 className="font-semibold">No. Phone</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-rumahrapih-graylight transition-all duration-300 focus-within:border-rumahrapih-orange">
+                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
                     <img
                       src="/assets/images/icons/telepon-booking-form.svg"
                       alt="icon"
@@ -371,7 +371,7 @@ export default function BookingPage() {
                       value={formData.phone}
                       name="phone"
                       onChange={handleChange}
-                      className="h-full w-full rounded-full pl-[50px] font-semibold leading-6 placeholder:text-[16px] placeholder:font-normal placeholder:text-rumahrapih-gray focus:outline-none"
+                      className="h-full w-full rounded-full pl-[50px] font-semibold leading-6 placeholder:text-[16px] placeholder:font-normal placeholder:text-ginzapet-gray focus:outline-none"
                       placeholder="Write your active number"
                     />
                     {formErrors.find((error) =>
@@ -391,7 +391,7 @@ export default function BookingPage() {
             </section>
             <section
               id="YourHomeAddress"
-              className="flex flex-col gap-4 rounded-3xl border border-rumahrapih-graylight bg-white px-[14px] py-[14px]"
+              className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
             >
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold">Your Home Address</h3>
@@ -406,13 +406,13 @@ export default function BookingPage() {
               <div id="YourHomeAddressJ" className="flex flex-col gap-4">
                 <label className="flex flex-col gap-2">
                   <h4 className="font-semibold">Address</h4>
-                  <div className="relative h-[110px] w-full overflow-hidden rounded-[22px] border border-rumahrapih-graylight transition-all duration-300 focus-within:border-rumahrapih-orange">
+                  <div className="relative h-[110px] w-full overflow-hidden rounded-[22px] border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
                     <textarea
                       placeholder="Enter your complete address"
                       required
                       value={formData.address}
                       onChange={handleChange}
-                      className="h-full w-full pl-[50px] pr-[14px] pt-[14px] font-semibold leading-7 placeholder:text-[16px] placeholder:font-normal placeholder:text-rumahrapih-gray focus:outline-none"
+                      className="h-full w-full pl-[50px] pr-[14px] pt-[14px] font-semibold leading-7 placeholder:text-[16px] placeholder:font-normal placeholder:text-ginzapet-gray focus:outline-none"
                       name="address"
                       id=""
                     />
@@ -444,7 +444,7 @@ export default function BookingPage() {
                       }
                     </p>
                   )}
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-rumahrapih-graylight transition-all duration-300 focus-within:border-rumahrapih-orange">
+                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
                     <img
                       src="/assets/images/icons/location-booking-form.svg"
                       alt="icon"
@@ -473,7 +473,7 @@ export default function BookingPage() {
                 </label>
                 <label className="flex flex-col gap-2">
                   <h4 className="font-semibold">Post Code</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-rumahrapih-graylight transition-all duration-300 focus-within:border-rumahrapih-orange">
+                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
                     <img
                       src="/assets/images/icons/ball-booking-form.svg"
                       alt="icon"
@@ -484,7 +484,7 @@ export default function BookingPage() {
                       value={formData.post_code}
                       onChange={handleChange}
                       name="post_code"
-                      className="post-code h-full w-full rounded-full pl-[50px] font-semibold leading-6 placeholder:text-[16px] placeholder:font-normal placeholder:text-rumahrapih-gray focus:outline-none"
+                      className="post-code h-full w-full rounded-full pl-[50px] font-semibold leading-6 placeholder:text-[16px] placeholder:font-normal placeholder:text-ginzapet-gray focus:outline-none"
                       placeholder="What’s your postal code"
                       type="tel"
                     />
@@ -506,7 +506,7 @@ export default function BookingPage() {
           </div>
           <button
             type="submit"
-            className="mt-[44px] w-full rounded-full bg-rumahrapih-orange py-[14px] font-semibold text-white transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]"
+            className="mt-[44px] w-full rounded-full bg-ginzapet-orange py-[14px] font-semibold text-white transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]"
           >
             Continue to Payment
           </button>

@@ -91,7 +91,7 @@ export default function MyBookingPage() {
           </h1>
         </header>
         <form onSubmit={handleSubmit}>
-          <section className="flex flex-col gap-4 rounded-3xl border border-rumahrapih-graylight bg-white px-[14px] py-[14px]">
+          <section className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]">
             <label className="flex flex-col gap-2">
               <h4 className="font-semibold">Booking TRX ID</h4>
               {formErrors.find((error) =>
@@ -105,7 +105,7 @@ export default function MyBookingPage() {
                   }
                 </p>
               )}
-              <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-rumahrapih-graylight focus-within:border-rumahrapih-orange">
+              <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight focus-within:border-ginzapet-orange">
                 <img
                   src="/assets/images/icons/note-id-finished.svg"
                   alt="icon"
@@ -134,7 +134,7 @@ export default function MyBookingPage() {
                   }
                 </p>
               )}
-              <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-rumahrapih-graylight focus-within:border-rumahrapih-orange">
+              <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight focus-within:border-ginzapet-orange">
                 <img
                   src="/assets/images/icons/amplop-booking-form.svg"
                   alt="icon"
@@ -155,7 +155,7 @@ export default function MyBookingPage() {
             </label>
             <button
               type="submit"
-              className="w-full rounded-full bg-rumahrapih-orange py-[14px] text-center font-semibold text-white hover:shadow-[0px_4px_10px_0px_#D04B1E80]"
+              className="w-full rounded-full bg-ginzapet-orange py-[14px] text-center font-semibold text-white hover:shadow-[0px_4px_10px_0px_#D04B1E80]"
             >
               Find My Booking
             </button>
@@ -165,7 +165,7 @@ export default function MyBookingPage() {
         {notFound && (
           <section
             id="NotFound"
-            className="flex flex-col items-center gap-4 rounded-3xl border border-rumahrapih-graylight bg-white px-[14px] py-[14px]"
+            className="flex flex-col items-center gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
           >
             <img
               src="/assets/images/icons/list-form-check-black.svg"
@@ -183,7 +183,7 @@ export default function MyBookingPage() {
           <div id="ResultBooking" className="space-y-[20px]">
             <section
               id="BookingStatus"
-              className="flex flex-col items-center gap-4 rounded-3xl border border-rumahrapih-graylight bg-white px-[14px] py-[14px]"
+              className="flex flex-col items-center gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
             >
               <div className="flex w-full items-center justify-between">
                 <h3 className="font-semibold">Booking Status</h3>
@@ -315,7 +315,7 @@ export default function MyBookingPage() {
             </section>
             <section
               id="WorkingSchedule"
-              className="flex flex-col gap-4 rounded-3xl border border-rumahrapih-graylight bg-white px-[14px] py-[14px]"
+              className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
             >
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold">Working Schedule</h3>
@@ -330,7 +330,7 @@ export default function MyBookingPage() {
               <div id="WorkingScheduleJ" className="flex flex-col gap-4">
                 <label className="flex flex-col gap-2">
                   <h4 className="font-semibold">Date</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-rumahrapih-graylight">
+                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight">
                     <img
                       src="/assets/images/icons/date-booking-form.svg"
                       alt="icon"
@@ -346,7 +346,7 @@ export default function MyBookingPage() {
                 </label>
                 <label className="flex flex-col gap-2">
                   <h4 className="font-semibold">Start Time At</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-rumahrapih-graylight">
+                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight">
                     <img
                       src="/assets/images/icons/clock-booking-form.svg"
                       alt="icon"
@@ -364,7 +364,7 @@ export default function MyBookingPage() {
             </section>
             <section
               id="ServicesOrdered"
-              className="flex flex-col gap-4 rounded-3xl border border-rumahrapih-graylight bg-white px-[14px] py-[14px]"
+              className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
             >
               <div className="flex items-center justify-between">
                 <h2 className="font-semibold">Services Ordered</h2>
@@ -398,7 +398,7 @@ export default function MyBookingPage() {
                               alt="icon"
                               className="h-4 w-4 shrink-0"
                             />
-                            <p className="text-xs leading-[18px] text-rumahrapih-gray">
+                            <p className="text-xs leading-[18px] text-ginzapet-gray">
                               {formatCurrency(detail.price)}
                             </p>
                           </div>
@@ -408,7 +408,7 @@ export default function MyBookingPage() {
                               alt="icon"
                               className="h-4 w-4 shrink-0"
                             />
-                            <p className="text-xs leading-[18px] text-rumahrapih-gray">
+                            <p className="text-xs leading-[18px] text-ginzapet-gray">
                               {detail.product.stok} Stok Tersedia
                             </p>
                           </div>
@@ -416,7 +416,7 @@ export default function MyBookingPage() {
                       </div>
                     </div>
                     {index < bookingDetails.transaction_details.length - 1 && (
-                      <hr className="border-rumahrapih-graylight" />
+                      <hr className="border-ginzapet-graylight" />
                     )}
                   </div>
                 ))}
@@ -424,7 +424,7 @@ export default function MyBookingPage() {
             </section>
             <section
               id="BookingDetails"
-              className="flex flex-col gap-4 rounded-3xl border border-rumahrapih-graylight bg-white px-[14px] py-[14px]"
+              className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
             >
               <div className="flex items-center justify-between">
                 <h2 className="font-semibold">Booking Details</h2>
@@ -444,13 +444,13 @@ export default function MyBookingPage() {
                       alt="icon"
                       className="h-[24px] w-[24px] shrink-0"
                     />
-                    <p className="text-rumahrapih-gray">Booking ID</p>
+                    <p className="text-ginzapet-gray">Booking ID</p>
                   </div>
                   <strong className="font-semibold">
                     {bookingDetails.booking_trx_id}
                   </strong>
                 </div>
-                <hr className="border-rumahrapih-graylight" />
+                <hr className="border-ginzapet-graylight" />
                 <div className="flex justify-between">
                   <div className="flex items-center gap-[10px]">
                     <img
@@ -458,13 +458,13 @@ export default function MyBookingPage() {
                       alt="icon"
                       className="h-[24px] w-[24px] shrink-0"
                     />
-                    <p className="text-rumahrapih-gray">Sub Total</p>
+                    <p className="text-ginzapet-gray">Sub Total</p>
                   </div>
                   <strong className="font-semibold">
                     {formatCurrency(bookingDetails.sub_total)}
                   </strong>
                 </div>
-                <hr className="border-rumahrapih-graylight" />
+                <hr className="border-ginzapet-graylight" />
                 <div className="flex justify-between">
                   <div className="flex items-center gap-[10px]">
                     <img
@@ -472,13 +472,13 @@ export default function MyBookingPage() {
                       alt="icon"
                       className="h-[24px] w-[24px] shrink-0"
                     />
-                    <p className="text-rumahrapih-gray">Tax 11%</p>
+                    <p className="text-ginzapet-gray">Tax 11%</p>
                   </div>
                   <strong className="font-semibold">
                     {formatCurrency(bookingDetails.total_tax_amount)}
                   </strong>
                 </div>
-                <hr className="border-rumahrapih-graylight" />
+                <hr className="border-ginzapet-graylight" />
                 <div className="flex justify-between">
                   <div className="flex items-center gap-[10px]">
                     <img
@@ -486,13 +486,13 @@ export default function MyBookingPage() {
                       alt="icon"
                       className="h-[24px] w-[24px] shrink-0"
                     />
-                    <p className="text-rumahrapih-gray">Grand Total</p>
+                    <p className="text-ginzapet-gray">Grand Total</p>
                   </div>
-                  <strong className="text-[20px] font-bold leading-[30px] text-rumahrapih-orange">
+                  <strong className="text-[20px] font-bold leading-[30px] text-ginzapet-orange">
                     {formatCurrency(bookingDetails.total_amount)}
                   </strong>
                 </div>
-                <hr className="border-rumahrapih-graylight" />
+                <hr className="border-ginzapet-graylight" />
                 <div className="flex w-full items-center justify-center overflow-hidden rounded-3xl">
                   <img
                     src={`${BASE_URL}/${bookingDetails.proof}`}
@@ -504,7 +504,7 @@ export default function MyBookingPage() {
             </section>
             <section
               id="PersonalInformations"
-              className="flex flex-col gap-4 rounded-3xl border border-rumahrapih-graylight bg-white px-[14px] py-[14px]"
+              className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
             >
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold">Personal Informations</h3>
@@ -519,7 +519,7 @@ export default function MyBookingPage() {
               <div className="flex flex-col gap-4" id="PersonalInformationsJ">
                 <label className="flex flex-col gap-2">
                   <h4 className="font-semibold">Full Name</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-rumahrapih-graylight">
+                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight">
                     <img
                       src="/assets/images/icons/profil-booking-form.svg"
                       alt="icon"
@@ -535,7 +535,7 @@ export default function MyBookingPage() {
                 </label>
                 <label className="flex flex-col gap-2">
                   <h4 className="font-semibold">Email Address</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-rumahrapih-graylight">
+                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight">
                     <img
                       src="/assets/images/icons/amplop-booking-form.svg"
                       alt="icon"
@@ -551,7 +551,7 @@ export default function MyBookingPage() {
                 </label>
                 <label className="flex flex-col gap-2">
                   <h4 className="font-semibold">No. Phone</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-rumahrapih-graylight">
+                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight">
                     <img
                       src="/assets/images/icons/telepon-booking-form.svg"
                       alt="icon"
@@ -569,7 +569,7 @@ export default function MyBookingPage() {
             </section>
             <section
               id="YourHomeAddress"
-              className="flex flex-col gap-4 rounded-3xl border border-rumahrapih-graylight bg-white px-[14px] py-[14px]"
+              className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
             >
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold">Your Home Address</h3>
@@ -584,7 +584,7 @@ export default function MyBookingPage() {
               <div id="YourHomeAddressJ" className="flex flex-col gap-4">
                 <label className="flex flex-col gap-2">
                   <h4 className="font-semibold">Address</h4>
-                  <div className="relative h-[110px] w-full overflow-hidden rounded-[22px] border border-rumahrapih-graylight">
+                  <div className="relative h-[110px] w-full overflow-hidden rounded-[22px] border border-ginzapet-graylight">
                     <textarea
                       readOnly
                       className="h-full w-full bg-[#F4F5F7] pl-[50px] pr-[14px] pt-[14px] font-semibold leading-7 focus:outline-none"
@@ -601,7 +601,7 @@ export default function MyBookingPage() {
                 </label>
                 <label className="flex flex-col gap-2">
                   <h4 className="font-semibold">City</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-rumahrapih-graylight bg-[#F4F5F7]">
+                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight bg-[#F4F5F7]">
                     <img
                       src="/assets/images/icons/location-booking-form.svg"
                       alt="icon"
@@ -620,7 +620,7 @@ export default function MyBookingPage() {
                 </label>
                 <label className="flex flex-col gap-2">
                   <h4 className="font-semibold">Post Code</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-rumahrapih-graylight">
+                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight">
                     <img
                       src="/assets/images/icons/ball-booking-form.svg"
                       alt="icon"
@@ -641,11 +641,11 @@ export default function MyBookingPage() {
       </div>
       <nav className="fixed bottom-5 left-0 right-0 z-30 mx-auto w-full">
         <div className="mx-auto max-w-[640px] px-5">
-          <div className="rounded-[24px] bg-rumahrapih-black px-[20px] py-[14px]">
+          <div className="rounded-[24px] bg-ginzapet-black px-[20px] py-[14px]">
             <ul className="flex items-center gap-[10.67px]">
               <li className="shrink-0">
                 <Link to={"/"}>
-                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-rumahrapih-graylight hover:border-rumahrapih-orange">
+                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-ginzapet-graylight hover:border-ginzapet-orange">
                     <img
                       src="/assets/images/icons/note-form-check-black.svg"
                       alt="icon"
@@ -656,7 +656,7 @@ export default function MyBookingPage() {
               </li>
               <li className="w-full">
                 <Link to={"/my-booking"}>
-                  <div className="flex items-center justify-center gap-2 rounded-full bg-rumahrapih-orange px-[18px] py-[10px] hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
+                  <div className="flex items-center justify-center gap-2 rounded-full bg-ginzapet-orange px-[18px] py-[10px] hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
                     <img
                       src="/assets/images/icons/list-form-check-white.svg"
                       alt="icon"
@@ -670,7 +670,7 @@ export default function MyBookingPage() {
               </li>
               {/* <li className="shrink-0">
                 <a href="#">
-                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-rumahrapih-graylight hover:border-rumahrapih-orange">
+                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-ginzapet-graylight hover:border-ginzapet-orange">
                     <img
                       src="/assets/images/icons/chat.svg"
                       alt="icon"
@@ -681,7 +681,7 @@ export default function MyBookingPage() {
               </li> */}
               <li className="shrink-0">
                 <a href="#">
-                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-rumahrapih-graylight hover:border-rumahrapih-orange">
+                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-ginzapet-graylight hover:border-ginzapet-orange">
                     <img
                       src="/assets/images/icons/profil.svg"
                       alt="icon"

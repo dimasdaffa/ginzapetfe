@@ -99,7 +99,7 @@ export default function CategoryPage() {
               <div
                 id="Back"
                 className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full bg-white
-                    ${isScrolled ? "border border-rumahrapih-graylight" : ""}`}
+                    ${isScrolled ? "border border-ginzapet-graylight" : ""}`}
               >
                 <img
                   src="/assets/images/icons/back.svg"
@@ -119,7 +119,7 @@ export default function CategoryPage() {
               <div
                 id="Cart"
                 className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full bg-white
-                    ${isScrolled ? "border border-rumahrapih-graylight" : ""}`}
+                    ${isScrolled ? "border border-ginzapet-graylight" : ""}`}
               >
                 <img
                   src="/assets/images/icons/cart.svg"
@@ -161,7 +161,7 @@ export default function CategoryPage() {
               ? category.popular_products.map((product) => (
                   <SwiperSlide key={product.id} className="swiper-slide !w-fit">
                     <Link to={`/product/${product.slug}`} className="card">
-                      <div className="relative flex w-[230px] shrink-0 flex-col gap-[12px] overflow-hidden rounded-[24px] border border-rumahrapih-graylight bg-white p-4 transition-all duration-300 hover:border-rumahrapih-orange">
+                      <div className="relative flex w-[230px] shrink-0 flex-col gap-[12px] overflow-hidden rounded-[24px] border border-ginzapet-graylight bg-white p-4 transition-all duration-300 hover:border-ginzapet-orange">
                         <span className="absolute right-[26px] top-[26px] shrink-0 rounded-full bg-white px-2 py-[7px]">
                           <div className="flex items-center gap-[2px]">
                             <img
@@ -190,7 +190,7 @@ export default function CategoryPage() {
                               alt="icon"
                               className="h-5 w-5 shrink-0"
                             />
-                            <p className="text-sm leading-[21px] text-rumahrapih-gray">
+                            <p className="text-sm leading-[21px] text-ginzapet-gray">
                               {category.name}
                             </p>
                           </div>
@@ -200,11 +200,11 @@ export default function CategoryPage() {
                               alt="icon"
                               className="h-5 w-5 shrink-0"
                             />
-                            <p className="text-sm leading-[21px] text-rumahrapih-gray">
+                            <p className="text-sm leading-[21px] text-ginzapet-gray">
                               {product.stok} Stok tersedia
                             </p>
                           </div>
-                          <strong className="font-semibold text-rumahrapih-orange">
+                          <strong className="font-semibold text-ginzapet-orange">
                             {formatCurrency(product.price)}
                           </strong>
                           <img
@@ -232,7 +232,7 @@ export default function CategoryPage() {
           {category.products.length > 0
             ? category.products.map((product) => (
                 <Link to={`/product/${product.slug}`} key={product.id} >
-                  <div className="mx-5 flex gap-3 rounded-[24px] border border-rumahrapih-graylight bg-white p-4 transition-all duration-300 hover:border-rumahrapih-orange">
+                  <div className="mx-5 flex gap-3 rounded-[24px] border border-ginzapet-graylight bg-white p-4 transition-all duration-300 hover:border-ginzapet-orange">
                     <div className="flex h-[101px] w-[120px] shrink-0 items-center justify-center overflow-hidden rounded-2xl">
                       <img
                         src={`${BASE_URL}/${product.thumbnail}`}
@@ -250,11 +250,11 @@ export default function CategoryPage() {
                           alt="icon"
                           className="h-5 w-5 shrink-0"
                         />
-                        <p className="text-sm leading-[21px] text-rumahrapih-gray">
+                        <p className="text-sm leading-[21px] text-ginzapet-gray">
                           {product.stok} Stok tersedia
                         </p>
                       </div>
-                      <strong className="font-semibold text-rumahrapih-orange">
+                      <strong className="font-semibold text-ginzapet-orange">
                         {formatCurrency(product.price)}
                       </strong>
                     </div>
@@ -270,7 +270,7 @@ export default function CategoryPage() {
       >
         <div className="mx-auto flex max-w-[640px] justify-center">
           <button type="button">
-            <div className="mx-auto flex !w-fit shrink-0 items-center gap-2 rounded-full bg-rumahrapih-orange px-[18px] py-[14px] transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
+            <div className="mx-auto flex !w-fit shrink-0 items-center gap-2 rounded-full bg-ginzapet-orange px-[18px] py-[14px] transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
               <img src="/assets/images/icons/filter.svg" alt="icon" />
               <p className="font-semibold text-white">Filter (12)</p>
             </div>
