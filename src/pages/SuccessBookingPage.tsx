@@ -153,12 +153,12 @@ export default function SuccessBookingPage() {
     </section>
     <section id="Btn" className="mt-[54px] flex flex-col gap-[14px]">
       <Link to={"/"}>
-        <p className="w-full rounded-full bg-ginzapet-orange py-[14px] text-center font-semibold text-white transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
+        <p className="w-full rounded-full bg-[#d14a1e] py-[14px] text-center font-semibold text-white transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
           Order Service Again
         </p>
       </Link>
       <Link to={"/my-booking"}>
-        <p className="w-full rounded-full bg-ginzapet-black py-[14px] text-center font-semibold text-white">
+        <p className="w-full rounded-full bg-black py-[14px] text-center font-semibold text-white">
           View My Booking Details
         </p>
       </Link>

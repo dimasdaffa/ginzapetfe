@@ -351,8 +351,8 @@ export default function DetailsPage() {
         </div>
       </section>
       <nav className="fixed bottom-5 left-0 right-0 z-30 mx-auto w-full">
-        <div className="mx-auto max-w-[640px] px-5">
-          <div className="flex items-center gap-[45px] rounded-[24px] bg-ginzapet-black px-[20px] py-[14px]">
+        <div className="mx-auto max-w-[640px] px-5 ">
+          <div className="flex items-center gap-[45px] rounded-[24px] bg-black px-[20px] py-[14px]">
             <div>
               <strong className="whitespace-nowrap text-[22px] font-extrabold leading-[33px] text-white">
                 {formatCurrency(product.price)}
@@ -366,7 +366,7 @@ export default function DetailsPage() {
               disabled={isAdding}
               className="w-full"
             >
-              <p className="w-full rounded-full bg-ginzapet-orange px-[18px] py-[14px] text-center font-semibold text-white transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
+              <p className="w-full rounded-full bg-[#d14a1e] px-[18px] py-[14px] text-center font-semibold text-white transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
                 {isAdding ? "Adding..." : "Add to Cart"}
               </p>
             </button>

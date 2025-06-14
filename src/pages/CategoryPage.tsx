@@ -2,7 +2,6 @@ import { Link, useParams } from "react-router-dom";
 import type { Category } from "../types/type";
 import { useEffect, useState } from "react";
 import apiClient from "../services/apiServices";
-import { ca } from "zod/v4/locales";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 export default function CategoryPage() {

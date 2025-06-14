@@ -489,7 +489,7 @@ export default function PaymentPage() {
           </section>
           <button
             type="submit"
-            className="mt-[54px] w-full rounded-full bg-ginzapet-orange py-[14px] font-semibold text-white transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]"
+            className="mt-[54px] w-full rounded-full bg-[#d14a1e] py-[14px] font-semibold text-white transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]"
           >
             Confirm My Payment
           </button>

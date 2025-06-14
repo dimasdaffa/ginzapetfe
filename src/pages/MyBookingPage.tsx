@@ -155,7 +155,7 @@ export default function MyBookingPage() {
             </label>
             <button
               type="submit"
-              className="w-full rounded-full bg-ginzapet-orange py-[14px] text-center font-semibold text-white hover:shadow-[0px_4px_10px_0px_#D04B1E80]"
+              className="w-full rounded-full bg-[#d14a1e] py-[14px] text-center font-semibold text-white hover:shadow-[0px_4px_10px_0px_#D04B1E80]"
             >
               Find My Booking
             </button>
@@ -641,11 +641,11 @@ export default function MyBookingPage() {
       </div>
       <nav className="fixed bottom-5 left-0 right-0 z-30 mx-auto w-full">
         <div className="mx-auto max-w-[640px] px-5">
-          <div className="rounded-[24px] bg-ginzapet-black px-[20px] py-[14px]">
+          <div className="rounded-[24px] bg-black px-[20px] py-[14px]">
             <ul className="flex items-center gap-[10.67px]">
               <li className="shrink-0">
                 <Link to={"/"}>
-                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-ginzapet-graylight hover:border-ginzapet-orange">
+                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full  bg-[#d14a1e] ">
                     <img
                       src="/assets/images/icons/note-form-check-black.svg"
                       alt="icon"
@@ -656,7 +656,7 @@ export default function MyBookingPage() {
               </li>
               <li className="w-full">
                 <Link to={"/my-booking"}>
-                  <div className="flex items-center justify-center gap-2 rounded-full bg-ginzapet-orange px-[18px] py-[10px] hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
+                  <div className="flex items-center justify-center gap-2 rounded-full bg-[#d14a1e] px-[18px] py-[10px] hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
                     <img
                       src="/assets/images/icons/list-form-check-white.svg"
                       alt="icon"
@@ -668,20 +668,9 @@ export default function MyBookingPage() {
                   </div>
                 </Link>
               </li>
-              {/* <li className="shrink-0">
-                <a href="#">
-                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-ginzapet-graylight hover:border-ginzapet-orange">
-                    <img
-                      src="/assets/images/icons/chat.svg"
-                      alt="icon"
-                      className="h-[22px] w-[22px] shrink-0"
-                    />
-                  </div>
-                </a>
-              </li> */}
               <li className="shrink-0">
                 <a href="#">
-                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-ginzapet-graylight hover:border-ginzapet-orange">
+                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full bg-[#d14a1e]">
                     <img
                       src="/assets/images/icons/profil.svg"
                       alt="icon"

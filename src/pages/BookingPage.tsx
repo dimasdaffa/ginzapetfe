@@ -506,7 +506,7 @@ export default function BookingPage() {
           </div>
           <button
             type="submit"
-            className="mt-[44px] w-full rounded-full bg-ginzapet-orange py-[14px] font-semibold text-white transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]"
+            className="mt-[44px] w-full rounded-full bg-[#d14a1e] py-[14px] font-semibold text-white transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]"
           >
             Continue to Payment
           </button>

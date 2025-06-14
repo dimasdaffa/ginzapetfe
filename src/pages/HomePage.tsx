@@ -69,39 +69,22 @@ export default function HomePage() {
   const BASE_URL = import.meta.env.VITE_REACT_API_STORAGE_URL;
 
   return (
-    <main className="relative mx-auto w-full max-w-[640px] overflow-hidden bg-white pb-[142px]">
-      <div id="Background" className="absolute left-0 right-0 top-0">
-        <img
-          src="assets/images/backgrounds/home-banner.png"
-          alt="image"
-          className="h-[349.02px] w-full object-cover object-bottom"
-        />
-      </div>
+    <main className="min-h-screen mx-auto w-full max-w-[640px] overflow-hidden bg-white pb-[142px]">
       <section id="NavTop" className="fixed left-0 right-0 top-5 z-30">
-        <div className="relative mx-auto max-w-[640px] px-5">
-          <div className="flex items-center justify-between rounded-[22px] bg-white px-4 py-[14px]">
-            <a href="#">
+        <div className=" mx-auto max-w-[640px] px-5">
+          <div className="flex items-center justify-between rounded-[22px] bg-[#d14a1e] px-4 py-[14px]">
+            <a href="/" className="flex items-center gap-3">
               <img
-                src="assets/images/logos/company.svg"
+                src="assets/images/logos/lobo.png"
                 alt="icon"
-                className="h-[40px] w-[114px] shrink-0"
+                className="h-[60px] w-auto shrink-0 border-2 border-white rounded-full"
               />
+              <h1 className="text-white font-bold text-2xl">Ginza Pet Shop</h1>
             </a>
             <ul className="flex items-center gap-[10px]">
               <li className="shrink-0">
-                <a href="#">
-                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-ginzapet-graylight">
-                    <img
-                      src="assets/images/icons/notification.svg"
-                      alt="icon"
-                      className="h-[22px] w-[22px] shrink-0"
-                    />
-                  </div>
-                </a>
-              </li>
-              <li className="shrink-0">
                 <Link to="/cart">
-                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-ginzapet-graylight">
+                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border-2 border-white">
                     <img
                       src="assets/images/icons/cart.svg"
                       alt="icon"
@@ -114,9 +97,15 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      <header className="relative ml-5 mt-[128px] w-[246px]">
-        <h1 className="text-[32px] font-extrabold leading-[46px]">
-          Discover Top Products
+
+      <header className="relative ml-5 mt-[128px]">
+        <section id="Adverticement" className="relative px-5">
+          <a href="#">
+            <img src="assets/images/backgrounds/adverticement.png" alt="icon" />
+          </a>
+        </section>
+        <h1 className="text-[#d14a1e] text-[32px] font-extrabold ">
+          Categories
         </h1>
       </header>
       <section
@@ -161,13 +150,8 @@ export default function HomePage() {
           </Swiper>
         </div>
       </section>
-      <section id="Adverticement" className="relative px-5">
-        <a href="#">
-          <img src="assets/images/backgrounds/adverticement.png" alt="icon" />
-        </a>
-      </section>
       <section id="PopularSummer" className="mt-[30px] space-y-[14px]">
-        <h2 className="pl-5 text-[18px] font-bold leading-[27px]">
+        <h2 className="text-[#d14a1e] pl-5 text-[18px] font-bold leading-[27px]">
           Popular This Summer
         </h2>
         <div
@@ -185,19 +169,8 @@ export default function HomePage() {
             {products.length > 0
               ? products.map((product) => (
                   <SwiperSlide key={product.id} className="swiper-slide !w-fit">
-                    <Link to={`/product/${product.slug}`}className="card">
+                    <Link to={`/product/${product.slug}`} className="card">
                       <div className="relative flex w-[230px] shrink-0 flex-col gap-[12px] overflow-hidden rounded-[24px] border border-ginzapet-graylight bg-white p-4 transition-all duration-300 hover:border-ginzapet-orange">
-                        <span className="absolute right-[26px] top-[26px] shrink-0 rounded-full bg-white px-2 py-[7px]">
-                          <div className="flex items-center gap-[2px]">
-                            <img
-                              src="assets/images/icons/star.svg"
-                              alt="icon"
-                            />
-                            <p className="text-xs font-semibold leading-[18px]">
-                              4.8
-                            </p>
-                          </div>
-                        </span>
                         <div className="flex h-[140px] w-full shrink-0 items-center justify-center overflow-hidden rounded-[16px] bg-[#D9D9D9]">
                           <img
                             src={`${BASE_URL}/${product.thumbnail}`}
@@ -247,12 +220,12 @@ export default function HomePage() {
         </div>
       </section>
       <nav className="fixed bottom-5 left-0 right-0 z-30 mx-auto w-full">
-        <div className="mx-auto max-w-[640px] px-5">
-          <div className="rounded-[24px] bg-ginzapet-black px-[20px] py-[14px]">
+        <div className=" mx-auto max-w-[640px] px-5">
+          <div className="rounded-[24px] px-[20px] py-[14px] bg-black">
             <ul className="flex items-center gap-[20.30px]">
               <li className="w-full">
                 <Link to={"/"}>
-                  <div className="flex items-center justify-center gap-2 rounded-full bg-ginzapet-orange px-[18px] py-[10px] transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
+                  <div className="flex items-center justify-center gap-2 rounded-full  bg-[#d14a1e] px-[18px] py-[10px] transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
                     <img
                       src="assets/images/icons/browse.svg"
                       alt="icon"
@@ -266,7 +239,7 @@ export default function HomePage() {
               </li>
               <li className="shrink-0">
                 <Link to={"/my-booking"}>
-                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-ginzapet-graylight transition-all duration-300 hover:border-ginzapet-orange">
+                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full  bg-[#d14a1e] transition-all duration-300 ">
                     <img
                       src="assets/images/icons/note.svg"
                       alt="icon"
@@ -277,7 +250,7 @@ export default function HomePage() {
               </li>
               <li className="shrink-0">
                 <a href="#">
-                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-ginzapet-graylight transition-all duration-300 hover:border-ginzapet-orange">
+                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full  bg-[#d14a1e] transition-all duration-300">
                     <img
                       src="assets/images/icons/profil.svg"
                       alt="icon"
