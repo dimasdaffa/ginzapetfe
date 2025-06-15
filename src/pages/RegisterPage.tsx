@@ -80,7 +80,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="relative min-h-screen mx-auto w-full max-w-[640px] lg:max-w-4xl xl:max-w-6xl bg-[#F4F5F7]">
+    <main className="relative min-h-screen mx-auto w-full bg-[#F4F5F7]">
       {/* Background Image */}
       <div id="Background" className="absolute left-0 right-0 top-0">
         <img
