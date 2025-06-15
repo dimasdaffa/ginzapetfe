@@ -135,7 +135,6 @@ export default function PaymentPage() {
       submissionData.append("address", bookingData.address);
       submissionData.append("city", bookingData.city);
       submissionData.append("post_code", bookingData.post_code);
-      submissionData.append("started_time", bookingData.started_time);
       submissionData.append("schedule_at", bookingData.schedule_at);
     }
 
@@ -224,7 +223,7 @@ export default function PaymentPage() {
               className={`font-semibold transition-all duration-300
                 ${isScrolled ? "" : "text-white"}`}
             >
-              Booking Services
+              Booking Products
             </h2>
           </div>
         </div>
@@ -281,50 +280,29 @@ export default function PaymentPage() {
           <h1 className="text-[26px] font-extrabold leading-[39px] text-white">
             Payment
           </h1>
-          <p className="text-white">Dibayar dulu nanti baru dikerjain</p>
         </header>
         <div className="mt-[20px] flex flex-col gap-5">
-          <section id="PaymentMethod" className="grid grid-cols-2 gap-[14px]">
+            <section id="PaymentMethod" className="gap-[14px]">
             <div className="flex items-center justify-center gap-[10px] rounded-[20px] bg-ginzapet-black py-[14px]">
               <img
-                src="/assets/images/icons/send-to-payment.svg"
-                alt="icon"
-                className="h-[32px] w-[32px] shrink-0"
+              src="/assets/images/icons/send-to-payment.svg"
+              alt="icon"
+              className="h-[32px] w-[32px] shrink-0"
               />
               <div>
-                <h5 className="text-sm font-semibold leading-[21px] text-white">
-                  Send to Bank
-                </h5>
-                <p className="text-sm leading-[21px] text-white">Available</p>
+              <h5 className="text-sm font-semibold leading-[21px] text-white">
+                Send to Bank
+              </h5>
+              <p className="text-sm leading-[21px] text-white">Available</p>
               </div>
             </div>
-            <div className="flex items-center justify-center gap-[10px] rounded-[20px] border border-ginzapet-graylight bg-white py-[14px]">
-              <img
-                src="/assets/images/icons/credit-payment.svg"
-                alt="icon"
-                className="h-[32px] w-[32px] shrink-0"
-              />
-              <div>
-                <h5 className="text-sm font-semibold leading-[21px]">
-                  Ngutang
-                </h5>
-                <p className="text-sm leading-[21px]">Offline</p>
-              </div>
-            </div>
-          </section>
+            </section>
           <section
             id="AvailablePayment"
             className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
           >
             <div className="flex items-center justify-between">
               <h3 className="font-semibold">Available Payment</h3>
-              <button type="button" data-expand="AvailablePaymentJ">
-                <img
-                  src="/assets/images/icons/bottom-booking-form.svg"
-                  alt="icon"
-                  className="h-[32px] w-[32px] shrink-0 transition-all duration-300"
-                />
-              </button>
             </div>
             <div id="AvailablePaymentJ" className="flex flex-col gap-4">
               <div className="flex gap-4">
@@ -386,13 +364,6 @@ export default function PaymentPage() {
           >
             <div className="flex items-center justify-between">
               <h3 className="font-semibold">Booking Details</h3>
-              <button type="button" data-expand="BookingDetailsJ">
-                <img
-                  src="/assets/images/icons/bottom-booking-form.svg"
-                  alt="icon"
-                  className="h-[32px] w-[32px] shrink-0 transition-all duration-300"
-                />
-              </button>
             </div>
             <div className="flex flex-col gap-4" id="BookingDetailsJ">
               <div className="flex justify-between">
@@ -428,18 +399,6 @@ export default function PaymentPage() {
                     alt="icon"
                     className="h-[24px] w-[24px] shrink-0"
                   />
-                  <p className="text-ginzapet-gray">Service Tools</p>
-                </div>
-                <strong className="font-semibold">Free</strong>
-              </div>
-              <hr className="border-ginzapet-graylight" />
-              <div className="flex justify-between">
-                <div className="flex items-center gap-[10px]">
-                  <img
-                    src="/assets/images/icons/note-payment.svg"
-                    alt="icon"
-                    className="h-[24px] w-[24px] shrink-0"
-                  />
                   <p className="text-ginzapet-gray">Grand Total</p>
                 </div>
                 <strong className="text-[20px] font-bold leading-[30px] text-ginzapet-orange">
@@ -453,13 +412,6 @@ export default function PaymentPage() {
           <section className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]">
             <div className="flex items-center justify-between">
               <h3 className="font-semibold">Confirmation</h3>
-              <button type="button" data-expand="ConfirmationJ">
-                <img
-                  src="/assets/images/icons/bottom-booking-form.svg"
-                  alt="icon"
-                  className="h-[32px] w-[32px] shrink-0 transition-all duration-300"
-                />
-              </button>
             </div>
             <div id="ConfirmationJ" className="flex flex-col gap-4">
               <label className="flex flex-col gap-2">

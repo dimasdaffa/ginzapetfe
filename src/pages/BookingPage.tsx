@@ -9,7 +9,6 @@ export default function BookingPage() {
     name: "",
     email: "",
     phone: "",
-    started_time: "",
     schedule_at: "",
     post_code: "",
     address: "",
@@ -83,7 +82,7 @@ export default function BookingPage() {
 
   useEffect(() => {
     const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setDate(tomorrow.getDate() + 0);
     console.log(tomorrow);
     const formattedDate = tomorrow.toISOString().split("T")[0]; // Format as YYYY-MM-DD
 
@@ -218,7 +217,7 @@ export default function BookingPage() {
               className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
             >
               <div className="flex items-center justify-between">
-                <h3 className="font-semibold">Working Schedule</h3>
+                <h3 className="font-semibold">Order Date</h3>
                 <button type="button" data-expand="WorkingScheduleJ">
                   <img
                     src="/assets/images/icons/bottom-booking-form.svg"
@@ -247,39 +246,6 @@ export default function BookingPage() {
                     />
                   </div>
                 </label>
-                <label className="flex flex-col gap-2">
-                  <h4 className="font-semibold">Start Time At</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
-                    <img
-                      src="/assets/images/icons/clock-booking-form.svg"
-                      alt="icon"
-                      className="absolute left-[14px] top-1/2 h-6 w-6 shrink-0 -translate-y-1/2"
-                    />
-                    <select
-                      value={formData.started_time}
-                      onChange={handleChange}
-                      name="started_time"
-                      id=""
-                      className="h-full w-full appearance-none rounded-full bg-transparent relative z-10 pl-[50px] font-semibold focus:outline-none"
-                    >
-                      <option value="">Enter the time</option>
-                      <option value="09:00">09:00</option>
-                      <option value="10:00">10:00</option>
-                      <option value="11:00">11:00</option>
-                    </select>
-                    {formErrors.find((error) =>
-                      error.path.includes("started_time")
-                    ) && (
-                      <p className="text-red-500">
-                        {
-                          formErrors.find((error) =>
-                            error.path.includes("started_time")
-                          )?.message
-                        }
-                      </p>
-                    )}
-                  </div>
-                </label>
               </div>
             </section>
             <section
@@ -288,13 +254,6 @@ export default function BookingPage() {
             >
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold">Personal Informations</h3>
-                <button type="button" data-expand="PersonalInformationsJ">
-                  <img
-                    src="/assets/images/icons/bottom-booking-form.svg"
-                    alt="icon"
-                    className="h-[32px] w-[32px] shrink-0 transition-all duration-300"
-                  />
-                </button>
               </div>
               <div className="flex flex-col gap-4" id="PersonalInformationsJ">
                 <label className="flex flex-col gap-2">
@@ -395,13 +354,6 @@ export default function BookingPage() {
             >
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold">Your Home Address</h3>
-                <button type="button" data-expand="YourHomeAddressJ">
-                  <img
-                    src="/assets/images/icons/bottom-booking-form.svg"
-                    alt="icon"
-                    className="h-[32px] w-[32px] shrink-0 transition-all duration-300"
-                  />
-                </button>
               </div>
               <div id="YourHomeAddressJ" className="flex flex-col gap-4">
                 <label className="flex flex-col gap-2">

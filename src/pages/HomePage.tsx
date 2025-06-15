@@ -187,17 +187,7 @@ export default function HomePage() {
                   <SwiperSlide key={product.id} className="swiper-slide !w-fit">
                     <Link to={`/product/${product.slug}`}className="card">
                       <div className="relative flex w-[230px] shrink-0 flex-col gap-[12px] overflow-hidden rounded-[24px] border border-ginzapet-graylight bg-white p-4 transition-all duration-300 hover:border-ginzapet-orange">
-                        <span className="absolute right-[26px] top-[26px] shrink-0 rounded-full bg-white px-2 py-[7px]">
-                          <div className="flex items-center gap-[2px]">
-                            <img
-                              src="assets/images/icons/star.svg"
-                              alt="icon"
-                            />
-                            <p className="text-xs font-semibold leading-[18px]">
-                              4.8
-                            </p>
-                          </div>
-                        </span>
+                     
                         <div className="flex h-[140px] w-full shrink-0 items-center justify-center overflow-hidden rounded-[16px] bg-[#D9D9D9]">
                           <img
                             src={`${BASE_URL}/${product.thumbnail}`}

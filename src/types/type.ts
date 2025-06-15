@@ -47,7 +47,6 @@ export interface BookingDetails {
   sub_total: number;
   total_tax_amount: number;
   total_amount: number;
-  started_time: string;
   schedule_at: string;
   transaction_details: TransactionDetails[]; // This implies an array of TransactionDetails
   proof: string | null; // Assuming this is a URL or path to the proof of payment
@@ -70,7 +69,6 @@ export type BookingFormData = {
   name: string;
   email: string;
   phone: string;
-  started_time: string;
   schedule_at: string;
   post_code: string;
   address: string;

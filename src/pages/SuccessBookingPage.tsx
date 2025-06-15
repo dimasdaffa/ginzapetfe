@@ -146,7 +146,7 @@ export default function SuccessBookingPage() {
             Penting Diingat:
           </p>
           <strong className="font-semibold">
-            lorem
+            Catat ID Booking dan Email Anda untuk memeriksa status
           </strong>
         </div>
       </div>

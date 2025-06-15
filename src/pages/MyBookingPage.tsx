@@ -187,13 +187,6 @@ export default function MyBookingPage() {
             >
               <div className="flex w-full items-center justify-between">
                 <h3 className="font-semibold">Booking Status</h3>
-                <button type="button" data-expand="BookingStatusJ">
-                  <img
-                    src="/assets/images/icons/bottom-booking-form.svg"
-                    alt="icon"
-                    className="h-[32px] w-[32px] shrink-0"
-                  />
-                </button>
               </div>
               {bookingDetails.is_paid ? (
                 <div
@@ -302,9 +295,9 @@ export default function MyBookingPage() {
                             3
                           </div>
                           <p className="text-xs text-center font-semibold leading-[18px]">
-                            Start
+                            In
                             <br />
-                            Working
+                            Delivery
                           </p>
                         </div>
                       </div>
@@ -318,14 +311,7 @@ export default function MyBookingPage() {
               className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
             >
               <div className="flex items-center justify-between">
-                <h3 className="font-semibold">Working Schedule</h3>
-                <button type="button" data-expand="WorkingScheduleJ">
-                  <img
-                    src="/assets/images/icons/bottom-booking-form.svg"
-                    alt="icon"
-                    className="h-[32px] w-[32px] shrink-0"
-                  />
-                </button>
+                <h3 className="font-semibold">Order Date</h3>
               </div>
               <div id="WorkingScheduleJ" className="flex flex-col gap-4">
                 <label className="flex flex-col gap-2">
@@ -344,22 +330,6 @@ export default function MyBookingPage() {
                     />
                   </div>
                 </label>
-                <label className="flex flex-col gap-2">
-                  <h4 className="font-semibold">Start Time At</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight">
-                    <img
-                      src="/assets/images/icons/clock-booking-form.svg"
-                      alt="icon"
-                      className="absolute left-[14px] top-1/2 h-6 w-6 shrink-0 -translate-y-1/2"
-                    />
-                    <input
-                      className="h-full w-full rounded-full bg-[#F4F5F7] pl-[50px] font-semibold focus:outline-none"
-                      readOnly
-                      type="text"
-                      value={bookingDetails.started_time}
-                    />
-                  </div>
-                </label>
               </div>
             </section>
             <section
@@ -367,14 +337,7 @@ export default function MyBookingPage() {
               className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
             >
               <div className="flex items-center justify-between">
-                <h2 className="font-semibold">Services Ordered</h2>
-                <button type="button" data-expand="ServicesOrderedJ">
-                  <img
-                    src="/assets/images/icons/bottom-booking-form.svg"
-                    alt="icon"
-                    className="h-[32px] w-[32px] shrink-0"
-                  />
-                </button>
+                <h2 className="font-semibold">Product Ordered</h2>
               </div>
               <div className="flex flex-col gap-4" id="ServicesOrderedJ">
                 {bookingDetails.transaction_details.map((detail, index) => (
@@ -428,13 +391,6 @@ export default function MyBookingPage() {
             >
               <div className="flex items-center justify-between">
                 <h2 className="font-semibold">Booking Details</h2>
-                <button type="button" data-expand="BookingDetailsJ">
-                  <img
-                    src="/assets/images/icons/bottom-booking-form.svg"
-                    alt="icon"
-                    className="h-[32px] w-[32px] shrink-0"
-                  />
-                </button>
               </div>
               <div className="flex flex-col gap-4" id="BookingDetailsJ">
                 <div className="flex justify-between">
@@ -508,13 +464,6 @@ export default function MyBookingPage() {
             >
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold">Personal Informations</h3>
-                <button type="button" data-expand="PersonalInformationsJ">
-                  <img
-                    src="/assets/images/icons/bottom-booking-form.svg"
-                    alt="icon"
-                    className="h-[32px] w-[32px] shrink-0"
-                  />
-                </button>
               </div>
               <div className="flex flex-col gap-4" id="PersonalInformationsJ">
                 <label className="flex flex-col gap-2">
@@ -573,13 +522,6 @@ export default function MyBookingPage() {
             >
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold">Your Home Address</h3>
-                <button type="button" data-expand="YourHomeAddressJ">
-                  <img
-                    src="/assets/images/icons/bottom-booking-form.svg"
-                    alt="icon"
-                    className="h-[32px] w-[32px] shrink-0"
-                  />
-                </button>
               </div>
               <div id="YourHomeAddressJ" className="flex flex-col gap-4">
                 <label className="flex flex-col gap-2">
@@ -668,17 +610,6 @@ export default function MyBookingPage() {
                   </div>
                 </Link>
               </li>
-              {/* <li className="shrink-0">
-                <a href="#">
-                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-ginzapet-graylight hover:border-ginzapet-orange">
-                    <img
-                      src="/assets/images/icons/chat.svg"
-                      alt="icon"
-                      className="h-[22px] w-[22px] shrink-0"
-                    />
-                  </div>
-                </a>
-              </li> */}
               <li className="shrink-0">
                 <a href="#">
                   <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border border-ginzapet-graylight hover:border-ginzapet-orange">

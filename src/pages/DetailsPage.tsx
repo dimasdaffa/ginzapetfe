@@ -57,7 +57,7 @@ export default function DetailsPage() {
       const itemExists = cart.find((item) => item.product_id === product.id);
 
       if (itemExists) {
-        alert("Jasa sudah tersedia di Cart!"); // "product is already in Cart!"
+        alert("Produk sudah tersedia di Cart!"); // "product is already in Cart!"
         setIsAdding(false);
       } else {
         const newCartItem: CartItem = {
@@ -69,7 +69,7 @@ export default function DetailsPage() {
         setCart(updatedCart);
         localStorage.setItem("cart", JSON.stringify(updatedCart));
 
-        alert("Jasa berhasil ditambahkan ke Cart!"); // "Service successfully added to Cart!"
+        alert("Produk berhasil ditambahkan ke Cart!"); // "Service successfully added to Cart!"
         setIsAdding(false);
       }
     }
@@ -163,14 +163,6 @@ export default function DetailsPage() {
             alt="image"
             className="h-full w-full object-cover"
           />
-          <div className="absolute right-5 top-5 flex shrink-0 items-center gap-[2px] rounded-full bg-white px-[8px] py-[7px]">
-            <img
-              src="/assets/images/icons/star-service-details.svg"
-              alt="icon"
-              className="h-[22px] w-[22px] shrink-0"
-            />
-            <p className="font-semibold">4.8</p>
-          </div>
           {product.is_popular ? (
             <div className="absolute bottom-5 left-[20.5px] flex shrink-0 items-center gap-[2px] rounded-full bg-white px-[8px] py-[7px]">
               <img
@@ -209,21 +201,6 @@ export default function DetailsPage() {
         </div>
         <div className="flex items-center gap-[10px] rounded-[20px] bg-[#F4F5F7] px-[14px] py-[14px]">
           <img
-            src="/assets/images/icons/note-service-details.svg"
-            alt="icon"
-            className="h-[32px] w-[32px] shrink-0"
-          />
-          <div>
-            <strong className="text-sm font-semibold leading-[21px]">
-              Top Product
-            </strong>
-            <p className="text-sm leading-[21px] text-ginzapet-gray">
-              Guarantee
-            </p>
-          </div>
-        </div>
-        <div className="flex items-center gap-[10px] rounded-[20px] bg-[#F4F5F7] px-[14px] py-[14px]">
-          <img
             src="/assets/images/icons/calender-service-details.svg"
             alt="icon"
             className="h-[32px] w-[32px] shrink-0"
@@ -234,21 +211,6 @@ export default function DetailsPage() {
             </strong>
             <p className="text-sm leading-[21px] text-ginzapet-gray">
               Category
-            </p>
-          </div>
-        </div>
-        <div className="flex items-center gap-[10px] rounded-[20px] bg-[#F4F5F7] px-[14px] py-[14px]">
-          <img
-            src="/assets/images/icons/clock-service-details.svg"
-            alt="icon"
-            className="h-[32px] w-[32px] shrink-0"
-          />
-          <div>
-            <strong className="text-sm font-semibold leading-[21px]">
-              Free Tools
-            </strong>
-            <p className="text-sm leading-[21px] text-ginzapet-gray">
-              SNI Level
             </p>
           </div>
         </div>
@@ -300,33 +262,7 @@ export default function DetailsPage() {
                   <SwiperSlide key={testimonial.id} className="!w-fit">
                     <a href="#" className="card">
                       <div className="flex w-[300px] flex-col gap-4 rounded-3xl border border-ginzapet-graylight p-5">
-                        <div className="stars flex items-center">
-                          <img
-                            src="/assets/images/icons/star-service-details.svg"
-                            alt="icon"
-                            className="h-[22px] w-[22px] shrink-0"
-                          />
-                          <img
-                            src="/assets/images/icons/star-service-details.svg"
-                            alt="icon"
-                            className="h-[22px] w-[22px] shrink-0"
-                          />
-                          <img
-                            src="/assets/images/icons/star-service-details.svg"
-                            alt="icon"
-                            className="h-[22px] w-[22px] shrink-0"
-                          />
-                          <img
-                            src="/assets/images/icons/star-service-details.svg"
-                            alt="icon"
-                            className="h-[22px] w-[22px] shrink-0"
-                          />
-                          <img
-                            src="/assets/images/icons/star-service-details.svg"
-                            alt="icon"
-                            className="h-[22px] w-[22px] shrink-0"
-                          />
-                        </div>
+                       
                         <p className="leading-7">{testimonial.message}</p>
                         <div className="profil flex items-center gap-3">
                           <div className="flex h-[60px] w-[60px] items-center justify-center overflow-hidden rounded-full">

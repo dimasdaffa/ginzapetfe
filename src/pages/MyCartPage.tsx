@@ -159,7 +159,7 @@ export default function MyCartPage() {
       </section>
       <div className="relative flex flex-col gap-[20px] px-5 pt-[100px]">
         <AccordionSection
-          title="Home Services"
+          title=" Products"
           iconSrc="/assets/images/icons/bottom-booking-form.svg"
         >
           <div className="flex flex-col gap-4" id="HomeServicesJ">
