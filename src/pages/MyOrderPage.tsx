@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { z } from "zod";
 import type { OrderDetails } from "../types/type";
 import { viewOrderSchema } from "../types/validationOrder";
@@ -21,6 +21,8 @@ import {
   ChevronUp,
   CheckCircle,
   NotebookIcon,
+  ShoppingCart,
+  ArrowLeft,
 } from "lucide-react";
 
 const formatCurrency = (price: number) => {
@@ -124,6 +126,20 @@ export default function MyOrderPage() {
   const [loading, setLoading] = useState(false);
   const [OrderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
   const [notFound, setNotFound] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+
+  useEffect(() => {
+      const handleScroll = () => {
+        setIsScrolled(window.scrollY > 0);
+      };
+  
+      window.addEventListener("scroll", handleScroll);
+  
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -188,13 +204,61 @@ export default function MyOrderPage() {
       {/* Desktop Background */}
       <div className="hidden lg:block absolute left-0 right-0 top-0 h-40 bg-gradient-to-r from-[#d14a1e] to-[#ff6b35]"></div>
 
+      {/* Navigation */}
+      <nav
+        className={`fixed left-0 right-0 z-30 transition-all duration-300 ${
+          isScrolled ? "top-7 lg:top-4" : "top-4 lg:top-4"
+        }`}
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div
+            className={`flex items-center justify-between py-3 lg:py-4 transition-all duration-300 ${
+              isScrolled
+                ? "bg-white rounded-2xl lg:rounded-3xl px-4 lg:px-6 shadow-lg"
+                : "lg:bg-white/10 lg:backdrop-blur-sm lg:rounded-3xl lg:px-6"
+            }`}
+          >
+            <Link to="/">
+              <div
+                className={`flex h-11 w-11 lg:h-12 lg:w-12 items-center justify-center rounded-full bg-white transition-all duration-300 ${
+                  isScrolled
+                    ? "border border-gray-200"
+                    : "lg:bg-white/20 lg:backdrop-blur-sm"
+                }`}
+              >
+                <ArrowLeft className="h-5 w-5 lg:h-6 lg:w-6 text-gray-700" />
+              </div>
+            </Link>
+            <h1
+              className={`font-semibold text-lg lg:text-xl transition-all duration-300 ${
+                isScrolled ? "text-gray-900" : "text-white lg:text-white"
+              }`}
+            >
+              Explore
+            </h1>
+            <Link to="/cart">
+              <div
+                className={`flex h-11 w-11 lg:h-12 lg:w-12 items-center justify-center rounded-full bg-white transition-all duration-300 ${
+                  isScrolled
+                    ? "border border-gray-200"
+                    : "lg:bg-white/20 lg:backdrop-blur-sm"
+                }`}
+              >
+                <ShoppingCart className="h-5 w-5 lg:h-6 lg:w-6 text-gray-700" />
+              </div>
+            </Link>
+          </div>
+        </div>
+      </nav>
+
+
       {/* Main Content */}
-      <main className="relative pt-12 lg:pt-20">
+      <main className="relative pt-24 lg:pt-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <header className="flex flex-col items-center gap-4 mb-8 lg:mb-12">
             <div className="flex h-16 w-16 lg:h-20 lg:w-20 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
-              <Search className="h-8 w-8 lg:h-10 lg:w-10 text-white" />
+              <Search className="h-8 w-8 lg:h-10 lg:w-10 text-white lg:text-[#d14a1e] " />
             </div>
             <h1 className="text-2xl lg:text-4xl font-extrabold text-white lg:text-black text-center">
               Check My Order
