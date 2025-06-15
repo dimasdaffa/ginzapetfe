@@ -255,7 +255,7 @@ export default function MyCartPage() {
               <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
                 <div className="flex items-center gap-3 mb-6">
                   <img
-                    src="/assets/images/icons/bottom-Order-form.svg"
+                    src="/assets/images/icons/bottom-booking-form.svg"
                     alt="icon"
                     className="h-6 w-6"
                   />
@@ -323,7 +323,7 @@ export default function MyCartPage() {
               <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sticky top-32">
                 <div className="flex items-center gap-3 mb-6">
                   <img
-                    src="//assets/images/icons/bottom-Order-form.svg"
+                    src="/public/assets/images/icons/bottom-booking-form.svg"
                     alt="icon"
                     className="h-6 w-6"
                   />
