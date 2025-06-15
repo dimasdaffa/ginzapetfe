@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import type { z } from "zod";
 import type { OrderDetails } from "../types/type";
-import { viewOrderSchema } from "../types/validationOrder";
+import { viewOrderSchema } from "../types/validationBooking";
 import apiClient, { isAxiosError } from "../services/apiServices";
 import { Link } from "react-router-dom";
 import React from "react";
@@ -121,25 +121,25 @@ function ProgressIndicator({ isPaid }: { isPaid: boolean }) {
 }
 
 export default function MyOrderPage() {
-  const [formData, setFormData] = useState({ email: "", Order_trx_id: "" });
+  // Ganti Order_trx_id menjadi booking_trx_id
+  const [formData, setFormData] = useState({ email: "", booking_trx_id: "" });
   const [formErrors, setFormErrors] = useState<z.ZodIssue[]>([]);
   const [loading, setLoading] = useState(false);
   const [OrderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
   const [notFound, setNotFound] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-
   useEffect(() => {
-      const handleScroll = () => {
-        setIsScrolled(window.scrollY > 0);
-      };
-  
-      window.addEventListener("scroll", handleScroll);
-  
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
-    }, []);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -153,6 +153,7 @@ export default function MyOrderPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Perbarui skema validasi jika diperlukan agar sesuai dengan booking_trx_id
     const validation = viewOrderSchema.safeParse(formData);
     if (!validation.success) {
       setFormErrors(validation.error.issues);
@@ -163,7 +164,7 @@ export default function MyOrderPage() {
     setNotFound(false);
 
     try {
-      const response = await apiClient.post("/check-Order", formData);
+      const response = await apiClient.post("/check-booking", formData);
 
       if (response.status === 200 && response.data.data) {
         setOrderDetails(response.data.data);
@@ -251,7 +252,6 @@ export default function MyOrderPage() {
         </div>
       </nav>
 
-
       {/* Main Content */}
       <main className="relative pt-24 lg:pt-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -278,12 +278,12 @@ export default function MyOrderPage() {
                       Order TRX ID
                     </label>
                     {formErrors.find((error) =>
-                      error.path.includes("Order_trx_id")
+                      error.path.includes("booking_trx_id") // Perbarui validasi error path juga
                     ) && (
                       <p className="text-red-500 text-sm">
                         {
                           formErrors.find((error) =>
-                            error.path.includes("Order_trx_id")
+                            error.path.includes("booking_trx_id") // Perbarui validasi error path juga
                           )?.message
                         }
                       </p>
@@ -293,8 +293,8 @@ export default function MyOrderPage() {
                       <input
                         required
                         onChange={handleChange}
-                        value={formData.Order_trx_id}
-                        name="Order_trx_id"
+                        value={formData.booking_trx_id} // Ganti Order_trx_id menjadi booking_trx_id
+                        name="booking_trx_id" // Ganti Order_trx_id menjadi booking_trx_id
                         id="OrderTrxId"
                         placeholder="Your Order TRX ID"
                         className="h-12 lg:h-14 w-full rounded-full border border-gray-200 bg-transparent pl-12 pr-4 font-semibold focus:border-[#d14a1e] focus:outline-none"

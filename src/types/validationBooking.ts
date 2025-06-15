@@ -18,6 +18,6 @@ export const paymentSchema = z.object({
 });
 
 export const viewOrderSchema = z.object({
-    Order_trx_id: z.string().min(1, "Order TRX is required!"),
+    booking_trx_id: z.string().min(1, "Order TRX is required!"),
     email: z.string().email("Invalid Email!"), 
   });

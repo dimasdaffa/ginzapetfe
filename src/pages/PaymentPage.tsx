@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import type { OrderFormData, CartItem, Product } from "../types/type";
 import type { ZodIssue } from "zod";
 import apiClient from "../services/apiServices";
-import { paymentSchema } from "../types/validationOrder";
+import { paymentSchema } from "../types/validationBooking";
 import { CheckCircle, IdCard, ListCheckIcon } from "lucide-react";
 
 type FormData = {
