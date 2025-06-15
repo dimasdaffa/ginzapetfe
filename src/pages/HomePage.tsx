@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import type { Category, Product } from "../types/type";
 import apiClient from "../services/apiServices";
 import { Link } from "react-router-dom";
-import { Home, User, NotebookTabsIcon, ShoppingCart } from "lucide-react";
+import { Home, User, NotebookTabsIcon, ShoppingCart, Search } from "lucide-react"; // Import Search icon
 
 const fetchCategories = async () => {
   const response = await apiClient.get("/categories");
@@ -21,6 +21,8 @@ export default function HomePage() {
   const [loadingCategories, setLoadingCategories] = useState(true);
   const [loadingProducts, setLoadingProducts] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>(""); // New state for search term
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]); // New state for filtered products
 
   useEffect(() => {
     const getCategoriesData = async () => {
@@ -39,6 +41,7 @@ export default function HomePage() {
       try {
         const productsData = await fetchProducts();
         setProducts(productsData);
+        setFilteredProducts(productsData); // Initialize filtered products
       } catch (err) {
         setError("Failed to load products");
         console.error("Failed to fetch products:", err);
@@ -50,6 +53,18 @@ export default function HomePage() {
     getCategoriesData();
     getProductsData();
   }, []);
+
+  useEffect(() => {
+    if (searchTerm === "") {
+      setFilteredProducts(products);
+    } else {
+      const lowercasedSearchTerm = searchTerm.toLowerCase();
+      const newFilteredProducts = products.filter((product) =>
+        product.name.toLowerCase().includes(lowercasedSearchTerm)
+      );
+      setFilteredProducts(newFilteredProducts);
+    }
+  }, [searchTerm, products]); // Re-run when searchTerm or products change
 
   if (loadingCategories && loadingProducts) {
     return (
@@ -71,7 +86,6 @@ export default function HomePage() {
     );
   }
 
-  // Format currency to IDR
   const formatCurrency = (value: number): string => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
@@ -101,6 +115,18 @@ export default function HomePage() {
             </Link>
 
             <div className="flex items-center gap-3">
+              {/* Search Input Field (Visible on Desktop) */}
+              <div className="relative hidden lg:block">
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:border-[#d14a1e] w-64"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+              </div>
+
               <div className="hidden lg:flex items-center gap-3">
                 <Link to="/">
                   <div className=" flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border-2 border-[#d14a1e] hover:bg-[#d14a1e] hover:text-white transition-colors">
@@ -121,6 +147,13 @@ export default function HomePage() {
                 </Link>
               </div>
 
+              {/* Search Icon (Visible on Mobile, opens a search bar or page) */}
+              <Link to="/search" className="lg:hidden"> {/* You might want a dedicated search page */}
+                <div className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border-2 border-[#d14a1e] hover:bg-[#d14a1e] hover:text-white transition-colors">
+                  <Search className="h-5 w-5" />
+                </div>
+              </Link>
+              
               {/* Cart Icon */}
               <Link to="/cart">
                 <div className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border-2 border-[#d14a1e] hover:bg-[#d14a1e] hover:text-white transition-colors">
@@ -256,8 +289,8 @@ export default function HomePage() {
                 slidesOffsetAfter={20}
                 slidesOffsetBefore={20}
               >
-                {products.length > 0 ? (
-                  products.map((product) => (
+                {filteredProducts.length > 0 ? ( // Use filteredProducts here
+                  filteredProducts.map((product) => (
                     <SwiperSlide key={product.id} className="!w-fit">
                       <Link to={`/product/${product.slug}`}>
                         <div className="w-56 shrink-0 rounded-2xl border border-gray-200 bg-white p-4 hover:border-[#d14a1e] transition-colors">
@@ -312,8 +345,8 @@ export default function HomePage() {
 
             {/* Desktop: Grid */}
             <div className="hidden lg:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {products.length > 0 ? (
-                products.map((product) => (
+              {filteredProducts.length > 0 ? ( // Use filteredProducts here
+                filteredProducts.map((product) => (
                   <Link key={product.id} to={`/product/${product.slug}`}>
                     <div className="rounded-2xl border border-gray-200 bg-white p-6 hover:border-[#d14a1e] hover:shadow-lg transition-all">
                       <div className="mb-4 h-48 w-full overflow-hidden rounded-xl bg-gray-100">
@@ -365,7 +398,6 @@ export default function HomePage() {
       </main>
 
       {/* Mobile Bottom Navigation */}
-      {/* This nav now exclusively handles mobile bottom navigation */}
       <nav className="fixed bottom-0 left-0 right-0 z-30 lg:hidden">
         <div className="mx-auto max-w-2xl px-4 pb-4">
           <div className="rounded-2xl bg-black px-4 py-3">
@@ -452,7 +484,6 @@ export default function HomePage() {
       </footer>
 
       {/* Mobile spacing for bottom nav */}
-      {/* This ensures content above the footer isn't hidden by the fixed bottom nav on mobile */}
       <div className="h-24 lg:hidden"></div>
     </div>
   );
