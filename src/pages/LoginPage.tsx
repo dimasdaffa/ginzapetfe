@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail } from 'lucide-react';
+import { Mail, Lock } from 'lucide-react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -50,7 +50,7 @@ export default function LoginPage() {
           <label className="flex flex-col gap-2">
             <h4 className="font-semibold">Password</h4>
             <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
-              <Mail className="absolute left-[14px] top-1/2 h-6 w-6 shrink-0 -translate-y-1/2" />
+              <Lock className="absolute left-[14px] top-1/2 h-6 w-6 shrink-0 -translate-y-1/2" />
               <input
                 type="password"
                 required

@@ -7,6 +7,7 @@ import type { OrderFormData } from "../types/type";
 import type { z } from "zod";
 import { Link, useNavigate } from "react-router-dom";
 import { OrderSchema } from "../types/validationOrder";
+import { ArrowLeft, Calendar, Clock, ListOrderedIcon } from "lucide-react";
 
 export default function OrderPage() {
   const [formData, setFormData] = useState<OrderFormData>({
@@ -148,11 +149,7 @@ export default function OrderPage() {
                 className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full bg-white
                     ${isScrolled ? "border border-ginzapet-graylight" : ""}`}
               >
-                <img
-                  src="/assets/images/icons/back.svg"
-                  alt="icon"
-                  className="h-[22px] w-[22px] shrink-0"
-                />
+                <ArrowLeft className="h-[22px] w-[22px] shrink-0" />
               </div>
             </Link>
             <h2
@@ -238,11 +235,7 @@ export default function OrderPage() {
                       Working Schedule
                     </h3>
                     <button type="button" data-expand="WorkingScheduleJ">
-                      <img
-                        src="/assets/images/icons/bottom-Order-form.svg"
-                        alt="icon"
-                        className="h-[28px] w-[28px] sm:h-[32px] sm:w-[32px] xl:h-[36px] xl:w-[36px] shrink-0 transition-all duration-300"
-                      />
+                      <ListOrderedIcon className="h-[28px] w-[28px] sm:h-[32px] sm:w-[32px] xl:h-[36px] xl:w-[36px] shrink-0 transition-all duration-300" />
                     </button>
                   </div>
                   <div id="WorkingScheduleJ" className="flex flex-col gap-4">
@@ -252,11 +245,7 @@ export default function OrderPage() {
                           Date
                         </h4>
                         <div className="relative h-[48px] sm:h-[52px] xl:h-[56px] w-full overflow-hidden rounded-full border border-ginzapet-graylight">
-                          <img
-                            src="/assets/images/icons/date-Order-form.svg"
-                            alt="icon"
-                            className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2"
-                          />
+                          <Calendar className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2" />
                           <input
                             value={formData.schedule_at}
                             onChange={handleChange}
@@ -273,11 +262,7 @@ export default function OrderPage() {
                           Start Time At
                         </h4>
                         <div className="relative h-[48px] sm:h-[52px] xl:h-[56px] w-full overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
-                          <img
-                            src="/assets/images/icons/clock-Order-form.svg"
-                            alt="icon"
-                            className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2"
-                          />
+                          <Clock className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2" />
                           <select
                             value={formData.started_time}
                             onChange={handleChange}

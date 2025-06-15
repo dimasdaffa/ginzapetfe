@@ -3,7 +3,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import type { Category, Product } from "../types/type";
 import apiClient from "../services/apiServices";
 import { Link } from "react-router-dom";
-import { Home, User, NotebookTabsIcon, ShoppingCart, Search } from "lucide-react"; // Import Search icon
+import {
+  Home,
+  User,
+  NotebookTabsIcon,
+  ShoppingCart,
+  Search,
+} from "lucide-react"; // Import Search icon
 
 const fetchCategories = async () => {
   const response = await apiClient.get("/categories");
@@ -148,12 +154,16 @@ export default function HomePage() {
               </div>
 
               {/* Search Icon (Visible on Mobile, opens a search bar or page) */}
-              <Link to="/search" className="lg:hidden"> {/* You might want a dedicated search page */}
-                <div className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border-2 border-[#d14a1e] hover:bg-[#d14a1e] hover:text-white transition-colors">
-                  <Search className="h-5 w-5" />
-                </div>
-              </Link>
-              
+              <div className="lg:hidden">
+                <input
+                  type="text"
+                  placeholder="Search products.."
+                  className="p-2 border border-gray-300 rounded-full focus:outline-none focus:border-[#d14a1e] "
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+
               {/* Cart Icon */}
               <Link to="/cart">
                 <div className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border-2 border-[#d14a1e] hover:bg-[#d14a1e] hover:text-white transition-colors">
@@ -405,9 +415,7 @@ export default function HomePage() {
               <Link to="/" className="flex-1">
                 <div className="flex items-center justify-center gap-2 rounded-full bg-[#d14a1e] px-4 py-2">
                   <Home className="h-5 w-5 text-white" />
-                  <span className="text-sm font-semibold text-white">
-                    Home
-                  </span>
+                  <span className="text-sm font-semibold text-white">Home</span>
                 </div>
               </Link>
               <Link to="/my-Order" className="ml-4">
