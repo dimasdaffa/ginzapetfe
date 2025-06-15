@@ -226,7 +226,7 @@ export default function OrderPage() {
               </h1>
             </header>
 
-            <div className="xl:grid xl:grid-cols-2 xl:gap-8 flex flex-col gap-4 sm:gap-5 lg:gap-6 xl:gap-8">
+            <div className="xl:grid xl:grid-cols-2 xl:gap-8 flex flex-col gap-4 sm:gap-5 lg:gap-6 ">
               <div className="xl:col-span-2">
                 {/* Working Schedule Section */}
                 <section
