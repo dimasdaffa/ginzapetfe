@@ -17,11 +17,10 @@ const PrivateRoute = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const currentUser = localStorage.getItem('currentUser');
-    setIsAuthenticated(!!currentUser); // Set to true if currentUser exists
+    setIsAuthenticated(!!currentUser);
   }, []);
 
   if (isAuthenticated === null) {
-    // Tampilkan loading state atau semacamnya saat memeriksa otentikasi
     return <div>Loading authentication...</div>;
   }
 
@@ -53,7 +52,7 @@ function App() {
           }
         />
         <Route
-          path="/booking"
+          path="/order"
           element={
             <PrivateRoute>
               <OrderPage />
@@ -69,7 +68,7 @@ function App() {
           }
         />
         <Route
-          path="/success-booking"
+          path="/success-order"
           element={
             <PrivateRoute>
               <SuccessOrderPage />
@@ -77,7 +76,7 @@ function App() {
           }
         />
         <Route
-          path="/my-booking"
+          path="/my-order"
           element={
             <PrivateRoute>
               <MyOrderPage />
