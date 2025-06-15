@@ -103,7 +103,7 @@ export default function BookingPage() {
     }
 
     localStorage.setItem("bookingData", JSON.stringify(formData));
-    alert("Booking information saved!");
+    alert("Order information saved!");
     navigate("/payment");
 
     setFormErrors([]);
@@ -154,7 +154,7 @@ export default function BookingPage() {
               className={`font-semibold transition-all duration-300
                 ${isScrolled ? "" : "text-white"}`}
             >
-              Booking Services
+              Order Products
             </h2>
           </div>
         </div>
@@ -170,7 +170,7 @@ export default function BookingPage() {
                     1
                   </div>
                   <p className="text-xs font-semibold leading-[18px] text-white">
-                    Booking
+                    Order
                   </p>
                 </div>
               </div>
@@ -208,7 +208,7 @@ export default function BookingPage() {
         <form onSubmit={handleSubmit}>
           <header className="flex flex-col gap-[2px]">
             <h1 className="text-[26px] font-extrabold leading-[39px] text-white">
-              Start Booking
+              Start Order
             </h1>
           </header>
           <div className="mt-[20px] flex flex-col gap-5">

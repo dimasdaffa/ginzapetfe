@@ -87,13 +87,13 @@ export default function MyBookingPage() {
             className="size-[70px] shrink-0"
           />
           <h1 className="text-[26px] font-extrabold leading-[39px] text-white">
-            Check My Booking
+            Check My Order
           </h1>
         </header>
         <form onSubmit={handleSubmit}>
           <section className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]">
             <label className="flex flex-col gap-2">
-              <h4 className="font-semibold">Booking TRX ID</h4>
+              <h4 className="font-semibold">Order TRX ID</h4>
               {formErrors.find((error) =>
                 error.path.includes("booking_trx_id")
               ) && (
@@ -118,7 +118,7 @@ export default function MyBookingPage() {
                   name="booking_trx_id"
                   id="bookingTrxId"
                   defaultValue=""
-                  placeholder="Your Booking TRX ID"
+                  placeholder="Your Order TRX ID"
                   className="h-full w-full rounded-full bg-transparent pl-[50px] font-semibold leading-6 placeholder:text-base placeholder:font-normal focus:outline-none"
                   type="text"
                 />

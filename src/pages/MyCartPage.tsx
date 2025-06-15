@@ -224,7 +224,7 @@ export default function MyCartPage() {
           </div>
         </AccordionSection>
         <AccordionSection
-          title="Booking Details"
+          title="Order Details"
           iconSrc="/assets/images/icons/bottom-booking-form.svg"
         >
           <div className="flex flex-col gap-4" id="BookingDetailsJ">

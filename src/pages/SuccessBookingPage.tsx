@@ -27,7 +27,7 @@ export default function SuccessBookingPage() {
           id="Title"
           className="font-semibold text-white transition-all duration-300"
         >
-          Finished Booking
+          Finished Order
         </h2>
       </div>
     </div>
@@ -44,7 +44,7 @@ export default function SuccessBookingPage() {
                 1
               </div>
               <p className="text-xs font-semibold leading-[18px] text-white">
-                Booking
+                Order
               </p>
             </div>
           </div>
@@ -89,7 +89,7 @@ export default function SuccessBookingPage() {
     />
     <header className="mt-[19px] flex flex-col gap-[6px]">
       <h1 className="text-[26px] font-extrabold leading-[39px] text-white">
-        Booking Finished
+        Order Finished
       </h1>
       <p className="leading-[30px] text-white">
         Kami akan memeriksa pembayaran Anda silahkan periksa status secara
@@ -101,7 +101,7 @@ export default function SuccessBookingPage() {
       className="mt-[30px] flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
     >
       <label className="flex flex-col gap-2">
-        <h4 className="font-semibold">Booking TRX ID</h4>
+        <h4 className="font-semibold">Order TRX ID</h4>
         <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight bg-[#F4F5F7]">
           <img
             src="/assets/images/icons/note-id-finished.svg"
@@ -146,7 +146,7 @@ export default function SuccessBookingPage() {
             Penting Diingat:
           </p>
           <strong className="font-semibold">
-            Catat ID Booking dan Email Anda untuk memeriksa status
+            Catat ID Order dan Email Anda untuk memeriksa status
           </strong>
         </div>
       </div>
@@ -154,12 +154,12 @@ export default function SuccessBookingPage() {
     <section id="Btn" className="mt-[54px] flex flex-col gap-[14px]">
       <Link to={"/"}>
         <p className="w-full rounded-full bg-ginzapet-orange py-[14px] text-center font-semibold text-white transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
-          Order Service Again
+          Order Product Again
         </p>
       </Link>
       <Link to={"/my-booking"}>
         <p className="w-full rounded-full bg-ginzapet-black py-[14px] text-center font-semibold text-white">
-          View My Booking Details
+          View My Order Details
         </p>
       </Link>
     </section>

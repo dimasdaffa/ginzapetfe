@@ -223,7 +223,7 @@ export default function PaymentPage() {
               className={`font-semibold transition-all duration-300
                 ${isScrolled ? "" : "text-white"}`}
             >
-              Booking Products
+              Order Products
             </h2>
           </div>
         </div>
@@ -240,7 +240,7 @@ export default function PaymentPage() {
                     1
                   </div>
                   <p className="text-xs font-semibold leading-[18px] text-white">
-                    Booking
+                    Order
                   </p>
                 </div>
               </div>
@@ -363,7 +363,7 @@ export default function PaymentPage() {
             className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
           >
             <div className="flex items-center justify-between">
-              <h3 className="font-semibold">Booking Details</h3>
+              <h3 className="font-semibold">Order Details</h3>
             </div>
             <div className="flex flex-col gap-4" id="BookingDetailsJ">
               <div className="flex justify-between">
