@@ -1,10 +1,10 @@
 import { useState } from "react";
 import type { z } from "zod";
-import type { BookingDetails } from "../types/type";
-import { viewBookingSchema } from "../types/validationBooking";
+import type { OrderDetails } from "../types/type";
+import { viewOrderSchema } from "../types/validationOrder";
 import apiClient, { isAxiosError } from "../services/apiServices";
 import { Link } from "react-router-dom";
-import React from "react"; // Import React
+import React from "react";
 
 import {
   Search,
@@ -22,7 +22,6 @@ import {
   CheckCircle,
 } from "lucide-react";
 
-// Helper function for currency formatting
 const formatCurrency = (price: number) => {
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
@@ -38,15 +37,26 @@ interface AccordionSectionProps {
   defaultOpen?: boolean;
 }
 
-function AccordionSection({ title, children, defaultOpen = true }: AccordionSectionProps) {
+function AccordionSection({
+  title,
+  children,
+  defaultOpen = true,
+}: AccordionSectionProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
     <section className="rounded-2xl lg:rounded-3xl border border-gray-200 bg-white p-4 lg:p-6">
       <div className="flex items-center justify-between mb-4">
         <h3 className="font-semibold text-lg lg:text-xl">{title}</h3>
-        <button onClick={() => setIsOpen(!isOpen)} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-          {isOpen ? <ChevronUp className="h-6 w-6" /> : <ChevronDown className="h-6 w-6" />}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+        >
+          {isOpen ? (
+            <ChevronUp className="h-6 w-6" />
+          ) : (
+            <ChevronDown className="h-6 w-6" />
+          )}
         </button>
       </div>
       {isOpen && <div className="space-y-4">{children}</div>}
@@ -57,7 +67,7 @@ function AccordionSection({ title, children, defaultOpen = true }: AccordionSect
 // ProgressIndicator Component
 function ProgressIndicator({ isPaid }: { isPaid: boolean }) {
   const steps = [
-    { number: 1, label: "Booking\nCreated", completed: true },
+    { number: 1, label: "Order\nCreated", completed: true },
     { number: 2, label: "Verifying\nPayment", completed: true },
     { number: 3, label: "Start\nWorking", completed: isPaid },
   ];
@@ -66,13 +76,18 @@ function ProgressIndicator({ isPaid }: { isPaid: boolean }) {
     <div className="relative w-full pb-12">
       <div className="flex items-center justify-between">
         {steps.map((step, index) => (
-          <div key={step.number} className="flex flex-col items-center relative">
+          <div
+            key={step.number}
+            className="flex flex-col items-center relative"
+          >
             {/* Progress Line */}
             {index < steps.length - 1 && (
               <div className="absolute top-3 left-6 w-full h-0.5 bg-gray-200 lg:w-32">
                 <div
                   className={`h-full transition-all duration-500 ${
-                    step.completed && steps[index + 1].completed ? "bg-green-500" : "bg-gray-200"
+                    step.completed && steps[index + 1].completed
+                      ? "bg-green-500"
+                      : "bg-gray-200"
                   }`}
                 />
               </div>
@@ -84,11 +99,17 @@ function ProgressIndicator({ isPaid }: { isPaid: boolean }) {
                 step.completed ? "bg-green-500" : "bg-gray-300"
               }`}
             >
-              {step.completed ? <CheckCircle className="h-4 w-4 lg:h-5 lg:w-5" /> : step.number}
+              {step.completed ? (
+                <CheckCircle className="h-4 w-4 lg:h-5 lg:w-5" />
+              ) : (
+                step.number
+              )}
             </div>
 
             {/* Step Label */}
-            <p className="text-xs lg:text-sm font-semibold text-center mt-2 whitespace-pre-line">{step.label}</p>
+            <p className="text-xs lg:text-sm font-semibold text-center mt-2 whitespace-pre-line">
+              {step.label}
+            </p>
           </div>
         ))}
       </div>
@@ -96,13 +117,11 @@ function ProgressIndicator({ isPaid }: { isPaid: boolean }) {
   );
 }
 
-export default function MyBookingPage() {
-  const [formData, setFormData] = useState({ email: "", booking_trx_id: "" });
+export default function MyOrderPage() {
+  const [formData, setFormData] = useState({ email: "", Order_trx_id: "" });
   const [formErrors, setFormErrors] = useState<z.ZodIssue[]>([]);
   const [loading, setLoading] = useState(false);
-  const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(
-    null
-  );
+  const [OrderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
   const [notFound, setNotFound] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -117,7 +136,7 @@ export default function MyBookingPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const validation = viewBookingSchema.safeParse(formData);
+    const validation = viewOrderSchema.safeParse(formData);
     if (!validation.success) {
       setFormErrors(validation.error.issues);
       return;
@@ -127,19 +146,19 @@ export default function MyBookingPage() {
     setNotFound(false);
 
     try {
-      const response = await apiClient.post("/check-booking", formData);
+      const response = await apiClient.post("/check-Order", formData);
 
       if (response.status === 200 && response.data.data) {
-        setBookingDetails(response.data.data);
+        setOrderDetails(response.data.data);
       } else {
         setNotFound(true);
-        setBookingDetails(null);
+        setOrderDetails(null);
       }
     } catch (err) {
       if (isAxiosError(err)) {
         if (err.response?.status === 404) {
           setNotFound(true);
-          setBookingDetails(null);
+          setOrderDetails(null);
         } else {
           // Handle other errors, e.g., show a generic error message
           console.error("An unexpected error occurred:", err);
@@ -176,7 +195,9 @@ export default function MyBookingPage() {
             <div className="flex h-16 w-16 lg:h-20 lg:w-20 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
               <Search className="h-8 w-8 lg:h-10 lg:w-10 text-white" />
             </div>
-            <h1 className="text-2xl lg:text-4xl font-extrabold text-white lg:text-black text-center">Check My Booking</h1>
+            <h1 className="text-2xl lg:text-4xl font-extrabold text-white lg:text-black text-center">
+              Check My Order
+            </h1>
           </header>
 
           <div className="max-w-4xl mx-auto">
@@ -185,12 +206,21 @@ export default function MyBookingPage() {
               <div className="rounded-2xl lg:rounded-3xl border border-gray-200 bg-white p-4 lg:p-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
                   <div className="space-y-2">
-                    <label htmlFor="bookingTrxId" className="font-semibold text-lg">
-                      Booking TRX ID
+                    <label
+                      htmlFor="OrderTrxId"
+                      className="font-semibold text-lg"
+                    >
+                      Order TRX ID
                     </label>
-                    {formErrors.find((error) => error.path.includes("booking_trx_id")) && (
+                    {formErrors.find((error) =>
+                      error.path.includes("Order_trx_id")
+                    ) && (
                       <p className="text-red-500 text-sm">
-                        {formErrors.find((error) => error.path.includes("booking_trx_id"))?.message}
+                        {
+                          formErrors.find((error) =>
+                            error.path.includes("Order_trx_id")
+                          )?.message
+                        }
                       </p>
                     )}
                     <div className="relative">
@@ -198,10 +228,10 @@ export default function MyBookingPage() {
                       <input
                         required
                         onChange={handleChange}
-                        value={formData.booking_trx_id}
-                        name="booking_trx_id"
-                        id="bookingTrxId"
-                        placeholder="Your Booking TRX ID"
+                        value={formData.Order_trx_id}
+                        name="Order_trx_id"
+                        id="OrderTrxId"
+                        placeholder="Your Order TRX ID"
                         className="h-12 lg:h-14 w-full rounded-full border border-gray-200 bg-transparent pl-12 pr-4 font-semibold focus:border-[#d14a1e] focus:outline-none"
                         type="text"
                       />
@@ -209,12 +239,21 @@ export default function MyBookingPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="emailAddress" className="font-semibold text-lg">
+                    <label
+                      htmlFor="emailAddress"
+                      className="font-semibold text-lg"
+                    >
                       Email Address
                     </label>
-                    {formErrors.find((error) => error.path.includes("email")) && (
+                    {formErrors.find((error) =>
+                      error.path.includes("email")
+                    ) && (
                       <p className="text-red-500 text-sm">
-                        {formErrors.find((error) => error.path.includes("email"))?.message}
+                        {
+                          formErrors.find((error) =>
+                            error.path.includes("email")
+                          )?.message
+                        }
                       </p>
                     )}
                     <div className="relative">
@@ -238,7 +277,7 @@ export default function MyBookingPage() {
                   disabled={loading}
                   className="w-full mt-6 rounded-full bg-[#d14a1e] py-3 lg:py-4 text-center font-semibold text-white hover:bg-[#b8401a] transition-colors hover:shadow-lg disabled:opacity-50"
                 >
-                  {loading ? "Searching..." : "Find My Booking"}
+                  {loading ? "Searching..." : "Find My Order"}
                 </button>
               </div>
             </form>
@@ -251,17 +290,18 @@ export default function MyBookingPage() {
                 </div>
                 <h3 className="font-bold text-xl mb-2">Oops! Not Found</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Kami tidak dapat menemukan pesanan anda silahkan diperiksa kembali
+                  Kami tidak dapat menemukan pesanan anda silahkan diperiksa
+                  kembali
                 </p>
               </div>
             )}
 
-            {/* Booking Results */}
-            {bookingDetails && !notFound && (
+            {/* Order Results */}
+            {OrderDetails && !notFound && (
               <div className="space-y-6 lg:space-y-8 pb-24 lg:pb-8">
-                {/* Booking Status */}
-                <AccordionSection title="Booking Status">
-                  <ProgressIndicator isPaid={bookingDetails.is_paid} />
+                {/* Order Status */}
+                <AccordionSection title="Order Status">
+                  <ProgressIndicator isPaid={OrderDetails.is_paid} />
                 </AccordionSection>
 
                 {/* Desktop Two-Column Layout */}
@@ -279,7 +319,7 @@ export default function MyBookingPage() {
                               className="h-12 w-full rounded-full border border-gray-200 bg-gray-50 pl-12 pr-4 font-semibold focus:outline-none"
                               readOnly
                               type="text"
-                              value={bookingDetails.schedule_at}
+                              value={OrderDetails.schedule_at}
                             />
                           </div>
                         </div>
@@ -291,7 +331,7 @@ export default function MyBookingPage() {
                               className="h-12 w-full rounded-full border border-gray-200 bg-gray-50 pl-12 pr-4 font-semibold focus:outline-none"
                               readOnly
                               type="text"
-                              value={bookingDetails.started_time}
+                              value={OrderDetails.started_time}
                             />
                           </div>
                         </div>
@@ -301,52 +341,64 @@ export default function MyBookingPage() {
                     {/* Services Ordered */}
                     <AccordionSection title="Services Ordered">
                       <div className="space-y-4">
-                        {bookingDetails.transaction_details.map((detail, index) => (
-                          <div key={detail.id} className="flex flex-col gap-4">
-                            <div className="flex items-center gap-4">
-                              <div className="flex h-20 w-20 lg:h-24 lg:w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-gray-100">
-                                <img
-                                  src={`${BASE_URL}/${detail.product.thumbnail}`}
-                                  alt={detail.product.name}
-                                  className="h-full w-full object-cover"
-                                />
-                              </div>
-                              <div className="flex-1 space-y-2">
-                                <h4 className="font-semibold text-sm lg:text-base line-clamp-2">
-                                  {detail.product.name}
-                                </h4>
-                                <div className="flex items-center gap-4 text-sm text-gray-500">
-                                  <div className="flex items-center gap-1">
-                                    <DollarSign className="h-4 w-4" />
-                                    <span>{formatCurrency(detail.price)}</span>
-                                  </div>
-                                  <div className="flex items-center gap-1">
-                                    <Clock className="h-4 w-4" />
-                                    <span>{detail.product.stok} Stok Tersedia</span>
+                        {OrderDetails.transaction_details.map(
+                          (detail, index) => (
+                            <div
+                              key={detail.id}
+                              className="flex flex-col gap-4"
+                            >
+                              <div className="flex items-center gap-4">
+                                <div className="flex h-20 w-20 lg:h-24 lg:w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-gray-100">
+                                  <img
+                                    src={`${BASE_URL}/${detail.product.thumbnail}`}
+                                    alt={detail.product.name}
+                                    className="h-full w-full object-cover"
+                                  />
+                                </div>
+                                <div className="flex-1 space-y-2">
+                                  <h4 className="font-semibold text-sm lg:text-base line-clamp-2">
+                                    {detail.product.name}
+                                  </h4>
+                                  <div className="flex items-center gap-4 text-sm text-gray-500">
+                                    <div className="flex items-center gap-1">
+                                      <DollarSign className="h-4 w-4" />
+                                      <span>
+                                        {formatCurrency(detail.price)}
+                                      </span>
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                      <Clock className="h-4 w-4" />
+                                      <span>
+                                        {detail.product.stok} Stok Tersedia
+                                      </span>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
+                              {index <
+                                OrderDetails.transaction_details.length - 1 && (
+                                <hr className="border-gray-200" />
+                              )}
                             </div>
-                            {index < bookingDetails.transaction_details.length - 1 && (
-                              <hr className="border-gray-200" />
-                            )}
-                          </div>
-                        ))}
+                          )
+                        )}
                       </div>
                     </AccordionSection>
                   </div>
 
                   {/* Right Column */}
                   <div className="space-y-6">
-                    {/* Booking Details */}
-                    <AccordionSection title="Booking Details">
+                    {/* Order Details */}
+                    <AccordionSection title="Order Details">
                       <div className="space-y-4">
                         <div className="flex justify-between items-center">
                           <div className="flex items-center gap-2">
                             <FileText className="h-5 w-5 text-gray-400" />
-                            <span className="text-gray-600">Booking ID</span>
+                            <span className="text-gray-600">Order ID</span>
                           </div>
-                          <span className="font-semibold">{bookingDetails.booking_trx_id}</span>
+                          <span className="font-semibold">
+                            {OrderDetails.Order_trx_id}
+                          </span>
                         </div>
                         <hr className="border-gray-200" />
                         <div className="flex justify-between items-center">
@@ -354,7 +406,9 @@ export default function MyBookingPage() {
                             <DollarSign className="h-5 w-5 text-gray-400" />
                             <span className="text-gray-600">Sub Total</span>
                           </div>
-                          <span className="font-semibold">{formatCurrency(bookingDetails.sub_total)}</span>
+                          <span className="font-semibold">
+                            {formatCurrency(OrderDetails.sub_total)}
+                          </span>
                         </div>
                         <hr className="border-gray-200" />
                         <div className="flex justify-between items-center">
@@ -362,7 +416,9 @@ export default function MyBookingPage() {
                             <DollarSign className="h-5 w-5 text-gray-400" />
                             <span className="text-gray-600">Tax 11%</span>
                           </div>
-                          <span className="font-semibold">{formatCurrency(bookingDetails.total_tax_amount)}</span>
+                          <span className="font-semibold">
+                            {formatCurrency(OrderDetails.total_tax_amount)}
+                          </span>
                         </div>
                         <hr className="border-gray-200" />
                         <div className="flex justify-between items-center">
@@ -371,13 +427,13 @@ export default function MyBookingPage() {
                             <span className="text-gray-600">Grand Total</span>
                           </div>
                           <span className="text-xl font-bold text-[#d14a1e]">
-                            {formatCurrency(bookingDetails.total_amount)}
+                            {formatCurrency(OrderDetails.total_amount)}
                           </span>
                         </div>
                         <hr className="border-gray-200" />
                         <div className="overflow-hidden rounded-2xl">
                           <img
-                            src={`${BASE_URL}/${bookingDetails.proof}`}
+                            src={`${BASE_URL}/${OrderDetails.proof}`}
                             alt="Payment proof"
                             className="h-48 w-full object-cover"
                           />
@@ -394,7 +450,7 @@ export default function MyBookingPage() {
                             <User className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                             <input
                               readOnly
-                              value={bookingDetails.name}
+                              value={OrderDetails.name}
                               className="h-12 w-full rounded-full border border-gray-200 bg-gray-50 pl-12 pr-4 font-semibold focus:outline-none"
                               type="text"
                             />
@@ -406,7 +462,7 @@ export default function MyBookingPage() {
                             <Mail className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                             <input
                               readOnly
-                              value={bookingDetails.email}
+                              value={OrderDetails.email}
                               className="h-12 w-full rounded-full border border-gray-200 bg-gray-50 pl-12 pr-4 font-semibold focus:outline-none"
                               type="email"
                             />
@@ -418,7 +474,7 @@ export default function MyBookingPage() {
                             <Phone className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                             <input
                               readOnly
-                              value={bookingDetails.phone}
+                              value={OrderDetails.phone}
                               className="h-12 w-full rounded-full border border-gray-200 bg-gray-50 pl-12 pr-4 font-semibold focus:outline-none"
                               type="tel"
                             />
@@ -439,7 +495,7 @@ export default function MyBookingPage() {
                         <textarea
                           readOnly
                           className="h-28 w-full rounded-2xl border border-gray-200 bg-gray-50 pl-12 pr-4 pt-4 font-semibold focus:outline-none resize-none"
-                          value={bookingDetails.address}
+                          value={OrderDetails.address}
                         />
                       </div>
                     </div>
@@ -449,7 +505,7 @@ export default function MyBookingPage() {
                         <MapPin className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                         <input
                           readOnly
-                          value={bookingDetails.city}
+                          value={OrderDetails.city}
                           className="h-12 w-full rounded-full border border-gray-200 bg-gray-50 pl-12 pr-4 font-semibold focus:outline-none"
                           type="text"
                         />
@@ -461,7 +517,7 @@ export default function MyBookingPage() {
                         <MapPin className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                         <input
                           readOnly
-                          value={bookingDetails.post_code}
+                          value={OrderDetails.post_code}
                           className="h-12 w-full rounded-full border border-gray-200 bg-gray-50 pl-12 pr-4 font-semibold focus:outline-none"
                           type="text"
                         />
@@ -485,10 +541,12 @@ export default function MyBookingPage() {
                   <FileText className="h-5 w-5 text-white" />
                 </div>
               </Link>
-              <Link to="/my-booking" className="flex-1">
+              <Link to="/my-Order" className="flex-1">
                 <div className="flex items-center justify-center gap-2 rounded-full bg-[#d14a1e] px-4 py-2">
                   <Search className="h-5 w-5 text-white" />
-                  <span className="text-sm font-semibold text-white">My Booking</span>
+                  <span className="text-sm font-semibold text-white">
+                    My Order
+                  </span>
                 </div>
               </Link>
               <Link to="/profile">

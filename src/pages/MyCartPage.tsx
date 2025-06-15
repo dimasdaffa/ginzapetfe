@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import AccordionSection from "../components/AccordionSection";
 import { ArrowLeft, DollarSign, Clock, Trash2 } from "lucide-react";
 
-
 export default function MyCartPage() {
   const [productDetails, setProductDetails] = useState<Product[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -102,7 +101,9 @@ export default function MyCartPage() {
 
   if (error) {
     return (
-      <p className="text-center py-10 text-red-600">Error loading data: {error}</p>
+      <p className="text-center py-10 text-red-600">
+        Error loading data: {error}
+      </p>
     );
   }
 
@@ -111,7 +112,7 @@ export default function MyCartPage() {
       {/* Background Image */}
       <div className="absolute left-0 right-0 top-0 lg:hidden">
         <img
-          src="/assets/images/backgrounds/orange.png" 
+          src="/assets/images/backgrounds/orange.png"
           alt="background"
           className="h-48 w-full object-cover object-bottom"
         />
@@ -137,7 +138,9 @@ export default function MyCartPage() {
             <Link to="/" className="absolute left-4 lg:left-6">
               <div
                 className={`flex h-11 w-11 lg:h-12 lg:w-12 items-center justify-center rounded-full bg-white transition-all duration-300 ${
-                  isScrolled ? "border border-gray-200" : "lg:bg-white/20 lg:backdrop-blur-sm"
+                  isScrolled
+                    ? "border border-gray-200"
+                    : "lg:bg-white/20 lg:backdrop-blur-sm"
                 }`}
               >
                 <ArrowLeft className="h-5 w-5 lg:h-6 lg:w-6 text-gray-700" />
@@ -161,7 +164,7 @@ export default function MyCartPage() {
           <div className="lg:hidden flex flex-col gap-5 pb-40">
             <AccordionSection
               title="Home Services"
-              iconSrc="/assets/images/icons/bottom-booking-form.svg" 
+              iconSrc="/assets/images/icons/bottom-Order-form.svg"
             >
               <div className="flex flex-col gap-4">
                 {productDetails.length > 0 ? (
@@ -171,21 +174,27 @@ export default function MyCartPage() {
                         <div className="flex items-center gap-3">
                           <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-gray-100">
                             <img
-                              src={`${BASE_URL}/${product.thumbnail}`} 
+                              src={`${BASE_URL}/${product.thumbnail}`}
                               alt={product.name}
                               className="h-full w-full object-cover"
                             />
                           </div>
                           <div className="flex flex-col gap-1 flex-1">
-                            <h3 className="line-clamp-2 text-sm font-semibold leading-5">{product.name}</h3>
+                            <h3 className="line-clamp-2 text-sm font-semibold leading-5">
+                              {product.name}
+                            </h3>
                             <div className="flex items-center gap-4">
                               <div className="flex items-center gap-1">
                                 <DollarSign className="h-3 w-3 text-gray-400" />
-                                <p className="text-xs text-gray-500">{formatCurrency(product.price)}</p>
+                                <p className="text-xs text-gray-500">
+                                  {formatCurrency(product.price)}
+                                </p>
                               </div>
                               <div className="flex items-center gap-1">
                                 <Clock className="h-3 w-3 text-gray-400" />
-                                <p className="text-xs text-gray-500">{product.stok} Stok tersedia</p>
+                                <p className="text-xs text-gray-500">
+                                  {product.stok} Stok tersedia
+                                </p>
                               </div>
                             </div>
                           </div>
@@ -197,18 +206,22 @@ export default function MyCartPage() {
                           <Trash2 className="h-5 w-5 text-red-500" />
                         </button>
                       </div>
-                      {index < productDetails.length - 1 && <hr className="border-gray-200" />}
+                      {index < productDetails.length - 1 && (
+                        <hr className="border-gray-200" />
+                      )}
                     </div>
                   ))
                 ) : (
-                  <p className="text-center text-gray-500 py-8">Your cart is empty</p>
+                  <p className="text-center text-gray-500 py-8">
+                    Your cart is empty
+                  </p>
                 )}
               </div>
             </AccordionSection>
 
             <AccordionSection
-              title="Booking Details"
-              iconSrc="/assets/images/icons/bottom-booking-form.svg" 
+              title="Order Details"
+              iconSrc="/assets/images/icons/bottom-Order-form.svg"
             >
               <div className="flex flex-col gap-4">
                 <div className="flex justify-between items-center">
@@ -216,7 +229,9 @@ export default function MyCartPage() {
                     <DollarSign className="h-5 w-5 text-gray-400" />
                     <p className="text-gray-600">Sub Total</p>
                   </div>
-                  <strong className="font-semibold">{formatCurrency(subtotal)}</strong>
+                  <strong className="font-semibold">
+                    {formatCurrency(subtotal)}
+                  </strong>
                 </div>
                 <hr className="border-gray-200" />
                 <div className="flex justify-between items-center">
@@ -224,7 +239,9 @@ export default function MyCartPage() {
                     <DollarSign className="h-5 w-5 text-gray-400" />
                     <p className="text-gray-600">Tax 11%</p>
                   </div>
-                  <strong className="font-semibold">{formatCurrency(tax)}</strong>
+                  <strong className="font-semibold">
+                    {formatCurrency(tax)}
+                  </strong>
                 </div>
                 <hr className="border-gray-200" />
               </div>
@@ -237,7 +254,11 @@ export default function MyCartPage() {
             <div className="lg:col-span-2">
               <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
                 <div className="flex items-center gap-3 mb-6">
-                  <img src="/assets/images/icons/bottom-booking-form.svg" alt="icon" className="h-6 w-6" />
+                  <img
+                    src="/assets/images/icons/bottom-Order-form.svg"
+                    alt="icon"
+                    className="h-6 w-6"
+                  />
                   <h2 className="text-xl font-semibold">Cart Items</h2>
                 </div>
 
@@ -256,7 +277,9 @@ export default function MyCartPage() {
                           />
                         </div>
                         <div className="flex-1">
-                          <h3 className="font-semibold text-lg mb-2 line-clamp-2">{product.name}</h3>
+                          <h3 className="font-semibold text-lg mb-2 line-clamp-2">
+                            {product.name}
+                          </h3>
                           <div className="flex items-center gap-6 text-sm text-gray-500">
                             <div className="flex items-center gap-1">
                               <DollarSign className="h-4 w-4" />
@@ -280,7 +303,9 @@ export default function MyCartPage() {
                     ))
                   ) : (
                     <div className="text-center py-12">
-                      <p className="text-gray-500 text-lg">Your cart is empty</p>
+                      <p className="text-gray-500 text-lg">
+                        Your cart is empty
+                      </p>
                       <Link
                         to="/"
                         className="text-[#d14a1e] hover:underline mt-2 inline-block"
@@ -297,14 +322,20 @@ export default function MyCartPage() {
             <div className="lg:col-span-1">
               <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sticky top-32">
                 <div className="flex items-center gap-3 mb-6">
-                  <img src="/assets/images/icons/bottom-booking-form.svg" alt="icon" className="h-6 w-6" />
+                  <img
+                    src="/assets/images/icons/bottom-Order-form.svg"
+                    alt="icon"
+                    className="h-6 w-6"
+                  />
                   <h2 className="text-xl font-semibold">Order Summary</h2>
                 </div>
 
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <span className="text-gray-600">Subtotal</span>
-                    <span className="font-semibold">{formatCurrency(subtotal)}</span>
+                    <span className="font-semibold">
+                      {formatCurrency(subtotal)}
+                    </span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-gray-600">Tax (11%)</span>
@@ -313,12 +344,14 @@ export default function MyCartPage() {
                   <hr className="border-gray-200" />
                   <div className="flex justify-between items-center text-lg">
                     <span className="font-semibold">Total</span>
-                    <span className="font-bold text-[#d14a1e]">{formatCurrency(total)}</span>
+                    <span className="font-bold text-[#d14a1e]">
+                      {formatCurrency(total)}
+                    </span>
                   </div>
                 </div>
 
-                {productDetails.length > 0 && ( 
-                  <Link to="/booking" className="block mt-6">
+                {productDetails.length > 0 && (
+                  <Link to="/Order" className="block mt-6">
                     <button className="w-full bg-[#d14a1e] text-white font-semibold py-4 px-6 rounded-full hover:bg-[#b8401a] transition-colors hover:shadow-lg">
                       Continue to Checkout
                     </button>
@@ -335,11 +368,13 @@ export default function MyCartPage() {
         <div className="mx-auto max-w-2xl px-4">
           <div className="flex items-center gap-4 rounded-2xl bg-black px-5 py-4">
             <div className="flex-1">
-              <p className="text-2xl font-extrabold text-white">{formatCurrency(total)}</p>
+              <p className="text-2xl font-extrabold text-white">
+                {formatCurrency(total)}
+              </p>
               <p className="text-sm text-white/80">Grand Total</p>
             </div>
-            {productDetails.length > 0 && ( 
-              <Link to="/booking" className="flex-1">
+            {productDetails.length > 0 && (
+              <Link to="/Order" className="flex-1">
                 <button className="w-full rounded-full bg-[#d14a1e] px-6 py-3 text-center font-semibold text-white hover:bg-[#b8401a] transition-colors">
                   Continue
                 </button>

@@ -34,7 +34,7 @@ export interface Category {
   popular_products: Product[]; 
 }
 
-export interface BookingDetails {
+export interface OrderDetails {
   id: number;
   name: string;
   phone: string;
@@ -42,7 +42,7 @@ export interface BookingDetails {
   address: string;
   post_code: string;
   city: string;
-  booking_trx_id: string;
+  Order_trx_id: string;
   is_paid: boolean;
   sub_total: number;
   total_tax_amount: number;
@@ -66,7 +66,7 @@ export interface CartItem {
   quantity: number;
 }
 
-export type BookingFormData = {
+export type OrderFormData = {
   name: string;
   email: string;
   phone: string;
@@ -75,7 +75,7 @@ export type BookingFormData = {
   post_code: string;
   address: string;
   city: string;
-  // Based on the StoreBookingTransactionRequest in PHP, these fields would also be expected:
+  // Based on the StoreOrderTransactionRequest in PHP, these fields would also be expected:
   // proof: string; // or File if it's handled as a file object in the frontend
   // service_ids: number[];
 };

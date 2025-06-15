@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useEffect, useState } from "react"
-import type { BookingFormData } from "../types/type"
-import type { z } from "zod"
-import { Link, useNavigate } from "react-router-dom"
-import { bookingSchema } from "../types/validationBooking"
+import { useEffect, useState } from "react";
+import type { OrderFormData } from "../types/type";
+import type { z } from "zod";
+import { Link, useNavigate } from "react-router-dom";
+import { OrderSchema } from "../types/validationOrder";
 
-export default function BookingPage() {
-  const [formData, setFormData] = useState<BookingFormData>({
+export default function OrderPage() {
+  const [formData, setFormData] = useState<OrderFormData>({
     name: "",
     email: "",
     phone: "",
@@ -18,35 +18,35 @@ export default function BookingPage() {
     post_code: "",
     address: "",
     city: "",
-  })
+  });
 
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0)
-    }
+      setIsScrolled(window.scrollY > 0);
+    };
 
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
-  const [formErrors, setFormErrors] = useState<z.ZodIssue[]>([])
-  const navigate = useNavigate()
+  const [formErrors, setFormErrors] = useState<z.ZodIssue[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const savedData = localStorage.getItem("bookingData")
-    const cartData = localStorage.getItem("cart")
+    const savedData = localStorage.getItem("OrderData");
+    const cartData = localStorage.getItem("cart");
     if (!cartData || JSON.parse(cartData).length === 0) {
-      navigate("/")
-      return
+      navigate("/");
+      return;
     }
     if (savedData) {
-      setFormData(JSON.parse(savedData))
+      setFormData(JSON.parse(savedData));
     }
-  }, [navigate])
+  }, [navigate]);
 
   const cities = [
     "Jakarta",
@@ -69,43 +69,47 @@ export default function BookingPage() {
     "Pontianak",
     "Banjarmasin",
     "Balikpapan",
-  ]
+  ];
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   useEffect(() => {
-    const tomorrow = new Date()
-    tomorrow.setDate(tomorrow.getDate() + 1)
-    const formattedDate = tomorrow.toISOString().split("T")[0]
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const formattedDate = tomorrow.toISOString().split("T")[0];
 
     setFormData((prev) => ({
       ...prev,
       schedule_at: formattedDate,
-    }))
-  }, [])
+    }));
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const validation = bookingSchema.safeParse(formData)
+    const validation = OrderSchema.safeParse(formData);
 
     if (!validation.success) {
-      setFormErrors(validation.error.issues)
-      return
+      setFormErrors(validation.error.issues);
+      return;
     }
 
-    localStorage.setItem("bookingData", JSON.stringify(formData))
-    alert("Booking information saved!")
-    navigate("/payment")
+    localStorage.setItem("OrderData", JSON.stringify(formData));
+    alert("Order information saved!");
+    navigate("/payment");
 
-    setFormErrors([])
-  }
+    setFormErrors([]);
+  };
 
   return (
     <main className="relative min-h-screen mx-auto w-full bg-[#F4F5F7]">
@@ -128,15 +132,27 @@ export default function BookingPage() {
           <div
             id="ContainerNav"
             className={`relative flex h-[68px] items-center justify-center transition-all duration-300
-                ${isScrolled ? "bg-white rounded-[22px] px-[16px] shadow-[0px_12px_20px_0px_#0305041C]" : ""}`}
+                ${
+                  isScrolled
+                    ? "bg-white rounded-[22px] px-[16px] shadow-[0px_12px_20px_0px_#0305041C]"
+                    : ""
+                }`}
           >
-            <Link to={"/cart"} id="BackA" className="absolute left-0 transition-all duration-300">
+            <Link
+              to={"/cart"}
+              id="BackA"
+              className="absolute left-0 transition-all duration-300"
+            >
               <div
                 id="Back"
                 className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full bg-white
                     ${isScrolled ? "border border-ginzapet-graylight" : ""}`}
               >
-                <img src="/assets/images/icons/back.svg" alt="icon" className="h-[22px] w-[22px] shrink-0" />
+                <img
+                  src="/assets/images/icons/back.svg"
+                  alt="icon"
+                  className="h-[22px] w-[22px] shrink-0"
+                />
               </div>
             </Link>
             <h2
@@ -144,14 +160,17 @@ export default function BookingPage() {
               className={`font-semibold text-base sm:text-lg transition-all duration-300
                 ${isScrolled ? "" : "text-white"}`}
             >
-              Booking Services
+              Order Services
             </h2>
           </div>
         </div>
       </section>
 
       {/* Progress Bar */}
-      <section id="ProgressBar" className="relative px-4 sm:px-5 pt-[92px] lg:pt-[120px]">
+      <section
+        id="ProgressBar"
+        className="relative px-4 sm:px-5 pt-[92px] lg:pt-[120px]"
+      >
         <div className="flex max-w-md mx-auto lg:max-w-lg xl:max-w-xl">
           <div className="flex flex-col items-center">
             <div className="relative z-10 flex h-[25px] items-center">
@@ -161,7 +180,9 @@ export default function BookingPage() {
                   <div className="flex h-[25px] w-[25px] items-center justify-center rounded-full bg-white text-xs font-bold leading-[18px]">
                     1
                   </div>
-                  <p className="text-xs font-semibold leading-[18px] text-white">Booking</p>
+                  <p className="text-xs font-semibold leading-[18px] text-white">
+                    Order
+                  </p>
                 </div>
               </div>
             </div>
@@ -173,7 +194,9 @@ export default function BookingPage() {
                 <div className="flex h-[25px] w-[25px] items-center justify-center rounded-full bg-[#FFBFA9] text-xs font-bold leading-[18px] text-[#C2836D]">
                   2
                 </div>
-                <p className="text-xs font-semibold leading-[18px] text-[#FFBFA9]">Payment</p>
+                <p className="text-xs font-semibold leading-[18px] text-[#FFBFA9]">
+                  Payment
+                </p>
               </div>
             </div>
           </div>
@@ -184,7 +207,9 @@ export default function BookingPage() {
                 <div className="flex h-[25px] w-[25px] items-center justify-center rounded-full bg-[#FFBFA9] text-xs font-bold leading-[18px] text-[#C2836D]">
                   3
                 </div>
-                <p className="text-xs font-semibold leading-[18px] text-[#FFBFA9]">Delivery</p>
+                <p className="text-xs font-semibold leading-[18px] text-[#FFBFA9]">
+                  Delivery
+                </p>
               </div>
             </div>
           </div>
@@ -197,7 +222,7 @@ export default function BookingPage() {
           <form onSubmit={handleSubmit}>
             <header className="flex flex-col gap-[2px] mb-5 sm:mb-[20px]">
               <h1 className="text-[22px] sm:text-[26px] lg:text-[30px] xl:text-[34px] font-extrabold leading-[33px] sm:leading-[39px] lg:leading-[45px] xl:leading-[51px] text-white text-center lg:text-left">
-                Start Booking
+                Start Order
               </h1>
             </header>
 
@@ -209,10 +234,12 @@ export default function BookingPage() {
                   className="flex flex-col gap-4 rounded-2xl sm:rounded-3xl border border-ginzapet-graylight bg-white px-4 sm:px-[14px] xl:px-6 py-4 sm:py-[14px] xl:py-6"
                 >
                   <div className="flex items-center justify-between">
-                    <h3 className="font-semibold text-base sm:text-lg xl:text-xl">Working Schedule</h3>
+                    <h3 className="font-semibold text-base sm:text-lg xl:text-xl">
+                      Working Schedule
+                    </h3>
                     <button type="button" data-expand="WorkingScheduleJ">
                       <img
-                        src="/assets/images/icons/bottom-booking-form.svg"
+                        src="/assets/images/icons/bottom-Order-form.svg"
                         alt="icon"
                         className="h-[28px] w-[28px] sm:h-[32px] sm:w-[32px] xl:h-[36px] xl:w-[36px] shrink-0 transition-all duration-300"
                       />
@@ -221,10 +248,12 @@ export default function BookingPage() {
                   <div id="WorkingScheduleJ" className="flex flex-col gap-4">
                     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4 xl:gap-6">
                       <label className="flex flex-col gap-2">
-                        <h4 className="font-semibold text-sm sm:text-base xl:text-lg">Date</h4>
+                        <h4 className="font-semibold text-sm sm:text-base xl:text-lg">
+                          Date
+                        </h4>
                         <div className="relative h-[48px] sm:h-[52px] xl:h-[56px] w-full overflow-hidden rounded-full border border-ginzapet-graylight">
                           <img
-                            src="/assets/images/icons/date-booking-form.svg"
+                            src="/assets/images/icons/date-Order-form.svg"
                             alt="icon"
                             className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2"
                           />
@@ -240,10 +269,12 @@ export default function BookingPage() {
                         </div>
                       </label>
                       <label className="flex flex-col gap-2">
-                        <h4 className="font-semibold text-sm sm:text-base xl:text-lg">Start Time At</h4>
+                        <h4 className="font-semibold text-sm sm:text-base xl:text-lg">
+                          Start Time At
+                        </h4>
                         <div className="relative h-[48px] sm:h-[52px] xl:h-[56px] w-full overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
                           <img
-                            src="/assets/images/icons/clock-booking-form.svg"
+                            src="/assets/images/icons/clock-Order-form.svg"
                             alt="icon"
                             className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2"
                           />
@@ -259,9 +290,15 @@ export default function BookingPage() {
                             <option value="11:00">11:00</option>
                           </select>
                         </div>
-                        {formErrors.find((error) => error.path.includes("started_time")) && (
+                        {formErrors.find((error) =>
+                          error.path.includes("started_time")
+                        ) && (
                           <p className="text-red-500 text-sm xl:text-base">
-                            {formErrors.find((error) => error.path.includes("started_time"))?.message}
+                            {
+                              formErrors.find((error) =>
+                                error.path.includes("started_time")
+                              )?.message
+                            }
                           </p>
                         )}
                       </label>
@@ -277,22 +314,29 @@ export default function BookingPage() {
                   className="flex flex-col gap-4 rounded-2xl sm:rounded-3xl border border-ginzapet-graylight bg-white px-4 sm:px-[14px] xl:px-6 py-4 sm:py-[14px] xl:py-6"
                 >
                   <div className="flex items-center justify-between">
-                    <h3 className="font-semibold text-base sm:text-lg xl:text-xl">Personal Information</h3>
+                    <h3 className="font-semibold text-base sm:text-lg xl:text-xl">
+                      Personal Information
+                    </h3>
                     <button type="button" data-expand="PersonalInformationsJ">
                       <img
-                        src="/assets/images/icons/bottom-booking-form.svg"
+                        src="/assets/images/icons/bottom-Order-form.svg"
                         alt="icon"
                         className="h-[28px] w-[28px] sm:h-[32px] sm:w-[32px] xl:h-[36px] xl:w-[36px] shrink-0 transition-all duration-300"
                       />
                     </button>
                   </div>
-                  <div className="flex flex-col gap-4" id="PersonalInformationsJ">
+                  <div
+                    className="flex flex-col gap-4"
+                    id="PersonalInformationsJ"
+                  >
                     <div className="grid grid-cols-1 gap-4">
                       <label className="flex flex-col gap-2">
-                        <h4 className="font-semibold text-sm sm:text-base xl:text-lg">Full Name</h4>
+                        <h4 className="font-semibold text-sm sm:text-base xl:text-lg">
+                          Full Name
+                        </h4>
                         <div className="relative h-[48px] sm:h-[52px] xl:h-[56px] w-full overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
                           <img
-                            src="/assets/images/icons/profil-booking-form.svg"
+                            src="/assets/images/icons/profil-Order-form.svg"
                             alt="icon"
                             className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2"
                           />
@@ -306,17 +350,25 @@ export default function BookingPage() {
                             type="text"
                           />
                         </div>
-                        {formErrors.find((error) => error.path.includes("name")) && (
+                        {formErrors.find((error) =>
+                          error.path.includes("name")
+                        ) && (
                           <p className="text-red-500 text-sm xl:text-base">
-                            {formErrors.find((error) => error.path.includes("name"))?.message}
+                            {
+                              formErrors.find((error) =>
+                                error.path.includes("name")
+                              )?.message
+                            }
                           </p>
                         )}
                       </label>
                       <label className="flex flex-col gap-2">
-                        <h4 className="font-semibold text-sm sm:text-base xl:text-lg">Email Address</h4>
+                        <h4 className="font-semibold text-sm sm:text-base xl:text-lg">
+                          Email Address
+                        </h4>
                         <div className="relative h-[48px] sm:h-[52px] xl:h-[56px] w-full overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
                           <img
-                            src="/assets/images/icons/amplop-booking-form.svg"
+                            src="/assets/images/icons/amplop-Order-form.svg"
                             alt="icon"
                             className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2"
                           />
@@ -330,17 +382,25 @@ export default function BookingPage() {
                             type="email"
                           />
                         </div>
-                        {formErrors.find((error) => error.path.includes("email")) && (
+                        {formErrors.find((error) =>
+                          error.path.includes("email")
+                        ) && (
                           <p className="text-red-500 text-sm xl:text-base">
-                            {formErrors.find((error) => error.path.includes("email"))?.message}
+                            {
+                              formErrors.find((error) =>
+                                error.path.includes("email")
+                              )?.message
+                            }
                           </p>
                         )}
                       </label>
                       <label className="flex flex-col gap-2">
-                        <h4 className="font-semibold text-sm sm:text-base xl:text-lg">Phone Number</h4>
+                        <h4 className="font-semibold text-sm sm:text-base xl:text-lg">
+                          Phone Number
+                        </h4>
                         <div className="relative h-[48px] sm:h-[52px] xl:h-[56px] w-full overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
                           <img
-                            src="/assets/images/icons/telepon-booking-form.svg"
+                            src="/assets/images/icons/telepon-Order-form.svg"
                             alt="icon"
                             className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2"
                           />
@@ -354,9 +414,15 @@ export default function BookingPage() {
                             placeholder="Write your active number"
                           />
                         </div>
-                        {formErrors.find((error) => error.path.includes("phone")) && (
+                        {formErrors.find((error) =>
+                          error.path.includes("phone")
+                        ) && (
                           <p className="text-red-500 text-sm xl:text-base">
-                            {formErrors.find((error) => error.path.includes("phone"))?.message}
+                            {
+                              formErrors.find((error) =>
+                                error.path.includes("phone")
+                              )?.message
+                            }
                           </p>
                         )}
                       </label>
@@ -372,10 +438,12 @@ export default function BookingPage() {
                   className="flex flex-col gap-4 rounded-2xl sm:rounded-3xl border border-ginzapet-graylight bg-white px-4 sm:px-[14px] xl:px-6 py-4 sm:py-[14px] xl:py-6"
                 >
                   <div className="flex items-center justify-between">
-                    <h3 className="font-semibold text-base sm:text-lg xl:text-xl">Your Home Address</h3>
+                    <h3 className="font-semibold text-base sm:text-lg xl:text-xl">
+                      Your Home Address
+                    </h3>
                     <button type="button" data-expand="YourHomeAddressJ">
                       <img
-                        src="/assets/images/icons/bottom-booking-form.svg"
+                        src="/assets/images/icons/bottom-Order-form.svg"
                         alt="icon"
                         className="h-[28px] w-[28px] sm:h-[32px] sm:w-[32px] xl:h-[36px] xl:w-[36px] shrink-0 transition-all duration-300"
                       />
@@ -383,7 +451,9 @@ export default function BookingPage() {
                   </div>
                   <div id="YourHomeAddressJ" className="flex flex-col gap-4">
                     <label className="flex flex-col gap-2">
-                      <h4 className="font-semibold text-sm sm:text-base xl:text-lg">Address</h4>
+                      <h4 className="font-semibold text-sm sm:text-base xl:text-lg">
+                        Address
+                      </h4>
                       <div className="relative h-[100px] sm:h-[110px] xl:h-[120px] w-full overflow-hidden rounded-[18px] sm:rounded-[22px] xl:rounded-[24px] border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
                         <textarea
                           placeholder="Enter your complete address"
@@ -394,23 +464,31 @@ export default function BookingPage() {
                           name="address"
                         />
                         <img
-                          src="/assets/images/icons/school-booking-form.svg"
+                          src="/assets/images/icons/school-Order-form.svg"
                           alt="icon"
                           className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-[14px] xl:top-[16px] h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0"
                         />
                       </div>
-                      {formErrors.find((error) => error.path.includes("address")) && (
+                      {formErrors.find((error) =>
+                        error.path.includes("address")
+                      ) && (
                         <p className="text-red-500 text-sm xl:text-base">
-                          {formErrors.find((error) => error.path.includes("address"))?.message}
+                          {
+                            formErrors.find((error) =>
+                              error.path.includes("address")
+                            )?.message
+                          }
                         </p>
                       )}
                     </label>
                     <div className="grid grid-cols-1 gap-4">
                       <label className="flex flex-col gap-2">
-                        <h4 className="font-semibold text-sm sm:text-base xl:text-lg">City</h4>
+                        <h4 className="font-semibold text-sm sm:text-base xl:text-lg">
+                          City
+                        </h4>
                         <div className="relative h-[48px] sm:h-[52px] xl:h-[56px] w-full overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
                           <img
-                            src="/assets/images/icons/location-booking-form.svg"
+                            src="/assets/images/icons/location-Order-form.svg"
                             alt="icon"
                             className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2"
                           />
@@ -433,17 +511,25 @@ export default function BookingPage() {
                             className="absolute right-[12px] sm:right-[14px] xl:right-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2"
                           />
                         </div>
-                        {formErrors.find((error) => error.path.includes("city")) && (
+                        {formErrors.find((error) =>
+                          error.path.includes("city")
+                        ) && (
                           <p className="text-red-500 text-sm xl:text-base">
-                            {formErrors.find((error) => error.path.includes("city"))?.message}
+                            {
+                              formErrors.find((error) =>
+                                error.path.includes("city")
+                              )?.message
+                            }
                           </p>
                         )}
                       </label>
                       <label className="flex flex-col gap-2">
-                        <h4 className="font-semibold text-sm sm:text-base xl:text-lg">Post Code</h4>
+                        <h4 className="font-semibold text-sm sm:text-base xl:text-lg">
+                          Post Code
+                        </h4>
                         <div className="relative h-[48px] sm:h-[52px] xl:h-[56px] w-full overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
                           <img
-                            src="/assets/images/icons/ball-booking-form.svg"
+                            src="/assets/images/icons/ball-Order-form.svg"
                             alt="icon"
                             className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2"
                           />
@@ -457,9 +543,15 @@ export default function BookingPage() {
                             type="tel"
                           />
                         </div>
-                        {formErrors.find((error) => error.path.includes("post_code")) && (
+                        {formErrors.find((error) =>
+                          error.path.includes("post_code")
+                        ) && (
                           <p className="text-red-500 text-sm xl:text-base">
-                            {formErrors.find((error) => error.path.includes("post_code"))?.message}
+                            {
+                              formErrors.find((error) =>
+                                error.path.includes("post_code")
+                              )?.message
+                            }
                           </p>
                         )}
                       </label>
@@ -479,5 +571,5 @@ export default function BookingPage() {
         </div>
       </div>
     </main>
-  )
+  );
 }

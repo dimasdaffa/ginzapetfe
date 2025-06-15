@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const bookingSchema = z.object({
+export const OrderSchema = z.object({
   name: z.string().min(1, "Name is required!"),
   email: z.string().email("Invalid email!"),
   phone: z.string().min(1, "Phone number is required!"),
@@ -17,7 +17,7 @@ export const paymentSchema = z.object({
     .refine((file) => file.size > 0, "Proof of payment is required!"),
 });
 
-export const viewBookingSchema = z.object({
-    booking_trx_id: z.string().min(1, "Booking TRX is required!"),
+export const viewOrderSchema = z.object({
+    Order_trx_id: z.string().min(1, "Order TRX is required!"),
     email: z.string().email("Invalid Email!"), 
   });

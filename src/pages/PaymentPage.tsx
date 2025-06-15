@@ -1,186 +1,195 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useEffect, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import type { BookingFormData, CartItem, Product } from "../types/type"
-import type { ZodIssue } from "zod"
-import apiClient from "../services/apiServices"
-import { paymentSchema } from "../types/validationBooking"
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import type { OrderFormData, CartItem, Product } from "../types/type";
+import type { ZodIssue } from "zod";
+import apiClient from "../services/apiServices";
+import { paymentSchema } from "../types/validationOrder";
 
 type FormData = {
-  proof: File | null
-  product_ids: number[]
-}
+  proof: File | null;
+  product_ids: number[];
+};
 
 export default function PaymentPage() {
   const [formData, setFormData] = useState<FormData>({
     proof: null,
     product_ids: [],
-  })
+  });
 
-  const [productDetails, setProductDetails] = useState<Product[]>([])
-  const [bookingData, setBookingData] = useState<BookingFormData | null>(null)
-  const [formErrors, setFormErrors] = useState<ZodIssue[]>([])
-  const [loading, setLoading] = useState(true)
-  const [successMessage, setSuccessMessage] = useState<string | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  const [fileName, setFileName] = useState<string | null>(null)
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [productDetails, setProductDetails] = useState<Product[]>([]);
+  const [OrderData, setOrderData] = useState<OrderFormData | null>(null);
+  const [formErrors, setFormErrors] = useState<ZodIssue[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [fileName, setFileName] = useState<string | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0)
-    }
+      setIsScrolled(window.scrollY > 0);
+    };
 
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const formatCurrency = (value: number): string => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
       currency: "IDR",
       maximumFractionDigits: 0,
-    }).format(value)
-  }
+    }).format(value);
+  };
 
-  const navigate = useNavigate()
-  const TAX_RATE = 0.11
+  const navigate = useNavigate();
+  const TAX_RATE = 0.11;
 
-  const subtotal = productDetails.reduce((acc, product) => acc + product.price, 0)
-  const tax = subtotal * TAX_RATE
-  const total = subtotal + tax
+  const subtotal = productDetails.reduce(
+    (acc, product) => acc + product.price,
+    0
+  );
+  const tax = subtotal * TAX_RATE;
+  const total = subtotal + tax;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null
+    const file = e.target.files ? e.target.files[0] : null;
 
     setFormData((prev) => ({
       ...prev,
       proof: file,
-    }))
-    setFileName(file ? file.name : null)
-  }
+    }));
+    setFileName(file ? file.name : null);
+  };
 
   const fetchProductDetails = async (cartItems: CartItem[]) => {
     try {
       const fetchedDetails = await Promise.all(
         cartItems.map(async (item) => {
-          const response = await apiClient.get(`/product/${item.slug}`)
-          return response.data.data
-        }),
-      )
+          const response = await apiClient.get(`/product/${item.slug}`);
+          return response.data.data;
+        })
+      );
 
-      setProductDetails(fetchedDetails)
-      setLoading(false)
+      setProductDetails(fetchedDetails);
+      setLoading(false);
 
-      const productIds = fetchedDetails.map((product) => product.id)
+      const productIds = fetchedDetails.map((product) => product.id);
       setFormData((prevData) => ({
         ...prevData,
         product_ids: productIds,
-      }))
+      }));
     } catch (error) {
-      console.error("Error fetching product details:", error)
-      setError("Failed to fetch product details")
-      setLoading(false)
+      console.error("Error fetching product details:", error);
+      setError("Failed to fetch product details");
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    const cartData = localStorage.getItem("cart")
-    const savedBookingData = localStorage.getItem("bookingData")
+    const cartData = localStorage.getItem("cart");
+    const savedOrderData = localStorage.getItem("OrderData");
 
-    if (savedBookingData) {
-      setBookingData(JSON.parse(savedBookingData) as BookingFormData)
+    if (savedOrderData) {
+      setOrderData(JSON.parse(savedOrderData) as OrderFormData);
     }
 
     if (!cartData || (cartData && JSON.parse(cartData).length === 0)) {
-      navigate("/")
-      return
+      navigate("/");
+      return;
     }
 
-    const cartItems = JSON.parse(cartData) as CartItem[]
-    fetchProductDetails(cartItems)
-  }, [navigate])
+    const cartItems = JSON.parse(cartData) as CartItem[];
+    fetchProductDetails(cartItems);
+  }, [navigate]);
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#F4F5F7]">
         <p className="text-lg font-semibold">Loading...</p>
       </div>
-    )
+    );
   }
 
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#F4F5F7]">
-        <p className="text-lg font-semibold text-red-500">Error loading data: {error}</p>
+        <p className="text-lg font-semibold text-red-500">
+          Error loading data: {error}
+        </p>
       </div>
-    )
+    );
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    const validation = paymentSchema.safeParse(formData)
+    e.preventDefault();
+    const validation = paymentSchema.safeParse(formData);
     if (!validation.success) {
-      setFormErrors(validation.error.issues)
-      return
+      setFormErrors(validation.error.issues);
+      return;
     }
-    setFormErrors([])
+    setFormErrors([]);
 
-    const submissionData = new FormData()
+    const submissionData = new FormData();
 
     if (formData.proof) {
-      submissionData.append("proof", formData.proof)
+      submissionData.append("proof", formData.proof);
     }
 
-    if (bookingData) {
-      submissionData.append("name", bookingData.name)
-      submissionData.append("email", bookingData.email)
-      submissionData.append("phone", bookingData.phone)
-      submissionData.append("address", bookingData.address)
-      submissionData.append("city", bookingData.city)
-      submissionData.append("post_code", bookingData.post_code)
-      submissionData.append("started_time", bookingData.started_time)
-      submissionData.append("schedule_at", bookingData.schedule_at)
+    if (OrderData) {
+      submissionData.append("name", OrderData.name);
+      submissionData.append("email", OrderData.email);
+      submissionData.append("phone", OrderData.phone);
+      submissionData.append("address", OrderData.address);
+      submissionData.append("city", OrderData.city);
+      submissionData.append("post_code", OrderData.post_code);
+      submissionData.append("started_time", OrderData.started_time);
+      submissionData.append("schedule_at", OrderData.schedule_at);
     }
 
     formData.product_ids.forEach((id, index) => {
-      submissionData.append(`product_ids[${index}]`, String(id))
-    })
+      submissionData.append(`product_ids[${index}]`, String(id));
+    });
 
     try {
-      setLoading(true)
-      const response = await apiClient.post("/booking-transaction", submissionData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      setLoading(true);
+      const response = await apiClient.post(
+        "/Order-transaction",
+        submissionData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       if (response.status === 200 || response.status === 201) {
-        const bookingTrxId = response.data.data.booking_trx_id
-        const email = response.data.data.email
+        const OrderTrxId = response.data.data.Order_trx_id;
+        const email = response.data.data.email;
 
-        if (!bookingTrxId) console.error("Error: booking_trx_id is undefined")
-        setSuccessMessage("Payment proof submitted successfully!")
-        localStorage.removeItem("cart")
-        localStorage.removeItem("bookingData")
-        setFormData({ proof: null, product_ids: [] })
-        setLoading(false)
-        navigate(`/success-booking?trx_id=${bookingTrxId}&email=${email}`)
+        if (!OrderTrxId) console.error("Error: Order_trx_id is undefined");
+        setSuccessMessage("Payment proof submitted successfully!");
+        localStorage.removeItem("cart");
+        localStorage.removeItem("OrderData");
+        setFormData({ proof: null, product_ids: [] });
+        setLoading(false);
+        navigate(`/success-Order?trx_id=${OrderTrxId}&email=${email}`);
       } else {
-        console.error("Unexpected response status", response.status)
-        setLoading(false)
+        console.error("Unexpected response status", response.status);
+        setLoading(false);
       }
     } catch (error) {
-      console.error("Error submitting payment proof", error)
-      setLoading(false)
-      setFormErrors([])
+      console.error("Error submitting payment proof", error);
+      setLoading(false);
+      setFormErrors([]);
     }
-  }
+  };
 
   return (
     <main className="relative min-h-screen mx-auto w-full bg-[#F4F5F7]">
@@ -203,15 +212,27 @@ export default function PaymentPage() {
           <div
             id="ContainerNav"
             className={`relative flex h-[68px] items-center justify-center transition-all duration-300
-                ${isScrolled ? "bg-white rounded-[22px] px-[16px] shadow-[0px_12px_20px_0px_#0305041C]" : ""}`}
+                ${
+                  isScrolled
+                    ? "bg-white rounded-[22px] px-[16px] shadow-[0px_12px_20px_0px_#0305041C]"
+                    : ""
+                }`}
           >
-            <Link to={"/booking"} id="BackA" className="absolute left-0 transition-all duration-300">
+            <Link
+              to={"/Order"}
+              id="BackA"
+              className="absolute left-0 transition-all duration-300"
+            >
               <div
                 id="Back"
                 className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full bg-white
                     ${isScrolled ? "border border-ginzapet-graylight" : ""}`}
               >
-                <img src="/assets/images/icons/back.svg" alt="icon" className="h-[22px] w-[22px] shrink-0" />
+                <img
+                  src="/assets/images/icons/back.svg"
+                  alt="icon"
+                  className="h-[22px] w-[22px] shrink-0"
+                />
               </div>
             </Link>
             <h2
@@ -219,14 +240,17 @@ export default function PaymentPage() {
               className={`font-semibold text-base sm:text-lg transition-all duration-300
                 ${isScrolled ? "" : "text-white"}`}
             >
-              Booking Services
+              Order Services
             </h2>
           </div>
         </div>
       </section>
 
       {/* Progress Bar */}
-      <section id="ProgressBar" className="relative px-4 sm:px-5 pt-[92px] lg:pt-[120px]">
+      <section
+        id="ProgressBar"
+        className="relative px-4 sm:px-5 pt-[92px] lg:pt-[120px]"
+      >
         <div className="flex max-w-md mx-auto lg:max-w-lg xl:max-w-xl">
           <div className="flex flex-col items-center">
             <div className="relative z-10 flex h-[25px] items-center">
@@ -237,7 +261,9 @@ export default function PaymentPage() {
                   <div className="flex h-[25px] w-[25px] items-center justify-center rounded-full bg-white text-xs font-bold leading-[18px]">
                     1
                   </div>
-                  <p className="text-xs font-semibold leading-[18px] text-white">Booking</p>
+                  <p className="text-xs font-semibold leading-[18px] text-white">
+                    Order
+                  </p>
                 </div>
               </div>
             </div>
@@ -250,7 +276,9 @@ export default function PaymentPage() {
                 <div className="flex h-[25px] w-[25px] items-center justify-center rounded-full bg-white text-xs font-bold leading-[18px]">
                   2
                 </div>
-                <p className="text-xs font-semibold leading-[18px] text-white">Payment</p>
+                <p className="text-xs font-semibold leading-[18px] text-white">
+                  Payment
+                </p>
               </div>
             </div>
           </div>
@@ -261,7 +289,9 @@ export default function PaymentPage() {
                 <div className="flex h-[25px] w-[25px] items-center justify-center rounded-full bg-[#FFBFA9] text-xs font-bold leading-[18px] text-[#C2836D]">
                   3
                 </div>
-                <p className="text-xs font-semibold leading-[18px] text-[#FFBFA9]">Delivery</p>
+                <p className="text-xs font-semibold leading-[18px] text-[#FFBFA9]">
+                  Delivery
+                </p>
               </div>
             </div>
           </div>
@@ -291,8 +321,12 @@ export default function PaymentPage() {
                     className="h-[28px] w-[28px] sm:h-[32px] sm:w-[32px] xl:h-[36px] xl:w-[36px] shrink-0"
                   />
                   <div>
-                    <h5 className="text-sm sm:text-base xl:text-lg font-semibold leading-[21px]">Send to Bank</h5>
-                    <p className="text-sm sm:text-base leading-[21px]">Available</p>
+                    <h5 className="text-sm sm:text-base xl:text-lg font-semibold leading-[21px]">
+                      Send to Bank
+                    </h5>
+                    <p className="text-sm sm:text-base leading-[21px]">
+                      Available
+                    </p>
                   </div>
                 </div>
               </section>
@@ -305,16 +339,21 @@ export default function PaymentPage() {
                 className="flex flex-col gap-4 rounded-2xl sm:rounded-3xl border border-ginzapet-graylight bg-white px-4 sm:px-[14px] xl:px-6 py-4 sm:py-[14px] xl:py-6 mb-4 sm:mb-5 lg:mb-6"
               >
                 <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-base sm:text-lg xl:text-xl">Available Payment</h3>
+                  <h3 className="font-semibold text-base sm:text-lg xl:text-xl">
+                    Available Payment
+                  </h3>
                   <button type="button" data-expand="AvailablePaymentJ">
                     <img
-                      src="/assets/images/icons/bottom-booking-form.svg"
+                      src="/assets/images/icons/bottom-Order-form.svg"
                       alt="icon"
                       className="h-[28px] w-[28px] sm:h-[32px] sm:w-[32px] xl:h-[36px] xl:w-[36px] shrink-0 transition-all duration-300"
                     />
                   </button>
                 </div>
-                <div id="AvailablePaymentJ" className="flex flex-col gap-4 xl:gap-6">
+                <div
+                  id="AvailablePaymentJ"
+                  className="flex flex-col gap-4 xl:gap-6"
+                >
                   <div className="flex gap-3 sm:gap-4">
                     <div className="flex h-[50px] w-[70px] sm:h-[60px] sm:w-[81px] xl:h-[70px] xl:w-[90px] items-center justify-center overflow-hidden rounded-lg">
                       <img
@@ -325,16 +364,28 @@ export default function PaymentPage() {
                     </div>
                     <div className="flex flex-col gap-2 sm:gap-[10px] flex-1">
                       <div className="flex flex-col gap-[2px]">
-                        <h4 className="text-ginzapet-gray text-xs sm:text-sm xl:text-base">Bank Name</h4>
-                        <strong className="font-semibold text-sm sm:text-base xl:text-lg">Bank Central Asia</strong>
+                        <h4 className="text-ginzapet-gray text-xs sm:text-sm xl:text-base">
+                          Bank Name
+                        </h4>
+                        <strong className="font-semibold text-sm sm:text-base xl:text-lg">
+                          Bank Central Asia
+                        </strong>
                       </div>
                       <div className="flex flex-col gap-[2px]">
-                        <h4 className="text-ginzapet-gray text-xs sm:text-sm xl:text-base">Bank Number</h4>
-                        <strong className="font-semibold text-sm sm:text-base xl:text-lg">18212331928391</strong>
+                        <h4 className="text-ginzapet-gray text-xs sm:text-sm xl:text-base">
+                          Bank Number
+                        </h4>
+                        <strong className="font-semibold text-sm sm:text-base xl:text-lg">
+                          18212331928391
+                        </strong>
                       </div>
                       <div className="flex flex-col gap-[2px]">
-                        <h4 className="text-ginzapet-gray text-xs sm:text-sm xl:text-base">Bank Account</h4>
-                        <strong className="font-semibold text-sm sm:text-base xl:text-lg">Ghiza Petshop</strong>
+                        <h4 className="text-ginzapet-gray text-xs sm:text-sm xl:text-base">
+                          Bank Account
+                        </h4>
+                        <strong className="font-semibold text-sm sm:text-base xl:text-lg">
+                          Ghiza Petshop
+                        </strong>
                       </div>
                     </div>
                   </div>
@@ -349,16 +400,28 @@ export default function PaymentPage() {
                     </div>
                     <div className="flex flex-col gap-2 sm:gap-[10px] flex-1">
                       <div className="flex flex-col gap-[2px]">
-                        <h4 className="text-ginzapet-gray text-xs sm:text-sm xl:text-base">Bank Name</h4>
-                        <strong className="font-semibold text-sm sm:text-base xl:text-lg">Bank Mandiri</strong>
+                        <h4 className="text-ginzapet-gray text-xs sm:text-sm xl:text-base">
+                          Bank Name
+                        </h4>
+                        <strong className="font-semibold text-sm sm:text-base xl:text-lg">
+                          Bank Mandiri
+                        </strong>
                       </div>
                       <div className="flex flex-col gap-[2px]">
-                        <h4 className="text-ginzapet-gray text-xs sm:text-sm xl:text-base">Bank Number</h4>
-                        <strong className="font-semibold text-sm sm:text-base xl:text-lg">829123192</strong>
+                        <h4 className="text-ginzapet-gray text-xs sm:text-sm xl:text-base">
+                          Bank Number
+                        </h4>
+                        <strong className="font-semibold text-sm sm:text-base xl:text-lg">
+                          829123192
+                        </strong>
                       </div>
                       <div className="flex flex-col gap-[2px]">
-                        <h4 className="text-ginzapet-gray text-xs sm:text-sm xl:text-base">Bank Account</h4>
-                        <strong className="font-semibold text-sm sm:text-base xl:text-lg">Ghiza Petshop</strong>
+                        <h4 className="text-ginzapet-gray text-xs sm:text-sm xl:text-base">
+                          Bank Account
+                        </h4>
+                        <strong className="font-semibold text-sm sm:text-base xl:text-lg">
+                          Ghiza Petshop
+                        </strong>
                       </div>
                     </div>
                   </div>
@@ -366,23 +429,28 @@ export default function PaymentPage() {
               </section>
             </div>
 
-            {/* Booking Details - Right column on xl */}
+            {/* Order Details - Right column on xl */}
             <div className="xl:col-span-1">
               <section
-                id="BookingDetails"
+                id="OrderDetails"
                 className="flex flex-col gap-4 rounded-2xl sm:rounded-3xl border border-ginzapet-graylight bg-white px-4 sm:px-[14px] xl:px-6 py-4 sm:py-[14px] xl:py-6 mb-4 sm:mb-5 lg:mb-6"
               >
                 <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-base sm:text-lg xl:text-xl">Booking Details</h3>
-                  <button type="button" data-expand="BookingDetailsJ">
+                  <h3 className="font-semibold text-base sm:text-lg xl:text-xl">
+                    Order Details
+                  </h3>
+                  <button type="button" data-expand="OrderDetailsJ">
                     <img
-                      src="/assets/images/icons/bottom-booking-form.svg"
+                      src="/assets/images/icons/bottom-Order-form.svg"
                       alt="icon"
                       className="h-[28px] w-[28px] sm:h-[32px] sm:w-[32px] xl:h-[36px] xl:w-[36px] shrink-0 transition-all duration-300"
                     />
                   </button>
                 </div>
-                <div className="flex flex-col gap-3 sm:gap-4" id="BookingDetailsJ">
+                <div
+                  className="flex flex-col gap-3 sm:gap-4"
+                  id="OrderDetailsJ"
+                >
                   <div className="flex justify-between items-center">
                     <div className="flex items-center gap-2 sm:gap-[10px]">
                       <img
@@ -390,7 +458,9 @@ export default function PaymentPage() {
                         alt="icon"
                         className="h-[20px] w-[20px] sm:h-[24px] sm:w-[24px] xl:h-[28px] xl:w-[28px] shrink-0"
                       />
-                      <p className="text-ginzapet-gray text-sm sm:text-base xl:text-lg">Sub Total</p>
+                      <p className="text-ginzapet-gray text-sm sm:text-base xl:text-lg">
+                        Sub Total
+                      </p>
                     </div>
                     <strong className="font-semibold text-sm sm:text-base xl:text-lg">
                       {formatCurrency(subtotal)}
@@ -404,9 +474,13 @@ export default function PaymentPage() {
                         alt="icon"
                         className="h-[20px] w-[20px] sm:h-[24px] sm:w-[24px] xl:h-[28px] xl:w-[28px] shrink-0"
                       />
-                      <p className="text-ginzapet-gray text-sm sm:text-base xl:text-lg">Tax 11%</p>
+                      <p className="text-ginzapet-gray text-sm sm:text-base xl:text-lg">
+                        Tax 11%
+                      </p>
                     </div>
-                    <strong className="font-semibold text-sm sm:text-base xl:text-lg">{formatCurrency(tax)}</strong>
+                    <strong className="font-semibold text-sm sm:text-base xl:text-lg">
+                      {formatCurrency(tax)}
+                    </strong>
                   </div>
                   <hr className="border-ginzapet-graylight" />
                   <div className="flex justify-between items-center">
@@ -416,9 +490,13 @@ export default function PaymentPage() {
                         alt="icon"
                         className="h-[20px] w-[20px] sm:h-[24px] sm:w-[24px] xl:h-[28px] xl:w-[28px] shrink-0"
                       />
-                      <p className="text-ginzapet-gray text-sm sm:text-base xl:text-lg">Service Tools</p>
+                      <p className="text-ginzapet-gray text-sm sm:text-base xl:text-lg">
+                        Service Tools
+                      </p>
                     </div>
-                    <strong className="font-semibold text-sm sm:text-base xl:text-lg">Free</strong>
+                    <strong className="font-semibold text-sm sm:text-base xl:text-lg">
+                      Free
+                    </strong>
                   </div>
                   <hr className="border-ginzapet-graylight" />
                   <div className="flex justify-between items-center">
@@ -428,7 +506,9 @@ export default function PaymentPage() {
                         alt="icon"
                         className="h-[20px] w-[20px] sm:h-[24px] sm:w-[24px] xl:h-[28px] xl:w-[28px] shrink-0"
                       />
-                      <p className="text-ginzapet-gray text-sm sm:text-base xl:text-lg">Grand Total</p>
+                      <p className="text-ginzapet-gray text-sm sm:text-base xl:text-lg">
+                        Grand Total
+                      </p>
                     </div>
                     <strong className="text-[18px] sm:text-[20px] xl:text-[22px] font-bold leading-[27px] sm:leading-[30px] xl:leading-[33px] text-ginzapet-orange">
                       {formatCurrency(total)}
@@ -443,10 +523,12 @@ export default function PaymentPage() {
               <form onSubmit={handleSubmit}>
                 <section className="flex flex-col gap-4 rounded-2xl sm:rounded-3xl border border-ginzapet-graylight bg-white px-4 sm:px-[14px] xl:px-6 py-4 sm:py-[14px] xl:py-6">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-semibold text-base sm:text-lg xl:text-xl">Confirmation</h3>
+                    <h3 className="font-semibold text-base sm:text-lg xl:text-xl">
+                      Confirmation
+                    </h3>
                     <button type="button" data-expand="ConfirmationJ">
                       <img
-                        src="/assets/images/icons/bottom-booking-form.svg"
+                        src="/assets/images/icons/bottom-Order-form.svg"
                         alt="icon"
                         className="h-[28px] w-[28px] sm:h-[32px] sm:w-[32px] xl:h-[36px] xl:w-[36px] shrink-0 transition-all duration-300"
                       />
@@ -454,7 +536,9 @@ export default function PaymentPage() {
                   </div>
                   <div id="ConfirmationJ" className="flex flex-col gap-4">
                     <label className="flex flex-col gap-2">
-                      <h4 className="font-semibold text-sm sm:text-base xl:text-lg">Add Proof of Payment</h4>
+                      <h4 className="font-semibold text-sm sm:text-base xl:text-lg">
+                        Add Proof of Payment
+                      </h4>
                       <div className="relative flex h-[48px] sm:h-[52px] xl:h-[56px] w-full items-center overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
                         <img
                           src="/assets/images/icons/proof-payment.svg"
@@ -476,9 +560,15 @@ export default function PaymentPage() {
                           accept="image/*"
                         />
                       </div>
-                      {formErrors.find((error) => error.path.includes("proof")) && (
+                      {formErrors.find((error) =>
+                        error.path.includes("proof")
+                      ) && (
                         <p className="text-red-500 text-sm xl:text-base">
-                          {formErrors.find((error) => error.path.includes("proof"))?.message}
+                          {
+                            formErrors.find((error) =>
+                              error.path.includes("proof")
+                            )?.message
+                          }
                         </p>
                       )}
                     </label>
@@ -497,5 +587,5 @@ export default function PaymentPage() {
         </div>
       </div>
     </main>
-  )
+  );
 }

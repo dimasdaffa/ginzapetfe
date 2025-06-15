@@ -107,8 +107,8 @@ export default function HomePage() {
                     <Home className="h-5 w-5" />
                   </div>
                 </Link>
-                {/* My Booking Icon */}
-                <Link to="/my-booking">
+                {/* My Order Icon */}
+                <Link to="/my-Order">
                   <div className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border-2 border-[#d14a1e] hover:bg-[#d14a1e] hover:text-white transition-colors">
                     <NotebookTabsIcon className="h-5 w-5" />
                   </div>
@@ -382,11 +382,11 @@ export default function HomePage() {
                   </span>
                 </div>
               </Link>
-              <Link to="/my-booking" className="ml-4">
+              <Link to="/my-Order" className="ml-4">
                 <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#d14a1e]">
                   <img
                     src="/assets/images/icons/note.svg"
-                    alt="My Booking"
+                    alt="My Order"
                     className="h-5 w-5"
                   />
                 </div>
