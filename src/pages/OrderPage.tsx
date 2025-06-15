@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import type { OrderFormData } from "../types/type";
 import type { z } from "zod";
 import { Link, useNavigate } from "react-router-dom";
-import { OrderSchema } from "../types/validationOrder";
+import { OrderSchema } from "../types/validationBooking";
 import { ArrowLeft, Building, Calendar, Clock, House, ListOrderedIcon, Mail, Mailbox, Phone, Pin, User } from "lucide-react";
 
 export default function OrderPage() {

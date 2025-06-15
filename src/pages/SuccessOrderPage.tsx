@@ -145,7 +145,7 @@ export default function SuccessOrderPage() {
                 </h4>
                 <div className="relative h-[48px] sm:h-[52px] xl:h-[56px] w-full overflow-hidden rounded-full border border-ginzapet-graylight bg-[#F4F5F7]">
                   <img
-                    src="/assets/images/icons/amplop-Order-form.svg"
+                    src="/public/assets/images/icons/amplop-booking-form.svg"
                     alt="icon"
                     className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2"
                   />
