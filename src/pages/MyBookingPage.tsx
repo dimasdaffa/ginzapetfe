@@ -4,6 +4,97 @@ import type { BookingDetails } from "../types/type";
 import { viewBookingSchema } from "../types/validationBooking";
 import apiClient, { isAxiosError } from "../services/apiServices";
 import { Link } from "react-router-dom";
+import React from "react"; // Import React
+
+import {
+  Search,
+  Mail,
+  FileText,
+  Calendar,
+  Clock,
+  DollarSign,
+  User,
+  Phone,
+  MapPin,
+  Home,
+  ChevronDown,
+  ChevronUp,
+  CheckCircle,
+} from "lucide-react";
+
+// Helper function for currency formatting
+const formatCurrency = (price: number) => {
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+  }).format(price);
+};
+
+// AccordionSection Component
+interface AccordionSectionProps {
+  title: string;
+  children: React.ReactNode;
+  defaultOpen?: boolean;
+}
+
+function AccordionSection({ title, children, defaultOpen = true }: AccordionSectionProps) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+
+  return (
+    <section className="rounded-2xl lg:rounded-3xl border border-gray-200 bg-white p-4 lg:p-6">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="font-semibold text-lg lg:text-xl">{title}</h3>
+        <button onClick={() => setIsOpen(!isOpen)} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+          {isOpen ? <ChevronUp className="h-6 w-6" /> : <ChevronDown className="h-6 w-6" />}
+        </button>
+      </div>
+      {isOpen && <div className="space-y-4">{children}</div>}
+    </section>
+  );
+}
+
+// ProgressIndicator Component
+function ProgressIndicator({ isPaid }: { isPaid: boolean }) {
+  const steps = [
+    { number: 1, label: "Booking\nCreated", completed: true },
+    { number: 2, label: "Verifying\nPayment", completed: true },
+    { number: 3, label: "Start\nWorking", completed: isPaid },
+  ];
+
+  return (
+    <div className="relative w-full pb-12">
+      <div className="flex items-center justify-between">
+        {steps.map((step, index) => (
+          <div key={step.number} className="flex flex-col items-center relative">
+            {/* Progress Line */}
+            {index < steps.length - 1 && (
+              <div className="absolute top-3 left-6 w-full h-0.5 bg-gray-200 lg:w-32">
+                <div
+                  className={`h-full transition-all duration-500 ${
+                    step.completed && steps[index + 1].completed ? "bg-green-500" : "bg-gray-200"
+                  }`}
+                />
+              </div>
+            )}
+
+            {/* Step Circle */}
+            <div
+              className={`flex h-6 w-6 lg:h-8 lg:w-8 items-center justify-center rounded-full text-xs lg:text-sm font-bold text-white z-10 ${
+                step.completed ? "bg-green-500" : "bg-gray-300"
+              }`}
+            >
+              {step.completed ? <CheckCircle className="h-4 w-4 lg:h-5 lg:w-5" /> : step.number}
+            </div>
+
+            {/* Step Label */}
+            <p className="text-xs lg:text-sm font-semibold text-center mt-2 whitespace-pre-line">{step.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function MyBookingPage() {
   const [formData, setFormData] = useState({ email: "", booking_trx_id: "" });
@@ -12,7 +103,7 @@ export default function MyBookingPage() {
   const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(
     null
   );
-  const [notFound, setNotFound] = useState(false); // State for "not found" error
+  const [notFound, setNotFound] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -20,11 +111,12 @@ export default function MyBookingPage() {
       ...prev,
       [name]: value,
     }));
+    // Clear errors when user starts typing
+    setFormErrors((prev) => prev.filter((error) => !error.path.includes(name)));
   };
-  // Handle form submission and validation
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Validate form data using Zod
     const validation = viewBookingSchema.safeParse(formData);
     if (!validation.success) {
       setFormErrors(validation.error.issues);
@@ -32,657 +124,385 @@ export default function MyBookingPage() {
     }
     setFormErrors([]);
     setLoading(true);
-    setNotFound(false); // Reset not found state
+    setNotFound(false);
 
     try {
-      // Send request to check booking
       const response = await apiClient.post("/check-booking", formData);
 
       if (response.status === 200 && response.data.data) {
-        // Assuming response contains booking details under response.data.data
         setBookingDetails(response.data.data);
       } else {
-        setNotFound(true); // Set booking not found flag
-        setBookingDetails(null); // Clear any existing booking details
+        setNotFound(true);
+        setBookingDetails(null);
       }
     } catch (err) {
       if (isAxiosError(err)) {
         if (err.response?.status === 404) {
-          // Handle booking not found
           setNotFound(true);
           setBookingDetails(null);
+        } else {
+          // Handle other errors, e.g., show a generic error message
+          console.error("An unexpected error occurred:", err);
         }
+      } else {
+        console.error("An unknown error occurred:", err);
       }
     } finally {
       setLoading(false);
     }
   };
 
-  const formatCurrency = (value: number): string => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      maximumFractionDigits: 0,
-    }).format(value);
-  };
-  if (loading) {
-    return <p>Loading...</p>;
-  }
   const BASE_URL = import.meta.env.VITE_REACT_API_STORAGE_URL;
 
   return (
-    <main className="relative mx-auto min-h-screen w-full max-w-[640px] bg-[#F4F5F7] px-5 pb-[138px] pt-[50px]">
-      <div id="Background" className="absolute left-0 right-0 top-0">
+    <div className="min-h-screen bg-[#F4F5F7]">
+      {/* Background Image - Mobile Only */}
+      <div className="absolute left-0 right-0 top-0 lg:hidden">
         <img
           src="/assets/images/backgrounds/orange.png"
-          alt="image"
-          className="h-[280px] w-full object-cover object-bottom"
+          alt="background"
+          className="h-70 w-full object-cover object-bottom"
         />
       </div>
-      <div className="relative flex flex-col gap-5">
-        <header className="flex flex-col items-center gap-[10px]">
-          <img
-            src="/assets/images/icons/list-form-check.svg"
-            alt="icon"
-            className="size-[70px] shrink-0"
-          />
-          <h1 className="text-[26px] font-extrabold leading-[39px] text-white">
-            Check My Booking
-          </h1>
-        </header>
-        <form onSubmit={handleSubmit}>
-          <section className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]">
-            <label className="flex flex-col gap-2">
-              <h4 className="font-semibold">Booking TRX ID</h4>
-              {formErrors.find((error) =>
-                error.path.includes("booking_trx_id")
-              ) && (
-                <p>
-                  {
-                    formErrors.find((error) =>
-                      error.path.includes("booking_trx_id")
-                    )?.message
-                  }
-                </p>
-              )}
-              <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight focus-within:border-ginzapet-orange">
-                <img
-                  src="/assets/images/icons/note-id-finished.svg"
-                  alt="icon"
-                  className="absolute left-[14px] top-1/2 h-6 w-6 shrink-0 -translate-y-1/2"
-                />
-                <input
-                  required
-                  onChange={handleChange}
-                  value={formData.booking_trx_id}
-                  name="booking_trx_id"
-                  id="bookingTrxId"
-                  defaultValue=""
-                  placeholder="Your Booking TRX ID"
-                  className="h-full w-full rounded-full bg-transparent pl-[50px] font-semibold leading-6 placeholder:text-base placeholder:font-normal focus:outline-none"
-                  type="text"
-                />
-              </div>
-            </label>
-            <label className="flex flex-col gap-2">
-              <h4 className="font-semibold">Email Address</h4>
-              {formErrors.find((error) => error.path.includes("email")) && (
-                <p>
-                  {
-                    formErrors.find((error) => error.path.includes("email"))
-                      ?.message
-                  }
-                </p>
-              )}
-              <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight focus-within:border-ginzapet-orange">
-                <img
-                  src="/assets/images/icons/amplop-booking-form.svg"
-                  alt="icon"
-                  className="absolute left-[14px] top-1/2 h-6 w-6 shrink-0 -translate-y-1/2"
-                />
-                <input
-                  required
-                  onChange={handleChange}
-                  value={formData.email}
-                  name="email"
-                  id="emailAddress"
-                  defaultValue=""
-                  placeholder="Write your email"
-                  className="h-full w-full rounded-full bg-transparent pl-[50px] font-semibold leading-6 placeholder:text-base placeholder:font-normal focus:outline-none"
-                  type="email"
-                />
-              </div>
-            </label>
-            <button
-              type="submit"
-              className="w-full rounded-full bg-[#d14a1e] py-[14px] text-center font-semibold text-white hover:shadow-[0px_4px_10px_0px_#D04B1E80]"
-            >
-              Find My Booking
-            </button>
-          </section>
-        </form>
 
-        {notFound && (
-          <section
-            id="NotFound"
-            className="flex flex-col items-center gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
-          >
-            <img
-              src="/assets/images/icons/list-form-check-black.svg"
-              alt="icon"
-              className="size-[50px] shrink-0"
-            />
-            <strong className="font-bold">Oops! Not Found</strong>
-            <p className="text-center leading-7">
-              Kami tidak dapat menemukan pesanan anda silahkan diperiksa kembali
-            </p>
-          </section>
-        )}
+      {/* Desktop Background */}
+      <div className="hidden lg:block absolute left-0 right-0 top-0 h-40 bg-gradient-to-r from-[#d14a1e] to-[#ff6b35]"></div>
 
-        {bookingDetails && !notFound && (
-          <div id="ResultBooking" className="space-y-[20px]">
-            <section
-              id="BookingStatus"
-              className="flex flex-col items-center gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
-            >
-              <div className="flex w-full items-center justify-between">
-                <h3 className="font-semibold">Booking Status</h3>
-                <button type="button" data-expand="BookingStatusJ">
-                  <img
-                    src="/assets/images/icons/bottom-booking-form.svg"
-                    alt="icon"
-                    className="h-[32px] w-[32px] shrink-0"
-                  />
-                </button>
-              </div>
-              {bookingDetails.is_paid ? (
-                <div
-                  id="BookingStatusJ completedbooking"
-                  className="relative w-full pb-[42px]"
-                >
-                  <div className="flex">
-                    <div className="flex flex-col items-center">
-                      <div className="relative z-10 flex h-[25px] items-center">
-                        <div className="h-2 w-[60px] rounded-full bg-[#F4F5F7]" />
-                        <div className="absolute h-2 w-[60px] rounded-full bg-[#0CA024]" />
-                        <div className="absolute right-0 top-0 translate-x-1/2">
-                          <div className="flex flex-col items-center gap-[6px]">
-                            <div className="flex h-[25px] w-[25px] items-center justify-center rounded-full bg-[#0CA024] text-xs font-bold leading-[18px] text-white">
-                              1
-                            </div>
-                            <p className="text-center text-xs font-semibold leading-[18px]">
-                              Booking
-                              <br />
-                              Created
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+      {/* Main Content */}
+      <main className="relative pt-12 lg:pt-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Header */}
+          <header className="flex flex-col items-center gap-4 mb-8 lg:mb-12">
+            <div className="flex h-16 w-16 lg:h-20 lg:w-20 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
+              <Search className="h-8 w-8 lg:h-10 lg:w-10 text-white" />
+            </div>
+            <h1 className="text-2xl lg:text-4xl font-extrabold text-white lg:text-black text-center">Check My Booking</h1>
+          </header>
+
+          <div className="max-w-4xl mx-auto">
+            {/* Search Form */}
+            <form onSubmit={handleSubmit} className="mb-8">
+              <div className="rounded-2xl lg:rounded-3xl border border-gray-200 bg-white p-4 lg:p-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+                  <div className="space-y-2">
+                    <label htmlFor="bookingTrxId" className="font-semibold text-lg">
+                      Booking TRX ID
+                    </label>
+                    {formErrors.find((error) => error.path.includes("booking_trx_id")) && (
+                      <p className="text-red-500 text-sm">
+                        {formErrors.find((error) => error.path.includes("booking_trx_id"))?.message}
+                      </p>
+                    )}
+                    <div className="relative">
+                      <FileText className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                      <input
+                        required
+                        onChange={handleChange}
+                        value={formData.booking_trx_id}
+                        name="booking_trx_id"
+                        id="bookingTrxId"
+                        placeholder="Your Booking TRX ID"
+                        className="h-12 lg:h-14 w-full rounded-full border border-gray-200 bg-transparent pl-12 pr-4 font-semibold focus:border-[#d14a1e] focus:outline-none"
+                        type="text"
+                      />
                     </div>
-                    <div className="relative flex h-[25px] w-full items-center">
-                      <div className="h-2 w-full rounded-full bg-[#F4F5F7]" />
-                      <div className="absolute h-2 w-1/2 rounded-full bg-[#0CA024]" />
-                      <div className="absolute right-1/2 top-0 z-10 translate-x-1/2">
-                        <div className="flex flex-col items-center gap-[6px]">
-                          <div className="flex h-[25px] w-[25px] items-center justify-center rounded-full bg-[#0CA024] text-xs font-bold leading-[18px] text-white">
-                            2
-                          </div>
-                          <p className="text-center text-xs font-semibold leading-[18px]">
-                            Verifying
-                            <br />
-                            Payment
-                          </p>
-                        </div>
-                      </div>
-                      <div className="absolute right-0 h-2 w-1/2 rounded-full bg-[#0CA024]" />
-                    </div>
-                    <div className="relative z-10 flex h-[25px] w-[60px] items-center">
-                      <div className="h-2 w-[60px] rounded-full bg-[#F4F5F7]" />
-                      <div className="absolute h-2 w-full rounded-full bg-[#0CA024]" />
-                      <div className="absolute left-0 top-0 -translate-x-1/2">
-                        <div className="flex flex-col items-center gap-[6px]">
-                          <div className="flex h-[25px] w-[25px] items-center justify-center rounded-full bg-[#0CA024] text-xs font-bold leading-[18px] text-white">
-                            3
-                          </div>
-                          <p className="text-center text-xs font-semibold leading-[18px]">
-                            Start
-                            <br />
-                            Working
-                          </p>
-                        </div>
-                      </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="emailAddress" className="font-semibold text-lg">
+                      Email Address
+                    </label>
+                    {formErrors.find((error) => error.path.includes("email")) && (
+                      <p className="text-red-500 text-sm">
+                        {formErrors.find((error) => error.path.includes("email"))?.message}
+                      </p>
+                    )}
+                    <div className="relative">
+                      <Mail className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                      <input
+                        required
+                        onChange={handleChange}
+                        value={formData.email}
+                        name="email"
+                        id="emailAddress"
+                        placeholder="Write your email"
+                        className="h-12 lg:h-14 w-full rounded-full border border-gray-200 bg-transparent pl-12 pr-4 font-semibold focus:border-[#d14a1e] focus:outline-none"
+                        type="email"
+                      />
                     </div>
                   </div>
                 </div>
-              ) : (
-                <div
-                  id="BookingStatusJ incomplete"
-                  className="relative w-full pb-[42px]"
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full mt-6 rounded-full bg-[#d14a1e] py-3 lg:py-4 text-center font-semibold text-white hover:bg-[#b8401a] transition-colors hover:shadow-lg disabled:opacity-50"
                 >
-                  <div className="flex">
-                    <div className="flex flex-col items-center">
-                      <div className="relative z-10 flex h-[25px] items-center">
-                        <div className="h-2 w-[60px] rounded-full bg-[#F4F5F7]" />
-                        <div className="absolute h-2 w-[60px] rounded-full bg-[#0CA024]" />
-                        <div className="absolute right-0 top-0 translate-x-1/2">
-                          <div className="flex flex-col items-center gap-[6px]">
-                            <div className="flex h-[25px] w-[25px] items-center justify-center rounded-full bg-[#0CA024] text-xs font-bold leading-[18px] text-white">
-                              1
+                  {loading ? "Searching..." : "Find My Booking"}
+                </button>
+              </div>
+            </form>
+
+            {/* Not Found State */}
+            {notFound && (
+              <div className="rounded-2xl lg:rounded-3xl border border-gray-200 bg-white p-6 lg:p-8 text-center mb-8">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-100 mx-auto mb-4">
+                  <Search className="h-8 w-8 text-red-500" />
+                </div>
+                <h3 className="font-bold text-xl mb-2">Oops! Not Found</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Kami tidak dapat menemukan pesanan anda silahkan diperiksa kembali
+                </p>
+              </div>
+            )}
+
+            {/* Booking Results */}
+            {bookingDetails && !notFound && (
+              <div className="space-y-6 lg:space-y-8 pb-24 lg:pb-8">
+                {/* Booking Status */}
+                <AccordionSection title="Booking Status">
+                  <ProgressIndicator isPaid={bookingDetails.is_paid} />
+                </AccordionSection>
+
+                {/* Desktop Two-Column Layout */}
+                <div className="lg:grid lg:grid-cols-2 lg:gap-8 space-y-6 lg:space-y-0">
+                  {/* Left Column */}
+                  <div className="space-y-6">
+                    {/* Working Schedule */}
+                    <AccordionSection title="Working Schedule">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <label className="font-semibold">Date</label>
+                          <div className="relative">
+                            <Calendar className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                            <input
+                              className="h-12 w-full rounded-full border border-gray-200 bg-gray-50 pl-12 pr-4 font-semibold focus:outline-none"
+                              readOnly
+                              type="text"
+                              value={bookingDetails.schedule_at}
+                            />
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <label className="font-semibold">Start Time At</label>
+                          <div className="relative">
+                            <Clock className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                            <input
+                              className="h-12 w-full rounded-full border border-gray-200 bg-gray-50 pl-12 pr-4 font-semibold focus:outline-none"
+                              readOnly
+                              type="text"
+                              value={bookingDetails.started_time}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </AccordionSection>
+
+                    {/* Services Ordered */}
+                    <AccordionSection title="Services Ordered">
+                      <div className="space-y-4">
+                        {bookingDetails.transaction_details.map((detail, index) => (
+                          <div key={detail.id} className="flex flex-col gap-4">
+                            <div className="flex items-center gap-4">
+                              <div className="flex h-20 w-20 lg:h-24 lg:w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-gray-100">
+                                <img
+                                  src={`${BASE_URL}/${detail.product.thumbnail}`}
+                                  alt={detail.product.name}
+                                  className="h-full w-full object-cover"
+                                />
+                              </div>
+                              <div className="flex-1 space-y-2">
+                                <h4 className="font-semibold text-sm lg:text-base line-clamp-2">
+                                  {detail.product.name}
+                                </h4>
+                                <div className="flex items-center gap-4 text-sm text-gray-500">
+                                  <div className="flex items-center gap-1">
+                                    <DollarSign className="h-4 w-4" />
+                                    <span>{formatCurrency(detail.price)}</span>
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    <Clock className="h-4 w-4" />
+                                    <span>{detail.product.stok} Stok Tersedia</span>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
-                            <p className="text-xs text-center font-semibold leading-[18px]">
-                              Booking
-                              <br />
-                              Created
-                            </p>
+                            {index < bookingDetails.transaction_details.length - 1 && (
+                              <hr className="border-gray-200" />
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </AccordionSection>
+                  </div>
+
+                  {/* Right Column */}
+                  <div className="space-y-6">
+                    {/* Booking Details */}
+                    <AccordionSection title="Booking Details">
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center gap-2">
+                            <FileText className="h-5 w-5 text-gray-400" />
+                            <span className="text-gray-600">Booking ID</span>
+                          </div>
+                          <span className="font-semibold">{bookingDetails.booking_trx_id}</span>
+                        </div>
+                        <hr className="border-gray-200" />
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center gap-2">
+                            <DollarSign className="h-5 w-5 text-gray-400" />
+                            <span className="text-gray-600">Sub Total</span>
+                          </div>
+                          <span className="font-semibold">{formatCurrency(bookingDetails.sub_total)}</span>
+                        </div>
+                        <hr className="border-gray-200" />
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center gap-2">
+                            <DollarSign className="h-5 w-5 text-gray-400" />
+                            <span className="text-gray-600">Tax 11%</span>
+                          </div>
+                          <span className="font-semibold">{formatCurrency(bookingDetails.total_tax_amount)}</span>
+                        </div>
+                        <hr className="border-gray-200" />
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center gap-2">
+                            <DollarSign className="h-5 w-5 text-gray-400" />
+                            <span className="text-gray-600">Grand Total</span>
+                          </div>
+                          <span className="text-xl font-bold text-[#d14a1e]">
+                            {formatCurrency(bookingDetails.total_amount)}
+                          </span>
+                        </div>
+                        <hr className="border-gray-200" />
+                        <div className="overflow-hidden rounded-2xl">
+                          <img
+                            src={`${BASE_URL}/${bookingDetails.proof}`}
+                            alt="Payment proof"
+                            className="h-48 w-full object-cover"
+                          />
+                        </div>
+                      </div>
+                    </AccordionSection>
+
+                    {/* Personal Information */}
+                    <AccordionSection title="Personal Information">
+                      <div className="space-y-4">
+                        <div className="space-y-2">
+                          <label className="font-semibold">Full Name</label>
+                          <div className="relative">
+                            <User className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                            <input
+                              readOnly
+                              value={bookingDetails.name}
+                              className="h-12 w-full rounded-full border border-gray-200 bg-gray-50 pl-12 pr-4 font-semibold focus:outline-none"
+                              type="text"
+                            />
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <label className="font-semibold">Email Address</label>
+                          <div className="relative">
+                            <Mail className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                            <input
+                              readOnly
+                              value={bookingDetails.email}
+                              className="h-12 w-full rounded-full border border-gray-200 bg-gray-50 pl-12 pr-4 font-semibold focus:outline-none"
+                              type="email"
+                            />
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <label className="font-semibold">Phone Number</label>
+                          <div className="relative">
+                            <Phone className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                            <input
+                              readOnly
+                              value={bookingDetails.phone}
+                              className="h-12 w-full rounded-full border border-gray-200 bg-gray-50 pl-12 pr-4 font-semibold focus:outline-none"
+                              type="tel"
+                            />
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="relative flex h-[25px] w-full items-center">
-                      <div className="h-2 w-full rounded-full bg-[#F4F5F7]" />
-                      <div className="absolute h-2 w-1/2 rounded-full bg-[#0CA024]" />
-                      <div className="absolute right-1/2 top-0 translate-x-1/2">
-                        <div className="flex flex-col items-center gap-[6px]">
-                          <div className="flex h-[25px] w-[25px] items-center justify-center rounded-full bg-[#0CA024] text-xs font-bold leading-[18px] text-white">
-                            2
-                          </div>
-                          <p className="text-xs text-center font-semibold leading-[18px]">
-                            Verifying
-                            <br />
-                            Payment
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="relative z-10 flex h-[25px] w-[60px] items-center">
-                      <div className="h-2 w-[60px] rounded-full bg-[#F4F5F7]" />
-                      <div className="absolute left-0 top-0 -translate-x-1/2">
-                        <div className="flex flex-col items-center gap-[6px]">
-                          <div className="flex h-[25px] w-[25px] items-center justify-center rounded-full bg-[#0CA024] text-xs font-bold leading-[18px] text-white">
-                            3
-                          </div>
-                          <p className="text-xs text-center font-semibold leading-[18px]">
-                            Start
-                            <br />
-                            Working
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+                    </AccordionSection>
                   </div>
                 </div>
-              )}
-            </section>
-            <section
-              id="WorkingSchedule"
-              className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
-            >
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold">Working Schedule</h3>
-                <button type="button" data-expand="WorkingScheduleJ">
-                  <img
-                    src="/assets/images/icons/bottom-booking-form.svg"
-                    alt="icon"
-                    className="h-[32px] w-[32px] shrink-0"
-                  />
-                </button>
-              </div>
-              <div id="WorkingScheduleJ" className="flex flex-col gap-4">
-                <label className="flex flex-col gap-2">
-                  <h4 className="font-semibold">Date</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight">
-                    <img
-                      src="/assets/images/icons/date-booking-form.svg"
-                      alt="icon"
-                      className="absolute left-[14px] top-1/2 h-6 w-6 shrink-0 -translate-y-1/2"
-                    />
-                    <input
-                      className="h-full w-full rounded-full bg-[#F4F5F7] pl-[50px] font-semibold focus:outline-none"
-                      readOnly
-                      type="text"
-                      value={bookingDetails.schedule_at}
-                    />
-                  </div>
-                </label>
-                <label className="flex flex-col gap-2">
-                  <h4 className="font-semibold">Start Time At</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight">
-                    <img
-                      src="/assets/images/icons/clock-booking-form.svg"
-                      alt="icon"
-                      className="absolute left-[14px] top-1/2 h-6 w-6 shrink-0 -translate-y-1/2"
-                    />
-                    <input
-                      className="h-full w-full rounded-full bg-[#F4F5F7] pl-[50px] font-semibold focus:outline-none"
-                      readOnly
-                      type="text"
-                      value={bookingDetails.started_time}
-                    />
-                  </div>
-                </label>
-              </div>
-            </section>
-            <section
-              id="ServicesOrdered"
-              className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
-            >
-              <div className="flex items-center justify-between">
-                <h2 className="font-semibold">Services Ordered</h2>
-                <button type="button" data-expand="ServicesOrderedJ">
-                  <img
-                    src="/assets/images/icons/bottom-booking-form.svg"
-                    alt="icon"
-                    className="h-[32px] w-[32px] shrink-0"
-                  />
-                </button>
-              </div>
-              <div className="flex flex-col gap-4" id="ServicesOrderedJ">
-                {bookingDetails.transaction_details.map((detail, index) => (
-                  <div className="flex flex-col gap-4" key={detail.id}>
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-[90px] w-[80px] shrink-0 items-center justify-center overflow-hidden rounded-3xl">
-                        <img
-                          src={`${BASE_URL}/${detail.product.thumbnail}`}
-                          alt="image"
-                          className="h-full w-full object-cover"
+
+                {/* Address - Full Width */}
+                <AccordionSection title="Your Home Address">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+                    <div className="lg:col-span-2 space-y-2">
+                      <label className="font-semibold">Address</label>
+                      <div className="relative">
+                        <Home className="absolute left-4 top-4 h-5 w-5 text-gray-400" />
+                        <textarea
+                          readOnly
+                          className="h-28 w-full rounded-2xl border border-gray-200 bg-gray-50 pl-12 pr-4 pt-4 font-semibold focus:outline-none resize-none"
+                          value={bookingDetails.address}
                         />
                       </div>
-                      <div className="flex flex-col gap-1">
-                        <h3 className="line-clamp-2 h-[42px] text-sm font-semibold leading-[21px]">
-                          {detail.product.name}
-                        </h3>
-                        <div className="flex items-center gap-[6px]">
-                          <div className="flex items-center gap-1">
-                            <img
-                              src="/assets/images/icons/coint.svg"
-                              alt="icon"
-                              className="h-4 w-4 shrink-0"
-                            />
-                            <p className="text-xs leading-[18px] text-ginzapet-gray">
-                              {formatCurrency(detail.price)}
-                            </p>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <img
-                              src="/assets/images/icons/clock-cart.svg"
-                              alt="icon"
-                              className="h-4 w-4 shrink-0"
-                            />
-                            <p className="text-xs leading-[18px] text-ginzapet-gray">
-                              {detail.product.stok} Stok Tersedia
-                            </p>
-                          </div>
-                        </div>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="font-semibold">City</label>
+                      <div className="relative">
+                        <MapPin className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                        <input
+                          readOnly
+                          value={bookingDetails.city}
+                          className="h-12 w-full rounded-full border border-gray-200 bg-gray-50 pl-12 pr-4 font-semibold focus:outline-none"
+                          type="text"
+                        />
                       </div>
                     </div>
-                    {index < bookingDetails.transaction_details.length - 1 && (
-                      <hr className="border-ginzapet-graylight" />
-                    )}
+                    <div className="space-y-2">
+                      <label className="font-semibold">Post Code</label>
+                      <div className="relative">
+                        <MapPin className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                        <input
+                          readOnly
+                          value={bookingDetails.post_code}
+                          className="h-12 w-full rounded-full border border-gray-200 bg-gray-50 pl-12 pr-4 font-semibold focus:outline-none"
+                          type="text"
+                        />
+                      </div>
+                    </div>
                   </div>
-                ))}
+                </AccordionSection>
               </div>
-            </section>
-            <section
-              id="BookingDetails"
-              className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
-            >
-              <div className="flex items-center justify-between">
-                <h2 className="font-semibold">Booking Details</h2>
-                <button type="button" data-expand="BookingDetailsJ">
-                  <img
-                    src="/assets/images/icons/bottom-booking-form.svg"
-                    alt="icon"
-                    className="h-[32px] w-[32px] shrink-0"
-                  />
-                </button>
-              </div>
-              <div className="flex flex-col gap-4" id="BookingDetailsJ">
-                <div className="flex justify-between">
-                  <div className="flex items-center gap-[10px]">
-                    <img
-                      src="/assets/images/icons/note-payment.svg"
-                      alt="icon"
-                      className="h-[24px] w-[24px] shrink-0"
-                    />
-                    <p className="text-ginzapet-gray">Booking ID</p>
-                  </div>
-                  <strong className="font-semibold">
-                    {bookingDetails.booking_trx_id}
-                  </strong>
-                </div>
-                <hr className="border-ginzapet-graylight" />
-                <div className="flex justify-between">
-                  <div className="flex items-center gap-[10px]">
-                    <img
-                      src="/assets/images/icons/note-payment.svg"
-                      alt="icon"
-                      className="h-[24px] w-[24px] shrink-0"
-                    />
-                    <p className="text-ginzapet-gray">Sub Total</p>
-                  </div>
-                  <strong className="font-semibold">
-                    {formatCurrency(bookingDetails.sub_total)}
-                  </strong>
-                </div>
-                <hr className="border-ginzapet-graylight" />
-                <div className="flex justify-between">
-                  <div className="flex items-center gap-[10px]">
-                    <img
-                      src="/assets/images/icons/note-payment.svg"
-                      alt="icon"
-                      className="h-[24px] w-[24px] shrink-0"
-                    />
-                    <p className="text-ginzapet-gray">Tax 11%</p>
-                  </div>
-                  <strong className="font-semibold">
-                    {formatCurrency(bookingDetails.total_tax_amount)}
-                  </strong>
-                </div>
-                <hr className="border-ginzapet-graylight" />
-                <div className="flex justify-between">
-                  <div className="flex items-center gap-[10px]">
-                    <img
-                      src="/assets/images/icons/note-payment.svg"
-                      alt="icon"
-                      className="h-[24px] w-[24px] shrink-0"
-                    />
-                    <p className="text-ginzapet-gray">Grand Total</p>
-                  </div>
-                  <strong className="text-[20px] font-bold leading-[30px] text-ginzapet-orange">
-                    {formatCurrency(bookingDetails.total_amount)}
-                  </strong>
-                </div>
-                <hr className="border-ginzapet-graylight" />
-                <div className="flex w-full items-center justify-center overflow-hidden rounded-3xl">
-                  <img
-                    src={`${BASE_URL}/${bookingDetails.proof}`}
-                    alt="image"
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-              </div>
-            </section>
-            <section
-              id="PersonalInformations"
-              className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
-            >
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold">Personal Informations</h3>
-                <button type="button" data-expand="PersonalInformationsJ">
-                  <img
-                    src="/assets/images/icons/bottom-booking-form.svg"
-                    alt="icon"
-                    className="h-[32px] w-[32px] shrink-0"
-                  />
-                </button>
-              </div>
-              <div className="flex flex-col gap-4" id="PersonalInformationsJ">
-                <label className="flex flex-col gap-2">
-                  <h4 className="font-semibold">Full Name</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight">
-                    <img
-                      src="/assets/images/icons/profil-booking-form.svg"
-                      alt="icon"
-                      className="absolute left-[14px] top-1/2 h-6 w-6 shrink-0 -translate-y-1/2"
-                    />
-                    <input
-                      readOnly
-                      value={bookingDetails.name}
-                      className="h-full w-full rounded-full bg-[#F4F5F7] pl-[50px] font-semibold leading-6 focus:outline-none"
-                      type="text"
-                    />
-                  </div>
-                </label>
-                <label className="flex flex-col gap-2">
-                  <h4 className="font-semibold">Email Address</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight">
-                    <img
-                      src="/assets/images/icons/amplop-booking-form.svg"
-                      alt="icon"
-                      className="absolute left-[14px] top-1/2 h-6 w-6 shrink-0 -translate-y-1/2"
-                    />
-                    <input
-                      readOnly
-                      value={bookingDetails.email}
-                      className="h-full w-full rounded-full bg-[#F4F5F7] pl-[50px] font-semibold leading-6 focus:outline-none"
-                      type="name"
-                    />
-                  </div>
-                </label>
-                <label className="flex flex-col gap-2">
-                  <h4 className="font-semibold">No. Phone</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight">
-                    <img
-                      src="/assets/images/icons/telepon-booking-form.svg"
-                      alt="icon"
-                      className="absolute left-[14px] top-1/2 h-6 w-6 shrink-0 -translate-y-1/2"
-                    />
-                    <input
-                      readOnly
-                      value={bookingDetails.phone}
-                      className="h-full w-full rounded-full bg-[#F4F5F7] pl-[50px] font-semibold leading-6 focus:outline-none"
-                      type="tel"
-                    />
-                  </div>
-                </label>
-              </div>
-            </section>
-            <section
-              id="YourHomeAddress"
-              className="flex flex-col gap-4 rounded-3xl border border-ginzapet-graylight bg-white px-[14px] py-[14px]"
-            >
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold">Your Home Address</h3>
-                <button type="button" data-expand="YourHomeAddressJ">
-                  <img
-                    src="/assets/images/icons/bottom-booking-form.svg"
-                    alt="icon"
-                    className="h-[32px] w-[32px] shrink-0"
-                  />
-                </button>
-              </div>
-              <div id="YourHomeAddressJ" className="flex flex-col gap-4">
-                <label className="flex flex-col gap-2">
-                  <h4 className="font-semibold">Address</h4>
-                  <div className="relative h-[110px] w-full overflow-hidden rounded-[22px] border border-ginzapet-graylight">
-                    <textarea
-                      readOnly
-                      className="h-full w-full bg-[#F4F5F7] pl-[50px] pr-[14px] pt-[14px] font-semibold leading-7 focus:outline-none"
-                      name=""
-                      id=""
-                      value={bookingDetails.address}
-                    />
-                    <img
-                      src="/assets/images/icons/school-booking-form.svg"
-                      alt="icon"
-                      className="absolute left-[14px] top-[14px] h-6 w-6 shrink-0"
-                    />
-                  </div>
-                </label>
-                <label className="flex flex-col gap-2">
-                  <h4 className="font-semibold">City</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight bg-[#F4F5F7]">
-                    <img
-                      src="/assets/images/icons/location-booking-form.svg"
-                      alt="icon"
-                      className="absolute left-[14px] top-1/2 h-6 w-6 shrink-0 -translate-y-1/2"
-                    />
-                    <select
-                      name=""
-                      id=""
-                      className="pointer-events-none relative z-10 h-full w-full appearance-none rounded-full bg-transparent pl-[50px] font-semibold focus:outline-none"
-                    >
-                      <option value={bookingDetails.city}>
-                        {bookingDetails.city}
-                      </option>
-                    </select>
-                  </div>
-                </label>
-                <label className="flex flex-col gap-2">
-                  <h4 className="font-semibold">Post Code</h4>
-                  <div className="relative h-[52px] w-full overflow-hidden rounded-full border border-ginzapet-graylight">
-                    <img
-                      src="/assets/images/icons/ball-booking-form.svg"
-                      alt="icon"
-                      className="absolute left-[14px] top-1/2 h-6 w-6 shrink-0 -translate-y-1/2"
-                    />
-                    <input
-                      readOnly
-                      className="post-code h-full w-full rounded-full bg-[#F4F5F7] pl-[50px] font-semibold leading-6 focus:outline-none"
-                      type="tel"
-                      value={bookingDetails.post_code}
-                    />
-                  </div>
-                </label>
-              </div>
-            </section>
+            )}
           </div>
-        )}
-      </div>
-      <nav className="fixed bottom-5 left-0 right-0 z-30 mx-auto w-full">
-        <div className="mx-auto max-w-[640px] px-5">
-          <div className="rounded-[24px] bg-black px-[20px] py-[14px]">
-            <ul className="flex items-center gap-[10.67px]">
-              <li className="shrink-0">
-                <Link to={"/"}>
-                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full  bg-[#d14a1e] ">
-                    <img
-                      src="/assets/images/icons/note-form-check-black.svg"
-                      alt="icon"
-                      className="h-[22px] w-[22px] shrink-0"
-                    />
-                  </div>
-                </Link>
-              </li>
-              <li className="w-full">
-                <Link to={"/my-booking"}>
-                  <div className="flex items-center justify-center gap-2 rounded-full bg-[#d14a1e] px-[18px] py-[10px] hover:shadow-[0px_4px_10px_0px_#D04B1E80]">
-                    <img
-                      src="/assets/images/icons/list-form-check-white.svg"
-                      alt="icon"
-                      className="h-6 w-6 shrink-0"
-                    />
-                    <p className="text-sm font-semibold leading-[21px] text-white">
-                      My Booking
-                    </p>
-                  </div>
-                </Link>
-              </li>
-              <li className="shrink-0">
-                <a href="#">
-                  <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full bg-[#d14a1e]">
-                    <img
-                      src="/assets/images/icons/profil.svg"
-                      alt="icon"
-                      className="h-[22px] w-[22px] shrink-0"
-                    />
-                  </div>
-                </a>
-              </li>
-            </ul>
+        </div>
+      </main>
+
+      {/* Mobile Bottom Navigation */}
+      <nav className="fixed bottom-5 left-0 right-0 z-30 lg:hidden">
+        <div className="mx-auto max-w-2xl px-4">
+          <div className="rounded-2xl bg-black px-5 py-4">
+            <div className="flex items-center gap-3">
+              <Link to="/">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#d14a1e]">
+                  <FileText className="h-5 w-5 text-white" />
+                </div>
+              </Link>
+              <Link to="/my-booking" className="flex-1">
+                <div className="flex items-center justify-center gap-2 rounded-full bg-[#d14a1e] px-4 py-2">
+                  <Search className="h-5 w-5 text-white" />
+                  <span className="text-sm font-semibold text-white">My Booking</span>
+                </div>
+              </Link>
+              <Link to="/profile">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#d14a1e]">
+                  <User className="h-5 w-5 text-white" />
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
       </nav>
-    </main>
+
+      {/* Mobile spacing for bottom nav */}
+      <div className="h-24 lg:hidden"></div>
+    </div>
   );
 }

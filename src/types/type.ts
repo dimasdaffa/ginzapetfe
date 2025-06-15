@@ -30,8 +30,8 @@ export interface Category {
   slug: string;
   photo: string;
   products_count: number;
-  products: Product[]; // Assuming this is an array of Product
-  popular_products: Product[]; // Assuming this is an array of Product
+  products: Product[]; 
+  popular_products: Product[]; 
 }
 
 export interface BookingDetails {
