@@ -8,6 +8,7 @@ import type { OrderFormData, CartItem, Product } from "../types/type";
 import type { ZodIssue } from "zod";
 import apiClient from "../services/apiServices";
 import { paymentSchema } from "../types/validationOrder";
+import { CheckCircle, IdCard, ListCheckIcon } from "lucide-react";
 
 type FormData = {
   proof: File | null;
@@ -160,7 +161,7 @@ export default function PaymentPage() {
     try {
       setLoading(true);
       const response = await apiClient.post(
-        "/Order-transaction",
+        "/booking-transaction",
         submissionData,
         {
           headers: {
@@ -170,7 +171,7 @@ export default function PaymentPage() {
       );
 
       if (response.status === 200 || response.status === 201) {
-        const OrderTrxId = response.data.data.Order_trx_id;
+        const OrderTrxId = response.data.data.booking_trx_id;
         const email = response.data.data.email;
 
         if (!OrderTrxId) console.error("Error: Order_trx_id is undefined");
@@ -240,7 +241,7 @@ export default function PaymentPage() {
               className={`font-semibold text-base sm:text-lg transition-all duration-300
                 ${isScrolled ? "" : "text-white"}`}
             >
-              Order Services
+              Pay
             </h2>
           </div>
         </div>
@@ -343,11 +344,7 @@ export default function PaymentPage() {
                     Available Payment
                   </h3>
                   <button type="button" data-expand="AvailablePaymentJ">
-                    <img
-                      src="/assets/images/icons/bottom-Order-form.svg"
-                      alt="icon"
-                      className="h-[28px] w-[28px] sm:h-[32px] sm:w-[32px] xl:h-[36px] xl:w-[36px] shrink-0 transition-all duration-300"
-                    />
+                    <IdCard className="h-[28px] w-[28px] sm:h-[32px] sm:w-[32px] xl:h-[36px] xl:w-[36px] shrink-0 transition-all duration-300" />
                   </button>
                 </div>
                 <div
@@ -440,11 +437,7 @@ export default function PaymentPage() {
                     Order Details
                   </h3>
                   <button type="button" data-expand="OrderDetailsJ">
-                    <img
-                      src="/assets/images/icons/bottom-Order-form.svg"
-                      alt="icon"
-                      className="h-[28px] w-[28px] sm:h-[32px] sm:w-[32px] xl:h-[36px] xl:w-[36px] shrink-0 transition-all duration-300"
-                    />
+                    <ListCheckIcon className="h-[28px] w-[28px] sm:h-[32px] sm:w-[32px] xl:h-[36px] xl:w-[36px] shrink-0 transition-all duration-300" />
                   </button>
                 </div>
                 <div
@@ -527,11 +520,7 @@ export default function PaymentPage() {
                       Confirmation
                     </h3>
                     <button type="button" data-expand="ConfirmationJ">
-                      <img
-                        src="/assets/images/icons/bottom-Order-form.svg"
-                        alt="icon"
-                        className="h-[28px] w-[28px] sm:h-[32px] sm:w-[32px] xl:h-[36px] xl:w-[36px] shrink-0 transition-all duration-300"
-                      />
+                      <CheckCircle className="h-[28px] w-[28px] sm:h-[32px] sm:w-[32px] xl:h-[36px] xl:w-[36px] shrink-0 transition-all duration-300" />
                     </button>
                   </div>
                   <div id="ConfirmationJ" className="flex flex-col gap-4">

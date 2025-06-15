@@ -187,7 +187,7 @@ export default function SuccessOrderPage() {
           >
             <Link to={"/"} className="flex-1">
               <div className="w-full rounded-full bg-[#d14a1e] py-3 sm:py-[14px] xl:py-4 text-center font-semibold text-white text-base sm:text-lg xl:text-xl transition-all duration-300 hover:shadow-[0px_4px_10px_0px_#D04B1E80] hover:bg-[#c1431a] cursor-pointer">
-                Order Service Again
+                Order Again
               </div>
             </Link>
             <Link to={"/my-Order"} className="flex-1">

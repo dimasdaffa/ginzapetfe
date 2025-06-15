@@ -7,7 +7,7 @@ import type { OrderFormData } from "../types/type";
 import type { z } from "zod";
 import { Link, useNavigate } from "react-router-dom";
 import { OrderSchema } from "../types/validationOrder";
-import { ArrowLeft, Calendar, Clock, ListOrderedIcon } from "lucide-react";
+import { ArrowLeft, Building, Calendar, Clock, House, ListOrderedIcon, Mail, Mailbox, Phone, Pin, User } from "lucide-react";
 
 export default function OrderPage() {
   const [formData, setFormData] = useState<OrderFormData>({
@@ -157,7 +157,7 @@ export default function OrderPage() {
               className={`font-semibold text-base sm:text-lg transition-all duration-300
                 ${isScrolled ? "" : "text-white"}`}
             >
-              Order Services
+              Order
             </h2>
           </div>
         </div>
@@ -303,11 +303,7 @@ export default function OrderPage() {
                       Personal Information
                     </h3>
                     <button type="button" data-expand="PersonalInformationsJ">
-                      <img
-                        src="/assets/images/icons/bottom-Order-form.svg"
-                        alt="icon"
-                        className="h-[28px] w-[28px] sm:h-[32px] sm:w-[32px] xl:h-[36px] xl:w-[36px] shrink-0 transition-all duration-300"
-                      />
+                      <User className="h-[28px] w-[28px] sm:h-[32px] sm:w-[32px] xl:h-[36px] xl:w-[36px] shrink-0 transition-all duration-300" />
                     </button>
                   </div>
                   <div
@@ -320,11 +316,7 @@ export default function OrderPage() {
                           Full Name
                         </h4>
                         <div className="relative h-[48px] sm:h-[52px] xl:h-[56px] w-full overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
-                          <img
-                            src="/assets/images/icons/profil-Order-form.svg"
-                            alt="icon"
-                            className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2"
-                          />
+                          <User className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2" />
                           <input
                             required
                             value={formData.name}
@@ -352,11 +344,7 @@ export default function OrderPage() {
                           Email Address
                         </h4>
                         <div className="relative h-[48px] sm:h-[52px] xl:h-[56px] w-full overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
-                          <img
-                            src="/assets/images/icons/amplop-Order-form.svg"
-                            alt="icon"
-                            className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2"
-                          />
+                          <Mail className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2" />
                           <input
                             required
                             value={formData.email}
@@ -384,11 +372,7 @@ export default function OrderPage() {
                           Phone Number
                         </h4>
                         <div className="relative h-[48px] sm:h-[52px] xl:h-[56px] w-full overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
-                          <img
-                            src="/assets/images/icons/telepon-Order-form.svg"
-                            alt="icon"
-                            className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2"
-                          />
+                          <Phone className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2" />
                           <input
                             type="tel"
                             required
@@ -427,11 +411,7 @@ export default function OrderPage() {
                       Your Home Address
                     </h3>
                     <button type="button" data-expand="YourHomeAddressJ">
-                      <img
-                        src="/assets/images/icons/bottom-Order-form.svg"
-                        alt="icon"
-                        className="h-[28px] w-[28px] sm:h-[32px] sm:w-[32px] xl:h-[36px] xl:w-[36px] shrink-0 transition-all duration-300"
-                      />
+                     <House className="h-[28px] w-[28px] sm:h-[32px] sm:w-[32px] xl:h-[36px] xl:w-[36px] shrink-0 transition-all duration-300" />
                     </button>
                   </div>
                   <div id="YourHomeAddressJ" className="flex flex-col gap-4">
@@ -448,11 +428,7 @@ export default function OrderPage() {
                           className="h-full w-full pl-[44px] sm:pl-[50px] xl:pl-[56px] pr-4 sm:pr-[14px] xl:pr-[16px] pt-[14px] xl:pt-[16px] font-semibold leading-6 sm:leading-7 xl:leading-8 text-sm sm:text-base xl:text-lg placeholder:text-sm sm:placeholder:text-[16px] xl:placeholder:text-lg placeholder:font-normal placeholder:text-ginzapet-gray focus:outline-none resize-none"
                           name="address"
                         />
-                        <img
-                          src="/assets/images/icons/school-Order-form.svg"
-                          alt="icon"
-                          className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-[14px] xl:top-[16px] h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0"
-                        />
+                        <Pin className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2" />
                       </div>
                       {formErrors.find((error) =>
                         error.path.includes("address")
@@ -472,11 +448,7 @@ export default function OrderPage() {
                           City
                         </h4>
                         <div className="relative h-[48px] sm:h-[52px] xl:h-[56px] w-full overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
-                          <img
-                            src="/assets/images/icons/location-Order-form.svg"
-                            alt="icon"
-                            className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2"
-                          />
+                          <Building className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2" />
                           <select
                             value={formData.city}
                             onChange={handleChange}
@@ -513,11 +485,7 @@ export default function OrderPage() {
                           Post Code
                         </h4>
                         <div className="relative h-[48px] sm:h-[52px] xl:h-[56px] w-full overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
-                          <img
-                            src="/assets/images/icons/ball-Order-form.svg"
-                            alt="icon"
-                            className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2"
-                          />
+                         <Mailbox className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2" />
                           <input
                             required
                             value={formData.post_code}

@@ -164,7 +164,7 @@ export default function MyCartPage() {
           <div className="lg:hidden flex flex-col gap-5 pb-40">
             <AccordionSection
               title="Home Services"
-              iconSrc="/assets/images/icons/bottom-Order-form.svg"
+              iconSrc="/public/assets/images/icons/bottom-booking-form.svg"
             >
               <div className="flex flex-col gap-4">
                 {productDetails.length > 0 ? (
@@ -221,7 +221,7 @@ export default function MyCartPage() {
 
             <AccordionSection
               title="Order Details"
-              iconSrc="/assets/images/icons/bottom-Order-form.svg"
+              iconSrc="/assets/images/icons/bottom-booking-form.svg"
             >
               <div className="flex flex-col gap-4">
                 <div className="flex justify-between items-center">
@@ -323,7 +323,7 @@ export default function MyCartPage() {
               <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sticky top-32">
                 <div className="flex items-center gap-3 mb-6">
                   <img
-                    src="/assets/images/icons/bottom-Order-form.svg"
+                    src="//assets/images/icons/bottom-Order-form.svg"
                     alt="icon"
                     className="h-6 w-6"
                   />
