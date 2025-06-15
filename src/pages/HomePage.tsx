@@ -372,32 +372,20 @@ export default function HomePage() {
             <div className="flex items-center justify-between">
               <Link to="/" className="flex-1">
                 <div className="flex items-center justify-center gap-2 rounded-full bg-[#d14a1e] px-4 py-2">
-                  <img
-                    src="/assets/images/icons/browse.svg"
-                    alt="Browse"
-                    className="h-5 w-5"
-                  />
+                  <Home className="h-5 w-5 text-white" />
                   <span className="text-sm font-semibold text-white">
-                    Browse
+                    Home
                   </span>
                 </div>
               </Link>
               <Link to="/my-Order" className="ml-4">
                 <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#d14a1e]">
-                  <img
-                    src="/assets/images/icons/note.svg"
-                    alt="My Order"
-                    className="h-5 w-5"
-                  />
+                  <NotebookTabsIcon className="h-5 w-5 text-white" />
                 </div>
               </Link>
               <Link to="/profile" className="ml-4">
                 <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#d14a1e]">
-                  <img
-                    src="/assets/images/icons/profil.svg"
-                    alt="Profile"
-                    className="h-5 w-5 rounded-full"
-                  />
+                  <User className="h-5 w-5 text-white" />
                 </div>
               </Link>
             </div>

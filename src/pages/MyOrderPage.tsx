@@ -20,6 +20,7 @@ import {
   ChevronDown,
   ChevronUp,
   CheckCircle,
+  NotebookIcon,
 } from "lucide-react";
 
 const formatCurrency = (price: number) => {
@@ -538,12 +539,12 @@ export default function MyOrderPage() {
             <div className="flex items-center gap-3">
               <Link to="/">
                 <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#d14a1e]">
-                  <FileText className="h-5 w-5 text-white" />
+                  <Home className="h-5 w-5 text-white" />
                 </div>
               </Link>
               <Link to="/my-Order" className="flex-1">
                 <div className="flex items-center justify-center gap-2 rounded-full bg-[#d14a1e] px-4 py-2">
-                  <Search className="h-5 w-5 text-white" />
+                  <NotebookIcon className="h-5 w-5 text-white" />
                   <span className="text-sm font-semibold text-white">
                     My Order
                   </span>
