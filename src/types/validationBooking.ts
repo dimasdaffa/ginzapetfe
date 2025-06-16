@@ -4,7 +4,6 @@ export const OrderSchema = z.object({
   name: z.string().min(1, "Name is required!"),
   email: z.string().email("Invalid email!"),
   phone: z.string().min(1, "Phone number is required!"),
-  started_time: z.string().min(1, "Start time is required!"),
   schedule_at: z.string().min(1, "Schedule date is required!"),
   post_code: z.string().min(1, "Post code is required!"),
   address: z.string().min(1, "Address is required!"),

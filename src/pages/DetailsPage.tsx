@@ -61,7 +61,7 @@ export default function DetailsPage() {
       const itemExists = cart.find((item) => item.product_id === product.id);
 
       if (itemExists) {
-        alert("Jasa sudah tersedia di Cart!"); 
+        alert("Produk sudah tersedia di Cart!"); 
         setIsAdding(false);
       } else {
         const newCartItem: CartItem = {
@@ -73,7 +73,7 @@ export default function DetailsPage() {
         setCart(updatedCart);
         localStorage.setItem("cart", JSON.stringify(updatedCart));
 
-        alert("Jasa berhasil ditambahkan ke Cart!"); 
+        alert("Produk berhasil ditambahkan ke Cart!"); 
         setIsAdding(false);
       }
     }

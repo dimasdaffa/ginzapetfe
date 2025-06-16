@@ -388,18 +388,6 @@ export default function MyOrderPage() {
                             />
                           </div>
                         </div>
-                        <div className="space-y-2">
-                          <label className="font-semibold">Start Time At</label>
-                          <div className="relative">
-                            <Clock className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
-                            <input
-                              className="h-12 w-full rounded-full border border-gray-200 bg-gray-50 pl-12 pr-4 font-semibold focus:outline-none"
-                              readOnly
-                              type="text"
-                              value={OrderDetails.started_time}
-                            />
-                          </div>
-                        </div>
                       </div>
                     </AccordionSection>
 

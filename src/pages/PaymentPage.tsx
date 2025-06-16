@@ -150,7 +150,6 @@ export default function PaymentPage() {
       submissionData.append("address", OrderData.address);
       submissionData.append("city", OrderData.city);
       submissionData.append("post_code", OrderData.post_code);
-      submissionData.append("started_time", OrderData.started_time);
       submissionData.append("schedule_at", OrderData.schedule_at);
     }
 
@@ -306,9 +305,6 @@ export default function PaymentPage() {
             <h1 className="text-[22px] sm:text-[26px] lg:text-[30px] xl:text-[34px] font-extrabold leading-[33px] sm:leading-[39px] lg:leading-[45px] xl:leading-[51px] text-white text-center lg:text-left">
               Payment
             </h1>
-            <p className="text-white text-center lg:text-left text-sm sm:text-base">
-              Dibayar dulu nanti baru dikerjain
-            </p>
           </header>
 
           <div className="xl:grid xl:grid-cols-3 xl:gap-8 flex flex-col gap-4 sm:gap-5 lg:gap-6">
@@ -473,22 +469,6 @@ export default function PaymentPage() {
                     </div>
                     <strong className="font-semibold text-sm sm:text-base xl:text-lg">
                       {formatCurrency(tax)}
-                    </strong>
-                  </div>
-                  <hr className="border-ginzapet-graylight" />
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-2 sm:gap-[10px]">
-                      <img
-                        src="/assets/images/icons/note-payment.svg"
-                        alt="icon"
-                        className="h-[20px] w-[20px] sm:h-[24px] sm:w-[24px] xl:h-[28px] xl:w-[28px] shrink-0"
-                      />
-                      <p className="text-ginzapet-gray text-sm sm:text-base xl:text-lg">
-                        Service Tools
-                      </p>
-                    </div>
-                    <strong className="font-semibold text-sm sm:text-base xl:text-lg">
-                      Free
                     </strong>
                   </div>
                   <hr className="border-ginzapet-graylight" />

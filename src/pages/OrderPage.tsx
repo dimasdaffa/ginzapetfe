@@ -14,7 +14,6 @@ export default function OrderPage() {
     name: "",
     email: "",
     phone: "",
-    started_time: "",
     schedule_at: "",
     post_code: "",
     address: "",
@@ -86,7 +85,7 @@ export default function OrderPage() {
 
   useEffect(() => {
     const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setDate(tomorrow.getDate() + 0);
     const formattedDate = tomorrow.toISOString().split("T")[0];
 
     setFormData((prev) => ({
@@ -256,36 +255,6 @@ export default function OrderPage() {
                             type="text"
                           />
                         </div>
-                      </label>
-                      <label className="flex flex-col gap-2">
-                        <h4 className="font-semibold text-sm sm:text-base xl:text-lg">
-                          Start Time At
-                        </h4>
-                        <div className="relative h-[48px] sm:h-[52px] xl:h-[56px] w-full overflow-hidden rounded-full border border-ginzapet-graylight transition-all duration-300 focus-within:border-ginzapet-orange">
-                          <Clock className="absolute left-[12px] sm:left-[14px] xl:left-[16px] top-1/2 h-5 w-5 sm:h-6 sm:w-6 xl:h-7 xl:w-7 shrink-0 -translate-y-1/2" />
-                          <select
-                            value={formData.started_time}
-                            onChange={handleChange}
-                            name="started_time"
-                            className="h-full w-full appearance-none rounded-full bg-transparent relative z-10 pl-[44px] sm:pl-[50px] xl:pl-[56px] pr-4 font-semibold text-sm sm:text-base xl:text-lg focus:outline-none"
-                          >
-                            <option value="">Enter the time</option>
-                            <option value="09:00">09:00</option>
-                            <option value="10:00">10:00</option>
-                            <option value="11:00">11:00</option>
-                          </select>
-                        </div>
-                        {formErrors.find((error) =>
-                          error.path.includes("started_time")
-                        ) && (
-                          <p className="text-red-500 text-sm xl:text-base">
-                            {
-                              formErrors.find((error) =>
-                                error.path.includes("started_time")
-                              )?.message
-                            }
-                          </p>
-                        )}
                       </label>
                     </div>
                   </div>

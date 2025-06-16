@@ -163,7 +163,7 @@ export default function MyCartPage() {
           {/* Mobile Layout */}
           <div className="lg:hidden flex flex-col gap-5 pb-40">
             <AccordionSection
-              title="Home Services"
+              title="Products"
               iconSrc="/public/assets/images/icons/bottom-booking-form.svg"
             >
               <div className="flex flex-col gap-4">
